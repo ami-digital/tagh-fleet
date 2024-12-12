@@ -26,7 +26,7 @@ watch(darkMode, (value) => {
 
         <q-page class="column flex-center  ">
 
-           Orders
+           asdasd
         </q-page>
     </MainLayout>
 
