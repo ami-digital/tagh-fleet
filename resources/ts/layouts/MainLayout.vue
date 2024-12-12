@@ -3,8 +3,11 @@
 
         <AppHorizontalNav/>
         <MainSidebar/>
-        <q-page-container>
-            <slot/>
+
+        <q-page-container  >
+            <slot name="secondNav" />
+
+            <slot name="default"/>
         </q-page-container>
 
 

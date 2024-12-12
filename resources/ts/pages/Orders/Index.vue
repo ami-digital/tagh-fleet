@@ -22,16 +22,10 @@ watch(darkMode, (value) => {
 
 
     <MainLayout   >
-        <template #secondNav>
-            <section class="h-screen bg-red-100 w-[240px] top-0 left-0 absolute p-3">
-                    <ul>
-                        <li>asd</li>
-                    </ul>
-            </section>
-        </template>
+
         <q-page class="column flex-center  ">
 
-           asdasd
+           Orders
         </q-page>
     </MainLayout>
 
