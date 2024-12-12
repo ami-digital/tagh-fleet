@@ -4,7 +4,7 @@
         <AppHorizontalNav/>
         <MainSidebar/>
 
-        <q-page-container  >
+        <q-page-container  class="bg-[#F6F6F6]" >
             <slot name="secondNav" />
 
             <slot name="default"/>
