@@ -6,12 +6,29 @@
         "dev": "vite"
     },
     "devDependencies": {
+        "@quasar/vite-plugin": "^1.8.1",
         "autoprefixer": "^10.4.20",
         "axios": "^1.7.4",
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.47",
+        "sass-embedded": "^1.82.0",
         "tailwindcss": "^3.4.13",
         "vite": "^6.0"
+    },
+    "dependencies": {
+        "@faker-js/faker": "^9.3.0",
+        "@inertiajs/vue3": "^1.2.0",
+        "@quasar/extras": "^1.16.15",
+        "@vitejs/plugin-vue": "^5.2.1",
+        "@vue/tsconfig": "^0.7.0",
+        "@vueuse/core": "^12.0.0",
+        "animate.css": "^4.1.1",
+        "path": "^0.12.7",
+        "quasar": "^2.17.4",
+        "typescript": "^5.7.2",
+        "unplugin-auto-import": "^0.17.1",
+        "unplugin-vue-components": "^0.14.0-beta.1",
+        "vue-tsc": "^2.1.10"
     }
 }
