@@ -89,6 +89,8 @@ const miniState = ref(true)
                             <q-item-label class="text-[#000] text-sm">Live Dashboard</q-item-label>
                         </q-item-section>
                     </q-item>
+                </div>
+                <div class="side-links">
                     <q-item
                         :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
                         clickable
@@ -106,6 +108,8 @@ const miniState = ref(true)
                             <q-item-label class="text-[#000] text-sm">Orders</q-item-label>
                         </q-item-section>
                     </q-item>
+                </div>
+                <div class="side-links">
                     <q-item
                         :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
                         clickable
@@ -123,7 +127,8 @@ const miniState = ref(true)
                             <q-item-label class="text-[#000] text-sm">Team Member</q-item-label>
                         </q-item-section>
                     </q-item>
-
+                </div>
+                <div class="side-links">
                     <q-item
                         :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
                         clickable
@@ -170,23 +175,23 @@ const miniState = ref(true)
 
 
     .side-links .q-focus-helper {
-        background: #66C4B9 !important;
+        background: #214080 !important;
     }
 
     .side-links .q-hoverable:hover > .q-focus-helper {
-        background: #66C4B9 !important;
+        background: #214080 !important;
     }
 
     .side-links:hover {
         .q-item__label, .q-item .q-item__section span.dropdown-parent-heading, .q-item i {
-            color: #66C4B9 !important;
+            color: #214080 !important;
             font-weight: 500;
         }
     }
 
     .dropdown-child-item:hover {
         span {
-            color: #5694E3 !important;
+            color: #214080 !important;
         }
     }
 
@@ -194,7 +199,7 @@ const miniState = ref(true)
         position: relative;
 
         .q-item__label, .q-item__section span.dropdown-parent-heading, i {
-            color: #66C4B9 !important;
+            color: #214080 !important;
             font-weight: 500;
         }
     }
@@ -207,7 +212,7 @@ const miniState = ref(true)
         height: 48px;
         width: 6px;
         border-radius: 0px 4px 4px 0px;
-        background: #66C4B9;
+        background: #214080;
     }
 }
 </style>
