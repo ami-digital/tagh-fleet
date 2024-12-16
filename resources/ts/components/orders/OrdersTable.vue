@@ -249,14 +249,14 @@ const applyFilters = () => {
             hide-pagination
             v-model:selected="orderSelected"
             class="rounded-lg shadow-sm bg-white text-[#61646A]"
-            table-header-class="bg-[#fafafa] font-semibold text-left"
+            table-header-class="bg-[#e8f4fd] font-semibold text-left"
         >
 
             <template v-slot:header-cell="props">
                 <q-th
                     :props="props"
                     style="font-weight: 600; font-size: 14px; min-width: 180px"
-                    class="order-table-slot"
+                    class="order-table-slot hover:bg-[#FCFCFC]"
                 >
                     {{ props.col.label }}
                     <div class="float-right">

@@ -11,7 +11,7 @@ const columns = ref([
     { name: "roles", label: "Roles", field: "roles",  align: 'left', sortable: true },
     { name: "lastLogin", label: "Last Login", field: "lastLogin",  align: 'left', sortable: true },
     { name: "appVersion", label: "App Version", field: "appVersion",  align: 'left', sortable: true },
-    { name: "actions", label: "", field: "actions",  align: 'left', },
+    { name: "actions", label: "", field: "actions",  align: 'right', },
 
 ]);
 
@@ -21,8 +21,8 @@ const rows = ref([
         name: "Chantelle Henshall",
         email: "coboh24908@pokeline.com",
         phone: "+44 786 645 4587",
-        roles: "39 Lakeside Road, EN8 0EX",
-        lastLogin: "Orders: Explore how to tailor your view, manage bulk actions, and op",
+        roles: "Admin, Driver",
+        lastLogin: "1:14 PM, Dec 16, 2024",
         appVersion: "Dec 1, 2024",
         actions: "",
 
@@ -46,7 +46,7 @@ const rows = ref([
             color="primary"
             hide-pagination
             class="rounded-lg shadow-sm bg-white text-[#61646A]"
-            table-header-class="bg-[#eff9f8] font-semibold text-left"
+            table-header-class="bg-[#e8f4fd] font-semibold text-left"
         >
 
             <template v-slot:header-cell="props">
@@ -57,6 +57,31 @@ const rows = ref([
                 >
                     {{ props.col.label }}
                 </q-th>
+            </template>
+
+            <template v-slot:body-cell-actions="">
+                <td style="text-align: right">
+                    <q-btn
+                        flat
+                        round
+                        icon="border_color"
+                        size="sm"
+                        class=" hover:text-blue-700 mx-2"
+                        v-close-popup
+                        unelevated
+                    >
+                    </q-btn>
+                    <q-btn
+                        flat
+                        round
+                        icon="delete_outline"
+                        size="sm"
+                        class=" hover:text-red-700 mx-2"
+                        v-close-popup
+                        unelevated
+                    >
+                    </q-btn>
+                </td>
             </template>
 
         </q-table>

@@ -2,10 +2,7 @@
 import { ref, watch } from "vue";
 import { Head } from "@inertiajs/vue3";
 import { Dark } from "quasar";
-import MainLayout from "../../layouts/MainLayout.vue";
-import OrdersTable from "../../components/orders/OrdersTable.vue";
 import TeamsTable from "../../components/team-members/TeamsTable.vue";
-
 
 const darkMode = ref(Dark.isActive);
 watch(darkMode, (value) => {
@@ -58,24 +55,14 @@ const search = ref('')
             </div>
         </section>
 
-
-
         <section class="my-3">
             <TeamsTable />
         </section>
 
     </q-page>
 
-
 </template>
 
 <style lang="scss">
-#order-page {
-   .search-input {
-       .q-field__control {
-           border-radius: 6px 0 0 6px;
-           height: 32px;
-       }
-   }
-}
+
 </style>

@@ -56,10 +56,10 @@ const miniState = ref(true)
     >
         <div class="">
             <div class="h-[60px] flex items-center border-b  p-2 cursor-pointer"
-                 @click="router.visit(route('dashboard.index'))">
+                 @click="router.visit(route('orders'))">
                 <q-img
-                    alt="Mammoth Log"
-                    src="/assets/logos/tagh_pos.svg"
+                    alt="Tagh Fleet Logo"
+                    src="/assets/logos/app_logo.svg"
                     width="100px"
                 />
             </div>
