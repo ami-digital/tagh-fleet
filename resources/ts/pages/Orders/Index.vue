@@ -20,10 +20,8 @@ const search = ref('')
     </Head>
     <q-page class="px-6 py-4 bg-[#F5F5F5]" id="order-page">
 
-        <section class="flex justify-between">
-            <div></div>
+        <section class="flex justify-center">
             <h3 class="m-0 text-2xl font-medium">Orders</h3>
-            <div></div>
         </section>
 
         <section class="flex justify-between my-3">
@@ -67,8 +65,6 @@ const search = ref('')
                 />
             </div>
         </section>
-
-
 
         <section class="my-3">
             <OrdersTable />

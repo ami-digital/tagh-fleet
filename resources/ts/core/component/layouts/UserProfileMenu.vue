@@ -29,22 +29,23 @@ defineOptions({ name: 'UserProfileMenu' });
           <q-item>
               <div class="flex items-center no-wrap q-pb-sm">
                   <q-btn
-                      color="primary"
+                      color="grey"
                       text-color="white"
                       style="border-radius: 100px; width: 35px; height: 35px;"
                       unelevated
                       padding="8px 10px"
                       dense
                       size="sm"
+                      icon="person"
                   >
-                      ss
 
                   </q-btn>
                   <div class="q-ml-sm">
-                      <div class="text-sm font-semibold text-primary">ss
+                      <div class="text-sm font-semibold text-primary">
+                          Aline Baxter
                       </div>
                       <div class="text-weight-regular" style="font-size: 0.80rem;">
-                         ss
+                          coboh24908@pokeline.com
                       </div>
                   </div>
               </div>
@@ -52,7 +53,29 @@ defineOptions({ name: 'UserProfileMenu' });
 
           <q-separator class="mx-4" />
 
+          <q-item clickable v-close-popup @click="router.post(route('logout'))" class="px-4">
+              <q-item-section  >
 
+                  <div class="flex items-center">
+                      <q-icon  name="add" size='xs' color="grey"  />
+                      <span class="text-[#898989] pl-2">Upload Logo</span>
+                  </div>
+
+              </q-item-section>
+
+          </q-item>
+
+          <q-item clickable v-close-popup @click="router.post(route('logout'))" class="px-4">
+              <q-item-section  >
+
+                  <div class="flex items-center">
+                      <q-icon  name="receipt_long" size='xs' color="grey"  />
+                      <span class="text-[#898989] pl-2">Billing</span>
+                  </div>
+
+              </q-item-section>
+
+          </q-item>
 
           <q-separator class="mx-4" />
 

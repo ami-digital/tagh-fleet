@@ -34,19 +34,17 @@ const props = defineProps({
       <div>
           <div>
               <q-btn
-                  color="primary"
+                  color="grey"
                   text-color="white"
                   style="border-radius: 100px; width: 35px; height: 35px;"
                   unelevated
                   padding="8px 10px"
                   dense
                   size="sm"
+                  icon="person"
               >
-                  sss
 
               </q-btn>
-              <b class="px-2 text-xs text-primary font-semibold">ss</b>
-              <q-icon color="primary" name="expand_more" :size="!$q.screen.lt.md ? 'sm' : 'xs'" />
           </div>
       </div>
   </section>

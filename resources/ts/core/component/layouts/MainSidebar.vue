@@ -5,7 +5,7 @@ import {route} from 'ziggy-js';
 
 import Dashboard from '@images/svg/sidebar/live-dashboard.svg';
 import ordersSvg from '@images/svg/sidebar/orders.svg';
-import logo from '@images/logos/tagh_pos.svg';
+import logo from '@images/logos/app_logo.svg';
 import DashboardBlue from '@images/svg/sidebar/live-dashboard.svg';
 import TeamMemberSvg from '@images/svg/sidebar/team-members.svg';
 import vehicleSvg from '@images/svg/sidebar/vehicles.svg';
@@ -60,7 +60,7 @@ const miniState = ref(true)
     >
         <div class="">
             <div class="h-[60px] flex items-center border-b  p-2 cursor-pointer"
-                 @click="router.visit(route('dashboard.index'))">
+                 @click="router.visit(route('/routes'))">
                 <q-img
                     alt="Mammoth Log"
                     :src="logo"
@@ -69,9 +69,7 @@ const miniState = ref(true)
             </div>
 
 
-
             <q-list class="mt-2">
-
 
                 <div class="side-links">
                     <q-item

@@ -255,8 +255,8 @@ const applyFilters = () => {
             <template v-slot:header-cell="props">
                 <q-th
                     :props="props"
-                    style="font-weight: 600; font-size: 14px; min-width: 180px"
-                    class="order-table-slot hover:bg-[#FCFCFC]"
+                    style="font-size: 14px; min-width: 180px"
+                    class="order-table-slot hover:bg-[#FCFCFC] font-semibold"
                 >
                     {{ props.col.label }}
                     <div class="float-right">
@@ -353,7 +353,7 @@ const applyFilters = () => {
             </template>
 
             <template v-slot:body-cell-status="">
-                <td style="width: 180px;">
+                <td class="w-[180px]">
                     <span class="px-1.5 py-0.5 rounded-md" style="border: 1px solid #00a398; background: rgba(0, 165, 155, 0.067);">
                         open
                     </span>

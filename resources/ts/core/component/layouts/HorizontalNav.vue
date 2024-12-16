@@ -33,12 +33,30 @@ const appLogo = computed(() => $page?.props?.settings?.app_logo)
         </div>
         <q-space />
       <div class="flex items-center">
-        <div class="flex items-center">
+
+          <div class="mx-4">
+              <q-btn
+
+                  text-color=""
+                  style="border-radius: 100px; width: 35px; height: 35px;"
+                  unelevated
+                  flat
+                  padding="0"
+                  dense
+                  size="md"
+                  icon="settings"
+              >
+
+              </q-btn>
+          </div>
+
+          <div class="flex items-center">
             <div class="cursor-pointer flex items-center">
                 <PresenceAvatar  />
             </div>
             <UserProfileMenu />
         </div>
+
       </div>
 
 
