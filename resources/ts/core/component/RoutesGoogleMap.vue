@@ -6,7 +6,6 @@ defineOptions({
     name: 'RoutesGoogleMap',
 });
 
-// const googleMapsApiKey = ref('AIzaSyCeofdTxksEZQGG5Q7-UeAv0rogv2lkA4E');
 const googleMapsApiKey = ref('AIzaSyCykavRgmm93R8m-H61UZINCe8FW2yEjJc');
 const mapRef = ref<HTMLElement | null>(null);
 
