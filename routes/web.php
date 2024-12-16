@@ -13,3 +13,13 @@ Route::get('/orders', function () {
 Route::get('/vehicles', function () {
     return Inertia\Inertia::render('Vehicles/Index');
 });
+
+
+Route::get('/customers', function () {
+    return Inertia\Inertia::render('Customers/Index');
+});
+
+
+Route::get('/routes', function () {
+    return Inertia\Inertia::render('Routes/Index');
+});
