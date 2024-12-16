@@ -8,6 +8,9 @@ Route::get('/', function () {
 Route::get('/orders', function () {
     return Inertia\Inertia::render('Orders/Index');
 });
+Route::get('/team-members', function () {
+    return Inertia\Inertia::render('TeamMembers/Index');
+});
 
 
 Route::get('/vehicles', function () {
