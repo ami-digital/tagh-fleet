@@ -40,6 +40,7 @@ const saveZone = () => {
 };
 // Function to export selected zones as GeoJSON
 const exportSelectedZonesAsGeoJSON = () => {
+  const color = generateRandomColor()
   const geoJsonExport = {
     type: 'FeatureCollection',
     features: selectedZones.value.map(zone => ({
@@ -47,7 +48,7 @@ const exportSelectedZonesAsGeoJSON = () => {
       properties: {
         id: zone.id,
         label: zone.label,
-        color: zone.color,
+        color: color,
       },
       geometry: zone.geometry,  // Ensure `geometry` is a valid GeoJSON object
     })),
@@ -78,7 +79,7 @@ function extractCoordinatesRecursive(geometry) {
 }
 const geoJsonUrls = [
   'https://gist.githubusercontent.com/ahmedMAfani/fd6410b45ac3efa4b3b1ef2bfc742025/raw/1781131a039c6e2b62b64e037b184b230456dbfe/uk-post.json',
-  'https://gist.githubusercontent.com/AhmedMAfana/ae0378e981245e0875c4509fe6437cc7/raw/18b17e846fe660c856ecb18d13ab062ffc26b088/ahmed.json',
+  // 'https://gist.githubusercontent.com/AhmedMAfana/ae0378e981245e0875c4509fe6437cc7/raw/bcf1ca0345c29ff6ab3a9f28315e80922526573c/ahmed.json',
 
 ];
 const loadGeoJSONLayer = async () => {

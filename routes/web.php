@@ -18,8 +18,8 @@ Route::get('/vehicles', function () {
 });
 
 
-Route::get('/customers', function () {
-    return Inertia\Inertia::render('Customers/Index');
+Route::get('/zones', function () {
+    return Inertia\Inertia::render('Zones/Index');
 });
 
 
