@@ -4,6 +4,7 @@ import { Head } from "@inertiajs/vue3";
 import { Dark } from "quasar";
 import MainLayout from "../../layouts/MainLayout.vue";
 import OrdersTable from "../../components/orders/OrdersTable.vue";
+import TeamsTable from "../../components/team-members/TeamsTable.vue";
 
 
 const darkMode = ref(Dark.isActive);
@@ -20,13 +21,14 @@ const search = ref('')
     </Head>
     <q-page class="px-6 py-4 bg-[#F5F5F5]" id="order-page">
 
-        <section class="flex justify-between">
-            <div></div>
-            <h3 class="m-0 text-2xl font-medium">Orders</h3>
-            <div></div>
+        <section class="flex items-center">
+            <q-separator  class=" w-[10%] max-w-[100px] " />
+            <h3 class="mb-1 q-px-md text-2xl font-medium">Team Members</h3>
+            <q-separator  class="flex-1" />
+
         </section>
 
-        <section class="flex justify-between my-3">
+        <section class="flex my-3 q-gutter-x-md">
             <div>
                 <div class="flex search-input">
                     <q-input v-model="search"
@@ -41,29 +43,17 @@ const search = ref('')
                 </div>
             </div>
 
-            <div class="flex">
+            <div>
                 <q-btn
-                    label="Create Order"
+                    label="Add New Team Member"
                     unelevated
                     dense
-                    icon="add"
-                    text-color="accent"
+                    icon="add_circle_outline"
+                    text-color="primary"
                     size="md"
                     padding="4px 14px"
                     class="px-2 bg-white px-2 mr-3 rounded-md;"
                     style=" font-weight: normal; border-radius: 6px; border:1px solid #d9d9d9;"
-                />
-                <q-btn
-                    label="Upload"
-                    unelevated
-                    dense
-                    filled
-                    text-color="white"
-                    icon="upload"
-                    size="md"
-                    padding="4px 14px"
-                    class="px-2 bg-primary "
-                    style="font-weight: normal; border-radius: 6px;"
                 />
             </div>
         </section>
@@ -71,7 +61,7 @@ const search = ref('')
 
 
         <section class="my-3">
-            <OrdersTable />
+            <TeamsTable />
         </section>
 
     </q-page>
