@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import {event} from "quasar";
+
 
 
 
@@ -27,7 +27,7 @@ const rows = ref([
         actions: "",
 
     },
-]);
+])
 
 
 

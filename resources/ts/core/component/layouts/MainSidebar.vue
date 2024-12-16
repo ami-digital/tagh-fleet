@@ -61,11 +61,8 @@ const miniState = ref(true)
         <div class="">
             <div class="h-[60px] flex items-center border-b  p-2 cursor-pointer"
                  @click="router.visit(route('/routes'))">
-                <q-img
-                    alt="Mammoth Log"
-                    :src="logo"
-                    width="100px"
-                />
+                <img :src="logo"  alt="Tagh Fleet" width="100">
+
             </div>
 
 
