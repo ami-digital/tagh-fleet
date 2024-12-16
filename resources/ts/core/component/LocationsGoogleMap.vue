@@ -78,8 +78,9 @@ function extractCoordinatesRecursive(geometry) {
   return []; // Return empty array if no valid coordinates are found
 }
 const geoJsonUrls = [
-  'https://gist.githubusercontent.com/ahmedMAfani/fd6410b45ac3efa4b3b1ef2bfc742025/raw/1781131a039c6e2b62b64e037b184b230456dbfe/uk-post.json',
-  // 'https://gist.githubusercontent.com/AhmedMAfana/ae0378e981245e0875c4509fe6437cc7/raw/bcf1ca0345c29ff6ab3a9f28315e80922526573c/ahmed.json',
+  'https://gist.githubusercontent.com/AhmedMAfana/10235d09dd34d7a24768ed5e56110fe9/raw/e4b5d5f441c38c6ab4cac5ece074afb897886fc2/uk-full-post-map.json',
+  // 'https://gist.githubusercontent.com/ahmedMAfani/fd6410b45ac3efa4b3b1ef2bfc742025/raw/1781131a039c6e2b62b64e037b184b230456dbfe/uk-post.json',
+  // 'https://gist.githubusercontent.com/AhmedMAfana/ae0378e981245e0875c4509fe6437cc7/raw/ef493d807b054da44a7975d439c851467dcd2b60/ahmed.json',
 
 ];
 const loadGeoJSONLayer = async () => {
@@ -100,7 +101,7 @@ const loadGeoJSONLayer = async () => {
         map.data.setStyle((feature) => ({
           fillColor: feature.getProperty('color') || 'gray',
           strokeColor: feature.getProperty('color') || 'gray',
-          strokeWeight: 2,
+          strokeWeight: 1,
         }));
 
         // Add event listeners for click, mouseover, and mouseout
