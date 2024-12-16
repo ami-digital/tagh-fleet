@@ -3,8 +3,12 @@
 import {router, usePage} from '@inertiajs/vue3';
 import {route} from 'ziggy-js';
 
-import Dashboard from '@images/svg/sidebar/dashboard.svg';
-import DashboardBlue from '@images/svg/sidebar/dashboard_blue_filled.svg';
+import Dashboard from '@images/svg/sidebar/live-dashboard.svg';
+import ordersSvg from '@images/svg/sidebar/orders.svg';
+import logo from '@images/logos/tagh_pos.svg';
+import DashboardBlue from '@images/svg/sidebar/live-dashboard.svg';
+import TeamMemberSvg from '@images/svg/sidebar/team-members.svg';
+import vehicleSvg from '@images/svg/sidebar/vehicles.svg';
 
 import {ref} from "vue";
 import {leftDrawerOpen} from "../../utils";
@@ -56,10 +60,10 @@ const miniState = ref(true)
     >
         <div class="">
             <div class="h-[60px] flex items-center border-b  p-2 cursor-pointer"
-                 @click="router.visit(route('orders'))">
+                 @click="router.visit(route('dashboard.index'))">
                 <q-img
-                    alt="Tagh Fleet Logo"
-                    src="/assets/logos/app_logo.svg"
+                    alt="Mammoth Log"
+                    :src="logo"
                     width="100px"
                 />
             </div>
@@ -71,10 +75,10 @@ const miniState = ref(true)
 
                 <div class="side-links">
                     <q-item
-                        :class="url === '/dashboard/index' ? 'bg-[#DEF1FF] active-side-link' : ''"
+                        :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
                         clickable
                         tag="div"
-                        @click="simpleSideLinkClick('dashboard.index')"
+
                     >
                         <div class="  flex items-center">
                             <q-icon
@@ -84,7 +88,59 @@ const miniState = ref(true)
                             />
                         </div>
                         <q-item-section class="ml-2">
-                            <q-item-label class="text-[#61646A] text-sm">Dashboard</q-item-label>
+                            <q-item-label class="text-[#000] text-sm">Live Dashboard</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                    <q-item
+                        :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
+                        clickable
+                        tag="div"
+
+                    >
+                        <div class="  flex items-center">
+                            <q-icon
+                                :name="url === '/dashboard/index' ? `img:${ordersSvg}` : `img:${ordersSvg}`"
+                                class="p-0 text-grey"
+                                size="18px"
+                            />
+                        </div>
+                        <q-item-section class="ml-2">
+                            <q-item-label class="text-[#000] text-sm">Orders</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                    <q-item
+                        :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
+                        clickable
+                        tag="div"
+
+                    >
+                        <div class="  flex items-center">
+                            <q-icon
+                                :name="url === '/dashboard/index' ? `img:${TeamMemberSvg}` : `img:${TeamMemberSvg}`"
+                                class="p-0 text-grey"
+                                size="18px"
+                            />
+                        </div>
+                        <q-item-section class="ml-2">
+                            <q-item-label class="text-[#000] text-sm">Team Member</q-item-label>
+                        </q-item-section>
+                    </q-item>
+
+                    <q-item
+                        :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
+                        clickable
+                        tag="div"
+
+                    >
+                        <div class="  flex items-center">
+                            <q-icon
+                                :name="url === '/dashboard/index' ? `img:${vehicleSvg}` : `img:${vehicleSvg}`"
+                                class="p-0 text-grey"
+                                size="18px"
+                            />
+                        </div>
+                        <q-item-section class="ml-2">
+                            <q-item-label class="text-[#000] text-sm">Vehicle </q-item-label>
                         </q-item-section>
                     </q-item>
                 </div>
@@ -116,16 +172,16 @@ const miniState = ref(true)
 
 
     .side-links .q-focus-helper {
-        background: #1b9bfd !important;
+        background: #66C4B9 !important;
     }
 
     .side-links .q-hoverable:hover > .q-focus-helper {
-        background: #1b9bfd !important;
+        background: #66C4B9 !important;
     }
 
     .side-links:hover {
         .q-item__label, .q-item .q-item__section span.dropdown-parent-heading, .q-item i {
-            color: #5694E3 !important;
+            color: #66C4B9 !important;
             font-weight: 500;
         }
     }
@@ -140,7 +196,7 @@ const miniState = ref(true)
         position: relative;
 
         .q-item__label, .q-item__section span.dropdown-parent-heading, i {
-            color: #5694E3 !important;
+            color: #66C4B9 !important;
             font-weight: 500;
         }
     }
@@ -153,7 +209,7 @@ const miniState = ref(true)
         height: 48px;
         width: 6px;
         border-radius: 0px 4px 4px 0px;
-        background: #00A3FF;
+        background: #66C4B9;
     }
 }
 </style>

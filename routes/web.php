@@ -16,3 +16,13 @@ Route::get('/team-members', function () {
 Route::get('/vehicles', function () {
     return Inertia\Inertia::render('Vehicles/Index');
 });
+
+
+Route::get('/zones', function () {
+    return Inertia\Inertia::render('Zones/Index');
+});
+
+
+Route::get('/routes', function () {
+    return Inertia\Inertia::render('Routes/Index');
+});
