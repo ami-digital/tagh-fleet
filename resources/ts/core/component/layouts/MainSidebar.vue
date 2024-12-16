@@ -46,10 +46,9 @@ const miniState = ref(true)
     <q-drawer
         id="side-bar"
         v-model="leftDrawerOpen"
-
         class=" relative"
         show-if-above
-
+        mini-to-overlay
         :mini="miniState"
         @mouseenter="miniState = false"
         @mouseleave="miniState = true"
