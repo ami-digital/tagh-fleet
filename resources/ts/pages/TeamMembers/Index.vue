@@ -16,7 +16,7 @@ const search = ref('')
     <Head>
         <title>Index</title>
     </Head>
-    <q-page class="px-6 py-4 bg-[#F5F5F5]" id="order-page">
+    <q-page class="px-6 py-4 bg-[#F5F5F5]" id="teams-page">
 
         <section class="flex items-center">
             <q-separator  class=" w-[10%] max-w-[100px] " />
@@ -49,8 +49,8 @@ const search = ref('')
                     text-color="primary"
                     size="md"
                     padding="4px 14px"
-                    class="px-2 bg-white px-2 mr-3 rounded-md;"
-                    style=" font-weight: normal; border-radius: 6px; border:1px solid #d9d9d9;"
+                    class="px-2 bg-white px-2 mr-3 rounded-md border-primary"
+                    style=" font-weight: normal; border-radius: 6px; border:1px solid;"
                 />
             </div>
         </section>
@@ -64,5 +64,12 @@ const search = ref('')
 </template>
 
 <style lang="scss">
-
+#teams-page {
+    .search-input {
+        .q-field__control {
+            border-radius: 6px 0 0 6px;
+            height: 32px;
+        }
+    }
+}
 </style>

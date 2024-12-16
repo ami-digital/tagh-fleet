@@ -354,7 +354,7 @@ const applyFilters = () => {
 
             <template v-slot:body-cell-status="">
                 <td class="w-[180px]">
-                    <span class="px-1.5 py-0.5 rounded-md" style="border: 1px solid #00a398; background: rgba(0, 165, 155, 0.067);">
+                    <span class="px-1.5 py-0.5 rounded-md" style="border: 1px solid #214080; background:#e8f4fd;">
                         open
                     </span>
                 </td>
