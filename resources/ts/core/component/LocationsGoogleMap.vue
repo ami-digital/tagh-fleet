@@ -19,7 +19,6 @@ const mapRef = ref<HTMLElement | null>(null);
 let map: google.maps.Map | null = null;
 const selectedZones = ref<SerializableZone[]>([]);
 const currentZoneLabel = ref<string>('');
-const editingZoneId = ref<string | null>(null);
 
 const generateRandomColor = () => {
     const letters = '0123456789ABCDEF';
@@ -32,59 +31,125 @@ const saveZone = () => {
         return;
     }
 
-    if (editingZoneId.value) {
-        const zone = selectedZones.value.find((z) => z.id === editingZoneId.value);
-        if (zone) zone.label = currentZoneLabel.value;
-        editingZoneId.value = null;
-    }
+  const geoJsonExport = exportSelectedZonesAsGeoJSON();
+  const geoJsonStr = JSON.stringify(geoJsonExport);
+  console.log(geoJsonStr)
+  localStorage.setItem('selectedZones', geoJsonStr);
 
     currentZoneLabel.value = '';
 };
+// Function to export selected zones as GeoJSON
+const exportSelectedZonesAsGeoJSON = () => {
+  const geoJsonExport = {
+    type: 'FeatureCollection',
+    features: selectedZones.value.map(zone => ({
+      type: 'Feature',
+      properties: {
+        id: zone.id,
+        label: zone.label,
+        color: zone.color,
+      },
+      geometry: zone.geometry,  // Ensure `geometry` is a valid GeoJSON object
+    })),
+  };
 
-const loadGeoJSONLayer = () => {
-    const geoJsonUrl = 'https://gist.githubusercontent.com/ahmedMAfani/fd6410b45ac3efa4b3b1ef2bfc742025/raw/1781131a039c6e2b62b64e037b184b230456dbfe/uk-post.json';
+  // Ensure that geometry is valid
+  geoJsonExport.features.forEach(feature => {
+    if (!feature.geometry || !feature.geometry.type || !feature.geometry.coordinates) {
+      console.warn(`Invalid geometry for zone with ID: ${feature.properties.id}`);
+    }
+  });
 
-    if (map) {
-        map.data.loadGeoJson(geoJsonUrl);
+  return geoJsonExport;
+};
 
+function extractCoordinatesRecursive(geometry) {
+  // Check if the geometry object contains the key `Eg`
+  if (Array.isArray(geometry.Eg)) {
+    return geometry.Eg.flatMap(subGeometry => extractCoordinatesRecursive(subGeometry));
+  }
+
+  // If it's not nested further, assume it's a point with `lat` and `lng`
+  if (geometry.lat !== undefined && geometry.lng !== undefined) {
+   return [[geometry.lng(), geometry.lat()]];
+
+  }
+  return []; // Return empty array if no valid coordinates are found
+}
+const geoJsonUrls = [
+  'https://gist.githubusercontent.com/ahmedMAfani/fd6410b45ac3efa4b3b1ef2bfc742025/raw/1781131a039c6e2b62b64e037b184b230456dbfe/uk-post.json',
+  'https://gist.githubusercontent.com/AhmedMAfana/ae0378e981245e0875c4509fe6437cc7/raw/18b17e846fe660c856ecb18d13ab062ffc26b088/ahmed.json',
+
+];
+const loadGeoJSONLayer = async () => {
+
+  if (map) {
+    try {
+      for (const url of geoJsonUrls) {
+
+        const response = await fetch(url);
+        if (!response.ok) {
+          console.error(`Failed to load GeoJSON from ${url}: ${response.statusText}`);
+        }
+        const geoJsonData = await response.json();
+
+        // Add the GeoJSON data to the map
+        map.data.addGeoJson(geoJsonData);
+        // Set the style for the features
         map.data.setStyle((feature) => ({
-            fillColor: feature.getProperty('color') || 'gray',
-            strokeColor: feature.getProperty('color') || 'gray',
-            strokeWeight: 2,
+          fillColor: feature.getProperty('color') || 'gray',
+          strokeColor: feature.getProperty('color') || 'gray',
+          strokeWeight: 2,
         }));
 
+        // Add event listeners for click, mouseover, and mouseout
         map.data.addListener('click', (event) => {
-            const feature = event.feature;
-            const zoneId = feature.getProperty('id') || uuidv4();
-            feature.setProperty('id', zoneId);
+          const feature = event.feature;
+          const zoneId = feature.getProperty('id') || uuidv4();
+          feature.setProperty('id', zoneId);
 
-            const existingZoneIndex = selectedZones.value.findIndex((z) => z.id === zoneId);
+          const existingZoneIndex = selectedZones.value.findIndex((z) => z.id === zoneId);
 
-            if (existingZoneIndex >= 0) {
-                selectedZones.value.splice(existingZoneIndex, 1);
-                feature.setProperty('color', 'gray');
-                map?.data.revertStyle(feature);
-            } else {
-                const randomColor = generateRandomColor();
-                feature.setProperty('color', randomColor);
+          if (existingZoneIndex >= 0) {
+            // Remove the zone if already selected
+            selectedZones.value.splice(existingZoneIndex, 1);
+            feature.setProperty('color', 'gray');
+            map.data.revertStyle(feature);
+          } else {
+            // Add the zone to selectedZones
+            const randomColor = generateRandomColor();
+            feature.setProperty('color', randomColor);
 
-                selectedZones.value.push({
-                    id: zoneId,
-                    label: currentZoneLabel.value || `Zone ${selectedZones.value.length + 1}`,
-                    color: randomColor,
-                    featureIds: [zoneId],
-                });
-            }
+            let coordinates = extractCoordinatesRecursive(feature.getGeometry())
+            coordinates = [...coordinates , coordinates[0]]
+
+            selectedZones.value.push({
+              id: zoneId,
+              label: currentZoneLabel.value || `Zone ${selectedZones.value.length + 1}`,
+              color: randomColor,
+              geometry: {
+                type: "Polygon",
+                coordinates: [coordinates],
+              },
+            });
+          }
         });
 
         map.data.addListener('mouseover', (event) => {
-            map.data.overrideStyle(event.feature, { strokeWeight: 5 });
+          map.data.overrideStyle(event.feature, { strokeWeight: 5 });
         });
 
         map.data.addListener('mouseout', (event) => {
-            map.data.revertStyle();
+          map.data.revertStyle();
         });
+      }
+
+
+
+    } catch (error) {
+      console.error('Error loading GeoJSON:', error);
     }
+  }
 };
 
 const initializeMap = async () => {
