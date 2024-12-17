@@ -30,7 +30,7 @@ const emits = defineEmits<{
 
 <template>
   <transition name="slide-up">
-    <section v-if="model" class="side-drawer  text-gray-app overflow-auto absolute transform top-0 bottom-0    z-fullscreen       w-full    " >
+    <section v-if="model" class="side-drawer  text-gray-app overflow-auto absolute transform top-0 bottom-0    bg-white        w-full    " >
       <div >
         <slot name="header">
           <div class="w-full  items-center justify-between sm:p-6 sm:pb-0 p-3 pb-0">
