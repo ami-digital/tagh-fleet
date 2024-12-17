@@ -1,9 +1,5 @@
 <script setup lang="ts">
 
-
-
-
-import {onMounted} from "vue";
 import DashboardRoutesTable from "../routes/DashboardRoutesTable.vue";
 
 const model = defineModel({required : true, default: false});

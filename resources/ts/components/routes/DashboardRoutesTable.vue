@@ -141,64 +141,7 @@ const resetFilters = () => {
         </q-table>
     </section>
 
-    <q-dialog persistent v-model="isFilterDialogOpen">
-        <q-card class="w-[700px] max-w-[70vh] q-px-md q-py-md rounded-md" >
 
-            <q-card-section class="flex justify-between items-center no-wrap q-py-none">
-                <div class="text-lg font-semibold">Filters</div>
-                <q-btn
-                    flat
-                    round
-                    icon="close"
-                    class=" hover:text-red-700"
-                    v-close-popup
-                    unelevated
-                >
-                </q-btn>
-            </q-card-section>
-
-            <q-card-section>
-                <div v-for="col in columns" :key="col.name" class="mb-4">
-                    <div class="mb-1">
-                        <label>{{col.label}}</label>
-                    </div>
-
-                    <div>
-                        <q-select
-                            v-if="col.name  === 'status' "
-                            outlined
-                            dense
-                            v-model="statusSelectList"
-                            :options="statusOptions"
-                        />
-                        <q-input
-                            v-else
-                            v-model="filters[col.name]"
-                            dense
-                            outlined
-                            class="w-full"
-                        />
-                    </div>
-                </div>
-            </q-card-section>
-
-            <q-card-actions align="right">
-                <q-btn flat label="Reset" @click="resetFilters" />
-                <q-btn
-                    label="Apply Filters"
-                    unelevated
-                    dense
-                    filled
-                    text-color="white"
-                    size="md"
-                    padding="4px 14px"
-                    class="px-2 bg-primary "
-                    style="font-weight: normal; border-radius: 6px;"
-                    @click="applyDialogFilters"
-                />
-            </q-card-actions>
-        </q-card>
-    </q-dialog>
 </template>
 
 <style lang="scss">
