@@ -7,19 +7,19 @@ Route::get('/', function () {
 });
 Route::get('/orders', function () {
     return Inertia\Inertia::render('Orders/Index');
-});
+})->name('orders.index');
 
 Route::get('/orders/view', function () {
     return Inertia\Inertia::render('Orders/View');
 });
 Route::get('/team-members', function () {
     return Inertia\Inertia::render('TeamMembers/Index');
-});
+})->name('team.index');
 
 
 Route::get('/vehicles', function () {
     return Inertia\Inertia::render('Vehicles/Index');
-});
+})->name('vehicles.index');
 
 
 Route::get('/zones', function () {
@@ -30,3 +30,8 @@ Route::get('/zones', function () {
 Route::get('/routes', function () {
     return Inertia\Inertia::render('Routes/Index');
 });
+
+Route::get('/settings', function () {
+    return Inertia\Inertia::render('Settings/Index');
+})->name('settings.index');
+

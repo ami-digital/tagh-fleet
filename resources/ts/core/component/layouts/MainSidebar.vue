@@ -90,6 +90,7 @@ const miniState = ref(true)
                     <q-item
                         :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
                         clickable
+                        @click="simpleSideLinkClick('orders.index')"
                         tag="div"
 
                     >
@@ -109,6 +110,7 @@ const miniState = ref(true)
                     <q-item
                         :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
                         clickable
+                        @click="simpleSideLinkClick('team.index')"
                         tag="div"
 
                     >
@@ -128,6 +130,7 @@ const miniState = ref(true)
                     <q-item
                         :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
                         clickable
+                        @click="simpleSideLinkClick('vehicles.index')"
                         tag="div"
 
                     >
