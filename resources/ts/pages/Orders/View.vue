@@ -12,7 +12,7 @@ const maximizedToggle = ref(true)
         <q-page>
             <q-btn label="Open Full-Screen Modal"   @click="showModal = true" />
 
-             <OrderViewDrawer @close="showModal = false" v-model="showModal" />
+             <OrderViewDrawerCopy @close="showModal = false" v-model="showModal" />
         </q-page>
 
 </template>
