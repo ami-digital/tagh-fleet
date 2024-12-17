@@ -27,7 +27,7 @@ const emits = defineEmits<{
   <transition name="slide-up">
     <section v-if="model" class="side-drawer  text-gray-app overflow-auto absolute transform top-0 bottom-0    bg-[#F6F6F6]  w-full    " >
         <div>
-            <div class="flex h-screen bg-gray-100">
+            <div class="flex h-[calc(100vh-60px)] ">
                 <div class="w-full fixed z-top">
                     <div class="absolute right-3 top-3">
                         <q-btn round  icon="close" @click="() =>emits('close')" />
@@ -35,7 +35,7 @@ const emits = defineEmits<{
                 </div>
 
                 <!-- Sidebar Tabs -->
-                <div class="w-[200px] bg-white shadow-md">
+                <div class="w-[200px]  shadow-md">
                     <q-tabs
                         v-model="tab"
                         vertical
@@ -51,19 +51,19 @@ const emits = defineEmits<{
                 </div>
 
                 <!-- Main Content -->
-                <div class="flex-1 p-4 bg-white">
+                <div class="flex-1 p-4 ">
 
-                    <q-tab-panels v-model="tab">
-                        <q-tab-panel name="info">
+                    <q-tab-panels v-model="tab" >
+                        <q-tab-panel name="info" class="bg-[#F6F6F6]">
                             <CustomerInfo />
                         </q-tab-panel>
-                        <q-tab-panel name="stops">
+                        <q-tab-panel name="stops" class="bg-[#F6F6F6]">
                             <CustomerStops />
                         </q-tab-panel>
-                        <q-tab-panel name="history">
+                        <q-tab-panel name="history" class="bg-[#F6F6F6]">
                             <OrderHistory />
                         </q-tab-panel>
-                        <q-tab-panel name="edit">
+                        <q-tab-panel name="edit" class="bg-[#F6F6F6]">
                             <div>Edit Order Content</div>
                             <section class="grid grid-cols-2">
 
