@@ -4,6 +4,7 @@
 
 
 import {onMounted} from "vue";
+import DashboardRoutesTable from "../routes/DashboardRoutesTable.vue";
 
 const model = defineModel({required : true, default: false});
 
@@ -25,6 +26,16 @@ const emits = defineEmits<{
 
 
 
+const showDetails = ref(false);
+
+
+const showUpdatedETA = ref(false);
+
+
+const toggleDetails = () => {
+    showDetails.value = !showDetails.value;
+};
+
 
 </script>
 
@@ -41,32 +52,35 @@ const emits = defineEmits<{
 
         <section class="grid grid-cols-2">
 
-            <div class="p-5  " >
-                <div class="grid grid-cols-6 ">
+            <div class="p-5">
+                <div class="grid grid-cols-1 md:grid-cols-6 gap-y-4 md:gap-0 items-center">
 
-
-                        <div class=" text-[12px] font-medium text-gray-400 flex items-center ">
-                            <q-icon size="1.2rem" color="blue" class="mr-1" name="public"/>
-                            <span class="line-clamp-1 w-9/12">south london/south coast</span>
-
-                        </div>
-
-                    <div class=" text-[12px] font-medium text-gray-400  flex items-center  ">
-                        <q-icon size="1.2rem" color="blue" class="mr-1" name="local_shipping"/>
-                        <span class="line-clamp-1 w-9/12">KX68 XKD</span>
-
+                    <!-- Location -->
+                    <div class="text-[12px] font-medium text-gray-400 flex items-center">
+                        <q-icon size="1.2rem" color="blue" class="mr-1" name="public" />
+                        <span class="line-clamp-1 w-full md:w-9/12">south london/south coast</span>
                     </div>
-                    <div class=" text-[12px] font-medium text-gray-400  flex items-center">
-                        <q-icon size="1.2rem" color="blue" class="mr-1" name="person"/>
-                        <span class="line-clamp-1 w-9/12">Bilal Hussain</span>
 
+                    <!-- Vehicle -->
+                    <div class="text-[12px] font-medium text-gray-400 flex items-center">
+                        <q-icon size="1.2rem" color="blue" class="mr-1" name="local_shipping" />
+                        <span class="line-clamp-1 w-full md:w-9/12">KX68 XKD</span>
                     </div>
-                    <div class=" text-[12px] font-medium text-gray-400  flex items-center">
-                        <q-icon size="1.2rem" color="blue" class="mr-1" name="calendar_today"/>
-                        <span class="line-clamp-1 w-9/12">December 21</span>
 
+                    <!-- Driver -->
+                    <div class="text-[12px] font-medium text-gray-400 flex items-center">
+                        <q-icon size="1.2rem" color="blue" class="mr-1" name="person" />
+                        <span class="line-clamp-1 w-full md:w-9/12">Bilal Hussain</span>
                     </div>
-                    <div class="col-span-2 flex items-center justify-end space-x-2">
+
+                    <!-- Date -->
+                    <div class="text-[12px] font-medium text-gray-400 flex items-center">
+                        <q-icon size="1.2rem" color="blue" class="mr-1" name="calendar_today" />
+                        <span class="line-clamp-1 w-full md:w-9/12">December 21</span>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="col-span-1 md:col-span-2 flex flex-wrap justify-end gap-2">
                         <q-btn
                             label="Edit Route"
                             unelevated
@@ -75,7 +89,7 @@ const emits = defineEmits<{
                             color="blue"
                             size="md"
                             padding="4px 14px"
-                            style=" font-weight: normal; border-radius: 6px "
+                            class="rounded-md"
                         />
 
                         <q-btn
@@ -83,17 +97,91 @@ const emits = defineEmits<{
                             padding="xs"
                             color="blue"
                             icon="print"
+                            class="rounded-md"
                         />
+
                         <q-btn
                             outline
                             padding="xs"
                             color="blue"
                             icon="download"
+                            class="rounded-md"
                         />
-
                     </div>
                 </div>
+
+
+                <section class="mt-3">
+                    <div class="p-4 border border-gray-200 rounded-md shadow-md">
+                        <!-- Summary Information -->
+                        <div class=" grid grid-cols-2 text-sm text-gray-500   ">
+
+                            <div class="flex ">
+                                <p>Completed: <span class="font-medium">0/11</span></p>
+                                <p>Failed: <span class="font-medium">0/11</span></p>
+                                <p>Outstanding: <span class="font-medium">0/11</span></p>
+                            </div>
+
+
+
+                            <!-- Action Buttons -->
+                            <div class="flex justify-end space-x-2">
+                                <q-icon name="edit" class="text-blue-500 cursor-pointer" size="1.2rem" />
+                                <q-icon name="delete" class="text-red-500 cursor-pointer" size="1.2rem" />
+                                <q-icon name="check" class="text-green-500 cursor-pointer" size="1.2rem" />
+                                <div>
+                                    <q-btn
+                                        unelevated
+                                        dense
+                                        icon="keyboard_arrow_down"
+                                        color="blue"
+                                        size="sm"
+                                        class="rounded-md"
+                                        @click="toggleDetails"
+                                    />
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div v-if="showDetails" class="mt-4 bg-blue-50 p-3 rounded-md">
+                            <div class="grid grid-cols-2 gap-4 text-gray-600 text-sm">
+                                <div>
+                                    <p>Started Time: <span class="font-semibold">Not Started</span></p>
+                                    <p>Completed Time: <span class="font-semibold">Not Completed</span></p>
+                                    <p>Sequence: <span class="font-semibold">Not Completed</span></p>
+                                </div>
+                                <div>
+                                    <p>Planned Distance: <span class="font-semibold">580.98 Miles</span></p>
+                                    <p>Actual Distance: <span class="font-semibold">-</span></p>
+                                    <div class="flex items-center space-x-2">
+                                        <span>Show Updated ETA:</span>
+                                        <q-toggle v-model="showUpdatedETA" color="blue" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-center mt-3">
+                                <q-btn
+                                    unelevated
+                                    dense
+
+                                    icon="keyboard_arrow_up"
+                                    color="blue"
+                                    size="sm"
+                                    class="rounded-md"
+                                    @click="toggleDetails"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mt-2">
+                    <DashboardRoutesTable />
+                </section>
             </div>
+
 
             <div class="h-screen w-full">
                 <iframe
