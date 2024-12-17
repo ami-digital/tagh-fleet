@@ -1,11 +1,15 @@
 <script setup lang="ts">
 
 import { Head } from "@inertiajs/vue3";
-
+import { ref } from "vue"
 import MainLayout from "../../layouts/MainLayout.vue";
 import VehiclesTable from "../../components/vehicles/VehiclesTable.vue";
+import OrderViewDrawer from "../../components/orders/OrderViewDrawer.vue";
+import OrderViewDrawerCopy from "../../components/orders/OrderViewDrawerCopy.vue";
+import CreateVehicleDrawer from "../../components/vehicles/CreateVehicleDrawer.vue";
 
-
+const search = ref('');
+const showModal = ref(false)
 
 </script>
 
@@ -15,10 +19,8 @@ import VehiclesTable from "../../components/vehicles/VehiclesTable.vue";
     </Head>
 
 
-
-
         <q-page padding id="vehicles-page">
-            <section class="shadow shadow-md p-6 bg-white mx-auto ">
+            <section class="shadow-md p-6 bg-white mx-auto ">
 
                 <section class="flex items-center justify-between">
                     <h3 class="mb-1 mt-0  text-2xl font-medium">Vehicles Setup</h3>
@@ -31,7 +33,7 @@ import VehiclesTable from "../../components/vehicles/VehiclesTable.vue";
                         text-color="primary"
                         size="md"
                         padding="4px 14px"
-                        class="px-2 bg-white px-2 mr-3 rounded-lg border-primary"
+                        class="px-2 bg-white mr-3 rounded-lg border-primary"
                         style=" font-weight: normal; border-radius: 18px; border:2px solid ;"
                     />
 
@@ -62,14 +64,17 @@ import VehiclesTable from "../../components/vehicles/VehiclesTable.vue";
                             padding="4px 14px"
                             class="px-2 bg-white px-2 mr-3 rounded-md border-primary"
                             style=" font-weight: normal; border-radius: 6px; border:1px solid;"
+                            @click="showModal = true"
                         />
                     </div>
                 </section>
                 <VehiclesTable />
             </section>
 
-        </q-page>
 
+
+            <CreateVehicleDrawer @close="showModal = false" v-model="showModal" />
+        </q-page>
 
 </template>
 

@@ -72,6 +72,7 @@ const miniState = ref(true)
                         :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
                         clickable
                         tag="div"
+                        @click="simpleSideLinkClick('dashboard.index')"
 
                     >
                         <div class="  flex items-center">

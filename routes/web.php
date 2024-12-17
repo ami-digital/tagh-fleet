@@ -5,6 +5,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return Inertia\Inertia::render('Index');
 });
+
+Route::get('/dashboard', function () {
+    return Inertia\Inertia::render('LiveDashboard/Index');
+})->name('dashboard.index');
+
 Route::get('/orders', function () {
     return Inertia\Inertia::render('Orders/Index');
 })->name('orders.index');
