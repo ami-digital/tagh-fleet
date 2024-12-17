@@ -30,29 +30,80 @@ const emits = defineEmits<{
 
 <template>
   <transition name="slide-up">
-    <section v-if="model" class="side-drawer  text-gray-app overflow-auto absolute transform top-0 bottom-0    bg-white        w-full    " >
-      <div >
-        <slot name="header">
-          <div class="w-full  items-center justify-between sm:p-6 sm:pb-0 p-3 pb-0">
-            <div class="text-[#707070] text-[1.5rem] px-3">
-              <slot name="title">
-                <div class="flex justify-between items-center py-2 w-full">
-asdas
+    <section v-if="model" class="side-drawer  text-gray-app overflow-auto absolute transform top-0 bottom-0    bg-white  w-full    " >
+
+         <div class="w-full relative">
+             <div class="absolute right-3 top-3">
+                 <q-btn round color="blue" icon="close" @click="() =>emits('close')" />
+
+             </div>
+         </div>
+
+        <section class="grid grid-cols-2">
+
+            <div class="p-5  " >
+                <div class="grid grid-cols-6 ">
+
+
+                        <div class=" text-[12px] font-medium text-gray-400 flex items-center ">
+                            <q-icon size="1.2rem" color="blue" class="mr-1" name="public"/>
+                            <span class="line-clamp-1 w-9/12">south london/south coast</span>
+
+                        </div>
+
+                    <div class=" text-[12px] font-medium text-gray-400  flex items-center  ">
+                        <q-icon size="1.2rem" color="blue" class="mr-1" name="local_shipping"/>
+                        <span class="line-clamp-1 w-9/12">KX68 XKD</span>
+
+                    </div>
+                    <div class=" text-[12px] font-medium text-gray-400  flex items-center">
+                        <q-icon size="1.2rem" color="blue" class="mr-1" name="person"/>
+                        <span class="line-clamp-1 w-9/12">Bilal Hussain</span>
+
+                    </div>
+                    <div class=" text-[12px] font-medium text-gray-400  flex items-center">
+                        <q-icon size="1.2rem" color="blue" class="mr-1" name="calendar_today"/>
+                        <span class="line-clamp-1 w-9/12">December 21</span>
+
+                    </div>
+                    <div class="col-span-2 flex items-center justify-end space-x-2">
+                        <q-btn
+                            label="Edit Route"
+                            unelevated
+                            dense
+                            icon="edit"
+                            color="blue"
+                            size="md"
+                            padding="4px 14px"
+                            style=" font-weight: normal; border-radius: 6px "
+                        />
+
+                        <q-btn
+                            outline
+                            padding="xs"
+                            color="blue"
+                            icon="print"
+                        />
+                        <q-btn
+                            outline
+                            padding="xs"
+                            color="blue"
+                            icon="download"
+                        />
+
+                    </div>
                 </div>
-              </slot>
-              <q-separator />
             </div>
-          </div>
-        </slot>
-        <slot name="body">
 
-        </slot>
-        <slot name="footer">
-          <section class="fixed bottom-0 right-0 w-full bg-white" >
+            <div class="h-screen w-full">
+                <iframe
+                    width="100%"
+                    height="100%"
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3610.1715086696317!2d55.2794979!3d25.197438!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f69adc43dc605%3A0x4704117ce7a04ff2!2sDubai%20Mall%20Zabeel%20Parking%20-%20Upper%20Level!5e0!3m2!1sen!2sae!4v1734420073903!5m2!1sen!2sae"
+                     style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
-          </section>
-        </slot>
-      </div>
+            </div>
+        </section>
 
 
     </section>
