@@ -97,159 +97,181 @@ const endLocationBtnGroup = ref([
                     </q-card-section>
 
                     <q-card-section>
-                        <div class="mb-4 grid grid-cols-1 gap-4">
-                            <div>
-                                <div class="mb-1 text-accent">
-                                    <label>Name</label>
-                                </div>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="flex gap-x-2">
+                                <q-icon name="local_shipping" color="primary" size="sm"/>
+                                <div class="flex-1">
+                                    <div class="mb-1 text-accent">
+                                        <label>Name</label>
+                                    </div>
 
-                                <div>
-                                    <q-input
-                                        v-model="name"
-                                        dense
-                                        outlined
-                                    />
+                                    <div>
+                                        <q-input
+                                            v-model="name"
+                                            dense
+                                            outlined
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
-                            <div>
-                                <div class="mb-1 text-accent">
-                                    <label>Driver</label>
-                                </div>
+                            <div class="flex gap-x-2">
+                                <q-icon name="person" color="primary" size="sm"/>
+                                <div class="flex-1">
+                                    <div class="mb-1 text-accent">
+                                        <label>Driver</label>
+                                    </div>
 
-                                <div>
-                                    <q-input
-                                        v-model="driver"
-                                        dense
-                                        outlined
-                                    />
+                                    <div>
+                                        <q-input
+                                            v-model="driver"
+                                            dense
+                                            outlined
+                                        />
+                                    </div>
                                 </div>
+                            </div>
+
+
+                            <div>
+
                             </div>
                         </div>
 
                     </q-card-section>
 
 
-                    <q-card-section class="bg-[#e8f4fd] m-3" style="border-radius: 6px">
+                    <q-card-section class="bg-[#e8f4fd] mx-3" style="border-radius: 6px">
                        <div>
-                           <div>
-                               <div class="mb-1 text-accent">
-                                   <label>Availability</label>
-                               </div>
-                               <q-btn-toggle
-                                   v-model="availability"
-                                   toggle-color="primary"
-                                   :options="availabilityBtnGroup"
-                                   color="white"
-                                   text-color="black"
-                                   unelevated
-                                   class="border"
-                               />
-                               <div
-                                   v-if="availability === 'specificTimes'"
-                                   class="grid grid-cols-2 gap-4 my-4"
-                               >
-                                   <div>
+
+                               <div class="flex gap-x-2">
+                                   <q-icon name="schedule" color="primary" size="sm"/>
+                                   <div class="flex-1">
                                        <div class="mb-1 text-accent">
-                                           <label>Time Slot Start</label>
+                                           <label>Availability</label>
                                        </div>
 
                                        <div>
-                                           <q-input
-                                               v-model="startTime"
-                                               dense
-                                               outlined
-                                               type="time"
+                                           <q-btn-toggle
+                                               v-model="availability"
+                                               toggle-color="primary"
+                                               :options="availabilityBtnGroup"
+                                               color="white"
+                                               text-color="black"
+                                               unelevated
+                                               class="border"
                                            />
-                                       </div>
-                                   </div>
+                                           <div
+                                               v-if="availability === 'specificTimes'"
+                                               class="grid grid-cols-2 gap-4 my-4"
+                                           >
+                                               <div>
+                                                   <div class="mb-1 text-accent">
+                                                       <label>Time Slot Start</label>
+                                                   </div>
 
-                                   <div>
-                                       <div class="mb-1 text-accent">
-                                           <label>Time Slot End</label>
-                                       </div>
+                                                   <div>
+                                                       <q-input
+                                                           v-model="startTime"
+                                                           dense
+                                                           outlined
+                                                           type="time"
+                                                       />
+                                                   </div>
+                                               </div>
 
-                                       <div>
-                                           <q-input
-                                               v-model="endTime"
-                                               dense
-                                               outlined
-                                               type="time"
-                                               placeholder="test"
-                                           />
+                                               <div>
+                                                   <div class="mb-1 text-accent">
+                                                       <label>Time Slot End</label>
+                                                   </div>
+
+                                                   <div>
+                                                       <q-input
+                                                           v-model="endTime"
+                                                           dense
+                                                           outlined
+                                                           type="time"
+                                                           placeholder="test"
+                                                       />
+                                                   </div>
+                                               </div>
+                                           </div>
                                        </div>
                                    </div>
                                </div>
 
-                               <div class="mt-4">
-                                   <q-toggle
-                                       v-model="IncludeBreak"
-                                       color="primary"
-                                       label="Include Driver Break"
-                                       left-label
-                                       checked-icon="check"
-                                       unchecked-icon="clear"
-                                   />
+                               <div class="flex gap-x-2 mt-4">
+                                   <q-icon name="soup_kitchen" color="primary" size="sm" class="mt-2"/>
 
-                                   <div
-                                       v-if="IncludeBreak"
-                                       class="grid grid-cols-2 gap-4 my-4"
-                                   >
-                                       <div>
-                                           <div class="mb-1 text-accent">
-                                               <span class="text-negative">* </span>
-                                               <label>Earliest Break Start</label>
+                                   <div class="flex-1">
+                                       <q-toggle
+                                           v-model="IncludeBreak"
+                                           color="primary"
+                                           label="Include Driver Break"
+                                           left-label
+                                           checked-icon="check"
+                                           unchecked-icon="clear"
+                                       />
+
+                                       <div
+                                           v-if="IncludeBreak"
+                                           class="grid grid-cols-2 gap-4 my-4"
+                                       >
+                                           <div>
+                                               <div class="mb-1 text-accent">
+                                                   <span class="text-negative">* </span>
+                                                   <label>Earliest Break Start</label>
+                                               </div>
+
+                                               <div>
+                                                   <q-input
+                                                       v-model="breakStart"
+                                                       dense
+                                                       outlined
+                                                       type="time"
+                                                   />
+                                               </div>
                                            </div>
 
                                            <div>
-                                               <q-input
-                                                   v-model="breakStart"
-                                                   dense
-                                                   outlined
-                                                   type="time"
-                                               />
-                                           </div>
-                                       </div>
+                                               <div class="mb-1 text-accent">
+                                                   <span class="text-negative">* </span>
+                                                   <label>Latest Break End</label>
+                                               </div>
 
-                                       <div>
-                                           <div class="mb-1 text-accent">
-                                               <span class="text-negative">* </span>
-                                               <label>Latest Break End</label>
-                                           </div>
-
-                                           <div>
-                                               <q-input
-                                                   v-model="breakEnd"
-                                                   dense
-                                                   outlined
-                                                   type="time"
-                                                   placeholder="test"
-                                               />
-                                           </div>
-                                       </div>
-
-                                       <div class="col-span-full">
-                                           <div class="mb-1 text-accent">
-                                               <span class="text-negative">* </span>
-                                               <label>
-                                                   Length of Break (minutes)
-                                               </label>
+                                               <div>
+                                                   <q-input
+                                                       v-model="breakEnd"
+                                                       dense
+                                                       outlined
+                                                       type="time"
+                                                       placeholder="test"
+                                                   />
+                                               </div>
                                            </div>
 
-                                           <div>
-                                               <q-input
-                                                   v-model="breakLength"
-                                                   dense
-                                                   outlined
-                                                   type="number"
-                                               />
+                                           <div class="col-span-full">
+                                               <div class="mb-1 text-accent">
+                                                   <span class="text-negative">* </span>
+                                                   <label>
+                                                       Length of Break (minutes)
+                                                   </label>
+                                               </div>
+
+                                               <div>
+                                                   <q-input
+                                                       v-model="breakLength"
+                                                       dense
+                                                       outlined
+                                                       type="number"
+                                                   />
+                                               </div>
                                            </div>
                                        </div>
                                    </div>
 
                                </div>
 
-                           </div>
                        </div>
 
                     </q-card-section>
@@ -257,126 +279,145 @@ const endLocationBtnGroup = ref([
                     <q-card-section class="bg-[#e8f4fd] m-3" style="border-radius: 6px">
                         <div>
                             <div>
-                                <div class="mb-1 text-accent">
-                                    <label>Start Location</label>
-                                </div>
-                                <q-btn-toggle
-                                    v-model="startLocation"
-                                    toggle-color="primary"
-                                    :options="startLocationBtnGroup"
-                                    color="white"
-                                    text-color="black"
-                                    unelevated
-                                    class="border"
-                                />
-                                <div
-                                    v-if="startLocation === 'other'"
-                                    class="my-4"
-                                >
-                                    <div>
+
+                                <div class="flex gap-x-2">
+                                    <q-icon :name="startLocation === 'other' ? 'location_on' : 'home'" color="primary" size="sm"/>
+                                    <div class="flex-1">
                                         <div class="mb-1 text-accent">
-                                            <span class="text-negative">* </span>
-                                            <label>Start Address</label>
+                                            <label>Start Location</label>
                                         </div>
 
                                         <div>
-                                            <q-input
-                                                v-model="startAddress"
-                                                dense
-                                                outlined
+                                            <q-btn-toggle
+                                                v-model="startLocation"
+                                                toggle-color="primary"
+                                                :options="startLocationBtnGroup"
+                                                color="white"
+                                                text-color="black"
+                                                unelevated
+                                                class="border"
                                             />
+                                            <div
+                                                v-if="startLocation === 'other'"
+                                                class="my-4"
+                                            >
+                                                <div>
+                                                    <div class="mb-1 text-accent">
+                                                        <span class="text-negative">* </span>
+                                                        <label>Start Address</label>
+                                                    </div>
+
+                                                    <div>
+                                                        <q-input
+                                                            v-model="startAddress"
+                                                            dense
+                                                            outlined
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-
-
-                            </div>
-
-                            <div class="mt-4">
-                                <div class="mb-1 text-accent">
-
-                                    <label>End Location</label>
-                                </div>
-                                <q-btn-toggle
-                                    v-model="endLocation"
-                                    toggle-color="primary"
-                                    :options="endLocationBtnGroup"
-                                    color="white"
-                                    text-color="black"
-                                    unelevated
-                                    class="border"
-                                />
-                                <div
-                                    v-if="endLocation === 'other'"
-                                    class="my-4"
-                                >
-                                    <div>
-                                        <div class="text-accent">
-                                            <span class="text-negative">* </span>
-                                            <label>End Address</label>
+                                <div class="flex gap-x-2 mt-4">
+                                    <q-icon :name="endLocation === 'other' ? 'location_on' : 'home'" color="primary" size="sm"/>
+                                    <div class="flex-1">
+                                        <div class="mb-1 text-accent">
+                                            <label>End Location</label>
                                         </div>
 
                                         <div>
-                                            <q-input
-                                                v-model="endAddress"
-                                                dense
-                                                outlined
+                                            <q-btn-toggle
+                                                v-model="endLocation"
+                                                toggle-color="primary"
+                                                :options="endLocationBtnGroup"
+                                                color="white"
+                                                text-color="black"
+                                                unelevated
+                                                class="border"
                                             />
+                                            <div
+                                                v-if="endLocation === 'other'"
+                                                class="my-4"
+                                            >
+                                                <div>
+                                                    <div class="text-accent">
+                                                        <span class="text-negative">* </span>
+                                                        <label>End Address</label>
+                                                    </div>
+
+                                                    <div>
+                                                        <q-input
+                                                            v-model="endAddress"
+                                                            dense
+                                                            outlined
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
+
                         </div>
 
                     </q-card-section>
 
                     <q-card-section class="bg-[#e8f4fd] mx-3" style="border-radius: 6px">
                         <div class="mb-4 grid grid-cols-1 gap-4">
-                            <div>
-                                <div class="mb-1 text-accent">
-                                    <label>Skills</label>
-                                </div>
 
-                                <div>
-                                    <q-input
-                                        v-model="skills"
-                                        dense
-                                        outlined
-                                    />
-                                </div>
-                            </div>
+                            <div class="flex gap-x-2">
+                                <q-icon name="key" color="primary" size="sm"/>
+                                <div class="flex-1">
+                                    <div class="mb-1 text-accent">
+                                        <label>Skills</label>
+                                    </div>
 
-                            <div>
-                                <div class="mb-1 text-accent">
-
-                                    <label>Max Number of Stops</label>
-                                </div>
-
-                                <div>
-                                    <q-input
-                                        v-model="maxNumberOfStop"
-                                        dense
-                                        outlined
-                                        type="number"
-                                    />
+                                    <div>
+                                        <q-input
+                                            v-model="skills"
+                                            dense
+                                            outlined
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
-                            <div>
-                                <div class="mb-1 text-accent">
+                            <div class="flex gap-x-2">
+                                <q-icon name="tag" color="primary" size="sm"/>
+                                <div class="flex-1">
+                                    <div class="mb-1 text-accent">
+                                        <label>Max Number of Stops</label>
+                                    </div>
 
-                                    <label>Capacity</label>
+                                    <div>
+                                        <q-input
+                                            v-model="maxNumberOfStop"
+                                            dense
+                                            outlined
+                                            type="number"
+                                        />
+                                    </div>
                                 </div>
+                            </div>
 
-                                <div>
-                                    <q-input
-                                        v-model="capacity"
-                                        dense
-                                        outlined
-                                        type="number"
-                                    />
+                            <div class="flex gap-x-2">
+                                <q-icon name="tag" color="primary" size="sm"/>
+                                <div class="flex-1">
+                                    <div class="mb-1 text-accent">
+                                        <label>Capacity</label>
+                                    </div>
+
+                                    <div>
+                                        <q-input
+                                            v-model="capacity"
+                                            dense
+                                            outlined
+                                            type="number"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
