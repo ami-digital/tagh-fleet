@@ -197,6 +197,7 @@ const endLocationBtnGroup = ref([
                                    >
                                        <div>
                                            <div class="mb-1 text-accent">
+                                               <span class="text-negative">* </span>
                                                <label>Earliest Break Start</label>
                                            </div>
 
@@ -212,6 +213,7 @@ const endLocationBtnGroup = ref([
 
                                        <div>
                                            <div class="mb-1 text-accent">
+                                               <span class="text-negative">* </span>
                                                <label>Latest Break End</label>
                                            </div>
 
@@ -228,6 +230,7 @@ const endLocationBtnGroup = ref([
 
                                        <div class="col-span-full">
                                            <div class="mb-1 text-accent">
+                                               <span class="text-negative">* </span>
                                                <label>
                                                    Length of Break (minutes)
                                                </label>
@@ -272,6 +275,7 @@ const endLocationBtnGroup = ref([
                                 >
                                     <div>
                                         <div class="mb-1 text-accent">
+                                            <span class="text-negative">* </span>
                                             <label>Start Address</label>
                                         </div>
 
@@ -291,6 +295,7 @@ const endLocationBtnGroup = ref([
 
                             <div class="mt-4">
                                 <div class="mb-1 text-accent">
+                                    <span class="text-negative">* </span>
                                     <label>End Location</label>
                                 </div>
                                 <q-btn-toggle
@@ -330,7 +335,6 @@ const endLocationBtnGroup = ref([
                         <div class="mb-4 grid grid-cols-1 gap-4">
                             <div>
                                 <div class="mb-1 text-accent">
-
                                     <label>Skills</label>
                                 </div>
 
