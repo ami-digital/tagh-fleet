@@ -24,18 +24,37 @@ const driver = ref('')
 const skills = ref('')
 const maxNumberOfStop = ref('')
 const capacity = ref('')
-const selectedTab = ref('addresses')
+const startTime = ref('')
+const endTime = ref('')
+const startAddress = ref('')
+const endAddress = ref('')
 
-const toggleTab = (tab: string) => {
-    selectedTab.value = tab;
-};
+const breakStart = ref('')
+const breakEnd = ref('')
+const breakLength = ref('')
+const IncludeBreak = ref(false)
 
 
-const toggleDetails = () => {
-  showDetails.value = !showDetails.value;
-};
 
+const availability = ref('fullDay')
+const startLocation = ref('depot')
+const endLocation = ref('depot')
 
+const availabilityBtnGroup = ref([
+    {label: 'Full Day', value: 'fullDay'},
+    {label: 'Specific Times', value: 'specificTimes'},
+    {label: 'Start Now', value: 'startNow'}
+])
+const startLocationBtnGroup = ref([
+    {label: 'Depot', value: 'depot'},
+    {label: 'Other', value: 'other'},
+    {label: 'App Location', value: 'appLocation', disabled:true}
+])
+const endLocationBtnGroup = ref([
+    {label: 'Depot', value: 'depot'},
+    {label: 'Other', value: 'other'},
+    {label: 'Last Stop', value: 'lastStop'}
+])
 </script>
 
 <template>
@@ -111,6 +130,202 @@ const toggleDetails = () => {
                     </q-card-section>
 
 
+                    <q-card-section class="bg-[#e8f4fd] m-3" style="border-radius: 6px">
+                       <div>
+                           <div>
+                               <div class="mb-1 text-accent">
+                                   <label>Availability</label>
+                               </div>
+                               <q-btn-toggle
+                                   v-model="availability"
+                                   toggle-color="primary"
+                                   :options="availabilityBtnGroup"
+                                   color="white"
+                                   text-color="black"
+                                   unelevated
+                                   class="border"
+                               />
+                               <div
+                                   v-if="availability === 'specificTimes'"
+                                   class="grid grid-cols-2 gap-4 my-4"
+                               >
+                                   <div>
+                                       <div class="mb-1 text-accent">
+                                           <label>Time Slot Start</label>
+                                       </div>
+
+                                       <div>
+                                           <q-input
+                                               v-model="startTime"
+                                               dense
+                                               outlined
+                                               type="time"
+                                           />
+                                       </div>
+                                   </div>
+
+                                   <div>
+                                       <div class="mb-1 text-accent">
+                                           <label>Time Slot End</label>
+                                       </div>
+
+                                       <div>
+                                           <q-input
+                                               v-model="endTime"
+                                               dense
+                                               outlined
+                                               type="time"
+                                               placeholder="test"
+                                           />
+                                       </div>
+                                   </div>
+                               </div>
+
+                               <div class="mt-4">
+                                   <q-toggle
+                                       v-model="IncludeBreak"
+                                       color="primary"
+                                       label="Include Driver Break"
+                                       left-label
+                                       checked-icon="check"
+                                       unchecked-icon="clear"
+                                   />
+
+                                   <div
+                                       v-if="IncludeBreak"
+                                       class="grid grid-cols-2 gap-4 my-4"
+                                   >
+                                       <div>
+                                           <div class="mb-1 text-accent">
+                                               <label>Earliest Break Start</label>
+                                           </div>
+
+                                           <div>
+                                               <q-input
+                                                   v-model="breakStart"
+                                                   dense
+                                                   outlined
+                                                   type="time"
+                                               />
+                                           </div>
+                                       </div>
+
+                                       <div>
+                                           <div class="mb-1 text-accent">
+                                               <label>Latest Break End</label>
+                                           </div>
+
+                                           <div>
+                                               <q-input
+                                                   v-model="breakEnd"
+                                                   dense
+                                                   outlined
+                                                   type="time"
+                                                   placeholder="test"
+                                               />
+                                           </div>
+                                       </div>
+
+                                       <div class="col-span-full">
+                                           <div class="mb-1 text-accent">
+                                               <label>
+                                                   Length of Break (minutes)
+                                               </label>
+                                           </div>
+
+                                           <div>
+                                               <q-input
+                                                   v-model="breakLength"
+                                                   dense
+                                                   outlined
+                                                   type="number"
+                                               />
+                                           </div>
+                                       </div>
+                                   </div>
+
+                               </div>
+
+                           </div>
+                       </div>
+
+                    </q-card-section>
+
+                    <q-card-section class="bg-[#e8f4fd] m-3" style="border-radius: 6px">
+                        <div>
+                            <div>
+                                <div class="mb-1 text-accent">
+                                    <label>Start Location</label>
+                                </div>
+                                <q-btn-toggle
+                                    v-model="startLocation"
+                                    toggle-color="primary"
+                                    :options="startLocationBtnGroup"
+                                    color="white"
+                                    text-color="black"
+                                    unelevated
+                                    class="border"
+                                />
+                                <div
+                                    v-if="startLocation === 'other'"
+                                    class="my-4"
+                                >
+                                    <div>
+                                        <div class="mb-1 text-accent">
+                                            <label>Start Address</label>
+                                        </div>
+
+                                        <div>
+                                            <q-input
+                                                v-model="startAddress"
+                                                dense
+                                                outlined
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="mt-4">
+                                <div class="mb-1 text-accent">
+                                    <label>End Location</label>
+                                </div>
+                                <q-btn-toggle
+                                    v-model="endLocation"
+                                    toggle-color="primary"
+                                    :options="endLocationBtnGroup"
+                                    color="white"
+                                    text-color="black"
+                                    unelevated
+                                    class="border"
+                                />
+                                <div
+                                    v-if="endLocation === 'other'"
+                                    class="my-4"
+                                >
+                                    <div>
+                                        <div class="text-accent">
+                                            <label>End Address</label>
+                                        </div>
+
+                                        <div>
+                                            <q-input
+                                                v-model="endAddress"
+                                                dense
+                                                outlined
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </q-card-section>
+
                     <q-card-section class="bg-[#e8f4fd] mx-3" style="border-radius: 6px">
                         <div class="mb-4 grid grid-cols-1 gap-4">
                             <div>
@@ -139,6 +354,7 @@ const toggleDetails = () => {
                                         v-model="maxNumberOfStop"
                                         dense
                                         outlined
+                                        type="number"
                                     />
                                 </div>
                             </div>
@@ -154,6 +370,7 @@ const toggleDetails = () => {
                                         v-model="capacity"
                                         dense
                                         outlined
+                                        type="number"
                                     />
                                 </div>
                             </div>
@@ -172,8 +389,6 @@ const toggleDetails = () => {
                                 style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </q-card-section>
-
-
                 </q-card>
             </section>
         </div>
