@@ -38,6 +38,7 @@ const startTime = ref('')
 const endTime = ref('')
 const startAddress = ref('')
 const endAddress = ref('')
+const defalult = ref('')
 
 const breakStart = ref('')
 const breakEnd = ref('')
@@ -406,7 +407,47 @@ const endLocationBtnGroup = ref([
                                             dense
                                             outlined
                                             type="number"
-                                        />
+                                        >
+                                            <template v-slot:append>
+
+                                                <q-btn
+                                                    unelevated
+                                                    padding="4px"
+                                                    size="sm"
+                                                    text-color=""
+                                                    @click.stop=""
+                                                >
+                                                    <div class="text-sm font-normal ">
+                                                        <span>Default: <span class="text-dark font-semibold">15</span></span>
+                                                    </div>
+                                                    <q-menu anchor="bottom right" self="top right">
+                                                        <q-item>
+                                                            <div class="flex no-wrap search-input">
+                                                                <div>
+                                                                    <q-input v-model="defalult"
+                                                                             outlined
+                                                                             dense
+                                                                             class="text-gray-app min-w-[200px] bg-white"
+                                                                             placeholder="Default Max Number of Stops"
+                                                                    >
+                                                                    </q-input>
+                                                                </div>
+
+                                                                <q-btn
+                                                                    label="Save"
+                                                                    dense
+                                                                    color="primary"
+                                                                    unelevated
+                                                                    size=""
+                                                                    padding="8px 14px"
+                                                                    class="mx-2"
+                                                                />
+                                                            </div>
+                                                        </q-item>
+                                                    </q-menu>
+                                                </q-btn>
+                                            </template>
+                                        </q-input>
                                     </div>
                                 </div>
                             </div>
@@ -424,7 +465,47 @@ const endLocationBtnGroup = ref([
                                             dense
                                             outlined
                                             type="number"
-                                        />
+                                        >
+                                            <template v-slot:append>
+
+                                                    <q-btn
+                                                        unelevated
+                                                        padding="4px"
+                                                        size="sm"
+                                                        text-color=""
+                                                        @click.stop=""
+                                                    >
+                                                        <div class="text-sm font-normal ">
+                                                            <span>Default: <span class="text-dark font-semibold">15</span></span>
+                                                        </div>
+                                                        <q-menu anchor="bottom right" self="top right">
+                                                            <q-item>
+                                                                <div class="flex no-wrap search-input">
+                                                                   <div>
+                                                                       <q-input v-model="defalult"
+                                                                                outlined
+                                                                                dense
+                                                                                class="text-gray-app min-w-[200px] bg-white"
+                                                                                placeholder="Default Capacity"
+                                                                       >
+                                                                       </q-input>
+                                                                   </div>
+
+                                                                    <q-btn
+                                                                        label="Save"
+                                                                        dense
+                                                                        color="primary"
+                                                                        unelevated
+                                                                        size=""
+                                                                        padding="8px 14px"
+                                                                        class="mx-2"
+                                                                    />
+                                                                </div>
+                                                            </q-item>
+                                                        </q-menu>
+                                                    </q-btn>
+                                            </template>
+                                        </q-input>
                                     </div>
                                 </div>
                             </div>
