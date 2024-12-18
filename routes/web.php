@@ -29,7 +29,11 @@ Route::get('/zones', function () {
 
 Route::get('/routes', function () {
     return Inertia\Inertia::render('Routes/Index');
-});
+})->name('routes.index');
+
+Route::get('/plans', function () {
+    return Inertia\Inertia::render('Plans/Index');
+})->name('plans.index');
 
 Route::get('/settings', function () {
     return Inertia\Inertia::render('Settings/Index');
