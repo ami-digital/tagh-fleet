@@ -295,7 +295,7 @@ const endLocationBtnGroup = ref([
 
                             <div class="mt-4">
                                 <div class="mb-1 text-accent">
-                                    <span class="text-negative">* </span>
+
                                     <label>End Location</label>
                                 </div>
                                 <q-btn-toggle
@@ -313,6 +313,7 @@ const endLocationBtnGroup = ref([
                                 >
                                     <div>
                                         <div class="text-accent">
+                                            <span class="text-negative">* </span>
                                             <label>End Address</label>
                                         </div>
 
