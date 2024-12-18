@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import DashboardRoutesTable from "../routes/DashboardRoutesTable.vue";
+
+import vehicle from '@images/svg/vehicle.svg';
+import person from '@images/svg/person.svg';
+import timer from '@images/svg/timer.svg';
+import home from '@images/svg/home-icon.svg';
+import coffee from '@images/svg/coffee_cup.svg';
+import book from '@images/svg/book.svg';
+import flag from '@images/svg/flag.svg';
+import location from '@images/svg/location.svg';
+import grid from '@images/svg/grid_box.svg';
+import key from '@images/svg/key.svg';
 
 const model = defineModel({required : true, default: false});
 
@@ -73,7 +83,7 @@ const endLocationBtnGroup = ref([
                 <q-card class="px-6 py-4">
                     <q-card-section>
                         <div class="flex justify-between">
-                            <div >
+                            <div>
                                 <div class="">
                                     <q-btn round unelevated outline color="white" text-color="dark" size="sm" icon="keyboard_arrow_left" @click="() =>emits('close')" />
                                 </div>
@@ -86,7 +96,7 @@ const endLocationBtnGroup = ref([
                             <q-btn
                                 unelevated
                                 dense
-                                icon="menu_book"
+                                :icon="`img:${book}`"
                                 text-color="primary"
                                 size="md"
                                 padding="4px 14px"
@@ -99,7 +109,7 @@ const endLocationBtnGroup = ref([
                     <q-card-section>
                         <div class="grid grid-cols-1 gap-4">
                             <div class="flex gap-x-2">
-                                <q-icon name="local_shipping" color="primary" size="sm"/>
+                                <q-icon :name=" `img:${vehicle}`" color="primary" size="xs"/>
                                 <div class="flex-1">
                                     <div class="mb-1 text-accent">
                                         <label>Name</label>
@@ -116,7 +126,7 @@ const endLocationBtnGroup = ref([
                             </div>
 
                             <div class="flex gap-x-2">
-                                <q-icon name="person" color="primary" size="sm"/>
+                                <q-icon :name=" `img:${person}`" color="primary" size="xs"/>
                                 <div class="flex-1">
                                     <div class="mb-1 text-accent">
                                         <label>Driver</label>
@@ -132,10 +142,6 @@ const endLocationBtnGroup = ref([
                                 </div>
                             </div>
 
-
-                            <div>
-
-                            </div>
                         </div>
 
                     </q-card-section>
@@ -145,7 +151,7 @@ const endLocationBtnGroup = ref([
                        <div>
 
                                <div class="flex gap-x-2">
-                                   <q-icon name="schedule" color="primary" size="sm"/>
+                                   <q-icon :name="`img:${timer}`" color="primary" size="xs"/>
                                    <div class="flex-1">
                                        <div class="mb-1 text-accent">
                                            <label>Availability</label>
@@ -201,7 +207,7 @@ const endLocationBtnGroup = ref([
                                </div>
 
                                <div class="flex gap-x-2 mt-4">
-                                   <q-icon name="soup_kitchen" color="primary" size="sm" class="mt-2"/>
+                                   <q-icon :name="`img:${coffee}`" color="primary" size="xs" class="mt-2"/>
 
                                    <div class="flex-1">
                                        <q-toggle
@@ -281,7 +287,8 @@ const endLocationBtnGroup = ref([
                             <div>
 
                                 <div class="flex gap-x-2">
-                                    <q-icon :name="startLocation === 'other' ? 'location_on' : 'home'" color="primary" size="sm"/>
+
+                                    <q-icon :name="startLocation === 'other' ? `img:${location}` : `img:${home}`" color="primary" size="xs"/>
                                     <div class="flex-1">
                                         <div class="mb-1 text-accent">
                                             <label>Start Location</label>
@@ -321,7 +328,7 @@ const endLocationBtnGroup = ref([
                                 </div>
 
                                 <div class="flex gap-x-2 mt-4">
-                                    <q-icon :name="endLocation === 'other' ? 'location_on' : 'home'" color="primary" size="sm"/>
+                                    <q-icon :name="endLocation === 'other' ? `img:${location}` : endLocation === 'lastStop' ? `img:${flag}` : `img:${home}`" color="primary" size="xs"/>
                                     <div class="flex-1">
                                         <div class="mb-1 text-accent">
                                             <label>End Location</label>
@@ -356,6 +363,7 @@ const endLocationBtnGroup = ref([
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -369,7 +377,7 @@ const endLocationBtnGroup = ref([
                         <div class="mb-4 grid grid-cols-1 gap-4">
 
                             <div class="flex gap-x-2">
-                                <q-icon name="key" color="primary" size="sm"/>
+                                <q-icon :name="`img:${key}`" color="primary" size="xs"/>
                                 <div class="flex-1">
                                     <div class="mb-1 text-accent">
                                         <label>Skills</label>
@@ -386,7 +394,7 @@ const endLocationBtnGroup = ref([
                             </div>
 
                             <div class="flex gap-x-2">
-                                <q-icon name="tag" color="primary" size="sm"/>
+                                <q-icon :name="`img:${grid}`"  color="primary" size="xs"/>
                                 <div class="flex-1">
                                     <div class="mb-1 text-accent">
                                         <label>Max Number of Stops</label>
@@ -404,7 +412,7 @@ const endLocationBtnGroup = ref([
                             </div>
 
                             <div class="flex gap-x-2">
-                                <q-icon name="tag" color="primary" size="sm"/>
+                                <q-icon :name="`img:${grid}`"  color="primary" size="xs"/>
                                 <div class="flex-1">
                                     <div class="mb-1 text-accent">
                                         <label>Capacity</label>
