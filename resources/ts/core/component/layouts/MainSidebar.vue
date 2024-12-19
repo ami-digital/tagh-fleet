@@ -3,26 +3,32 @@
 import {router, usePage} from '@inertiajs/vue3';
 import {route} from 'ziggy-js';
 
+import Planing from '@images/svg/sidebar/route-planning.svg';
+import PlaningActive from '@images/svg/sidebar/route-planning-active.svg';
 import Dashboard from '@images/svg/sidebar/live-dashboard.svg';
+import DashboardActive from '@images/svg/sidebar/dashboard-active.svg';
 import ordersSvg from '@images/svg/sidebar/orders.svg';
+import ordersActive from '@images/svg/sidebar/orders-active.svg';
 import logo from '@images/logos/app_logo.svg';
 import DashboardBlue from '@images/svg/sidebar/live-dashboard.svg';
 import TeamMemberSvg from '@images/svg/sidebar/team-members.svg';
+import TeamMemberActiveSvg from '@images/svg/sidebar/team-members-active.svg';
 import vehicleSvg from '@images/svg/sidebar/vehicles.svg';
+import vehicleActiveSvg from '@images/svg/sidebar/vehicles-active.svg';
 
 import {ref} from "vue";
 import {leftDrawerOpen} from "../../utils";
 import {useQuasar} from "quasar";
 
-const {url} = usePage()
+const currentUrl = ref(usePage()?.url);
 
 defineOptions({
     name: 'MainSidebar'
 });
 
 const $q = useQuasar()
-
-
+let stopWatch: (() => void) | null = null;
+const miniState = ref(true)
 const activeLink = ref<string>('');
 const setActiveLink = (link: string) => {
     activeLink.value = link;
@@ -36,8 +42,19 @@ const simpleSideLinkClick = (pageLink: string) => {
         leftDrawerOpen.value = false;
     }
 }
+stopWatch = watch(
+    () => usePage().url,
+    (newUrl) => {
+        currentUrl.value = newUrl;
+    }
+);
 
-const miniState = ref(true)
+onUnmounted(() => {
+    if (stopWatch) {
+        stopWatch()
+    }
+})
+
 </script>
 
 <template class="bg-white">
@@ -68,16 +85,16 @@ const miniState = ref(true)
             <q-list class="mt-2">
                 <div class="side-links">
                     <q-item
-                        :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
+                        :class="currentUrl === '/plans' ? 'bg-blue-100 active-side-link' : ''"
                         clickable
                         tag="div"
                         @click="simpleSideLinkClick('plans.index')"
                     >
                         <div class="  flex items-center">
                             <q-icon
-                                :name="url === '/dashboard/index' ? `img:${DashboardBlue}` : `img:${Dashboard}`"
+                                :name="currentUrl === '/plans' ? `img:${PlaningActive}` : `img:${Planing}`"
                                 class="p-0 text-grey"
-                                size="18px"
+                                size="24px"
                             />
                         </div>
                         <q-item-section class="ml-2">
@@ -87,7 +104,7 @@ const miniState = ref(true)
                 </div>
                 <div class="side-links">
                     <q-item
-                        :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
+                        :class="currentUrl === '/dashboard' ? 'bg-blue-100 active-side-link' : ''"
                         clickable
                         tag="div"
                         @click="simpleSideLinkClick('dashboard.index')"
@@ -95,9 +112,9 @@ const miniState = ref(true)
                     >
                         <div class="  flex items-center">
                             <q-icon
-                                :name="url === '/dashboard/index' ? `img:${DashboardBlue}` : `img:${Dashboard}`"
+                                :name="currentUrl === '/dashboard' ? `img:${DashboardActive}` : `img:${Dashboard}`"
                                 class="p-0 text-grey"
-                                size="18px"
+                                size="24px"
                             />
                         </div>
                         <q-item-section class="ml-2">
@@ -107,7 +124,7 @@ const miniState = ref(true)
                 </div>
                 <div class="side-links">
                     <q-item
-                        :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
+                        :class="currentUrl === '/orders' ? 'bg-blue-100 active-side-link' : ''"
                         clickable
                         @click="simpleSideLinkClick('orders.index')"
                         tag="div"
@@ -115,9 +132,9 @@ const miniState = ref(true)
                     >
                         <div class="  flex items-center">
                             <q-icon
-                                :name="url === '/dashboard/index' ? `img:${ordersSvg}` : `img:${ordersSvg}`"
+                                :name="currentUrl === '/orders' ? `img:${ordersActive}` : `img:${ordersSvg}`"
                                 class="p-0 text-grey"
-                                size="18px"
+                                size="24px"
                             />
                         </div>
                         <q-item-section class="ml-2">
@@ -127,7 +144,7 @@ const miniState = ref(true)
                 </div>
                 <div class="side-links">
                     <q-item
-                        :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
+                        :class="currentUrl === '/team-members' ? 'bg-blue-100 active-side-link' : ''"
                         clickable
                         @click="simpleSideLinkClick('team.index')"
                         tag="div"
@@ -135,9 +152,9 @@ const miniState = ref(true)
                     >
                         <div class="  flex items-center">
                             <q-icon
-                                :name="url === '/dashboard/index' ? `img:${TeamMemberSvg}` : `img:${TeamMemberSvg}`"
+                                :name="currentUrl === '/team-members' ? `img:${TeamMemberActiveSvg}` : `img:${TeamMemberSvg}`"
                                 class="p-0 text-grey"
-                                size="18px"
+                                size="24px"
                             />
                         </div>
                         <q-item-section class="ml-2">
@@ -147,7 +164,7 @@ const miniState = ref(true)
                 </div>
                 <div class="side-links">
                     <q-item
-                        :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
+                        :class="currentUrl === '/vehicles' ? 'bg-blue-100 active-side-link' : ''"
                         clickable
                         @click="simpleSideLinkClick('vehicles.index')"
                         tag="div"
@@ -155,9 +172,9 @@ const miniState = ref(true)
                     >
                         <div class="  flex items-center">
                             <q-icon
-                                :name="url === '/dashboard/index' ? `img:${vehicleSvg}` : `img:${vehicleSvg}`"
+                                :name="currentUrl === '/vehicles' ? `img:${vehicleActiveSvg}` : `img:${vehicleSvg}`"
                                 class="p-0 text-grey"
-                                size="18px"
+                                size="24px"
                             />
                         </div>
                         <q-item-section class="ml-2">
