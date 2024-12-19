@@ -3,6 +3,7 @@ import { ref } from "vue";
 import {event} from "quasar";
 import prevent = event.prevent;
 import OrdersTopNavActions from "./OrdersTopNavActions.vue";
+import OrderTableHeaderAction from "./OrderTableHeaderAction.vue";
 
 const orderSelected = ref([]);
 const search = ref('')
@@ -84,7 +85,7 @@ const statusOptions = ref([
     'Completed',
 ]);
 
-const selectedStatus = ref<string[]>([]);
+
 const currentPage = ref<number>(1);
 const rowsPerPage = ref<number>(2);
 
@@ -115,13 +116,7 @@ const resetFilters = () => {
     filters.value = {};
 };
 
-const resetStatusFilters = () => {
-    selectedStatus.value = [];
-};
 
-const applyFilters = () => {
-    console.log('Selected Filters:', selectedStatus.value);
-};
 </script>
 
 <template>
@@ -131,7 +126,7 @@ const applyFilters = () => {
             <div class="flex gap-3">
 
                 <section  v-if="orderSelected.length !== 0" >
-                    <OrdersTopNavActions />
+                    <OrdersTopNavActions  />
                 </section>
 
                 <q-btn
@@ -193,96 +188,7 @@ const applyFilters = () => {
                     class="order-table-slot hover:bg-[#FCFCFC] font-semibold"
                 >
                     {{ props.col.label }}
-                    <div class="float-right">
-                        <div  v-if="props.col.name  == 'routedStop'"></div>
-                        <div  v-else-if="props.col.name  == 'status' ">
-                            <q-btn
-                                icon="filter_alt"
-                                unelevated
-                                padding="4px"
-                                size="sm"
-                                text-color="grey"
-                                @click.stop=""
-                                >
-
-                                <q-menu anchor="bottom right" self="top right" max-width="200px">
-                                    <q-card class="min-w-[100px]">
-                                        <q-input
-                                            v-model="search"
-                                            dense
-                                            placeholder="Search in filters"
-                                            outlined
-                                            class="p-2"
-                                        >
-                                            <template v-slot:append>
-                                                <q-icon name="search" />
-                                            </template>
-                                        </q-input>
-
-                                        <q-list bordered class="q-pb-sm" style="color: rgba(0, 0, 0, 0.88)">
-                                            <q-item v-for="(item, index) in statusOptions" :key="index" dense>
-                                                <q-checkbox
-                                                    v-model="selectedStatus"
-                                                    :val="item"
-                                                    :label="item"
-                                                    dense
-                                                    size="xs"
-                                                />
-                                            </q-item>
-                                        </q-list>
-
-                                        <div class="flex justify-between items-center p-2">
-                                            <q-btn
-                                                flat
-                                                unelevated
-                                                padding="0 8px "
-                                                size="md"
-
-                                                label="Reset" @click="resetStatusFilters" :disable="selectedStatus.length === 0" :color="selectedStatus.length === 0 ? 'grey' : 'primary'" />
-
-                                            <q-btn
-                                                color="primary"
-                                                v-close-popup
-                                                label="OK"
-                                                @click="applyFilters"
-                                                unelevated
-                                                size="sm"
-                                                padding="2px 8px"
-                                            />
-                                        </div>
-                                    </q-card>
-                                </q-menu>
-
-                            </q-btn>
-                        </div>
-                        <div v-else>
-                            <q-btn
-                                icon="search"
-                                unelevated
-                                padding="4px"
-                                size="sm"
-                                text-color="grey"
-                                @click.stop=""
-                            >
-                                <q-menu anchor="bottom right" self="top right">
-                                    <q-item>
-                                        <div class="flex no-wrap search-input">
-                                            <q-input v-model="search"
-                                                     outlined
-                                                     dense
-                                                     class="text-gray-app min-w-[200px] bg-white"
-                                                     :placeholder="`${props.col.label} Search`">
-                                            </q-input>
-                                            <div class=" bg-primary p-2 flex no-wrap items-center justify-center cursor-pointer" style="border-radius: 0 6px 6px 0">
-                                                <q-icon size="14px" class="text-gray-app  inline-block" color="white" name="search"/>
-                                                <span class="text-white ml-1">search</span>
-                                            </div>
-                                        </div>
-                                    </q-item>
-                                </q-menu>
-                            </q-btn>
-                        </div>
-                    </div>
+                   <OrderTableHeaderAction  :type="props.col.name" :label="props.col.label"/>
                  </q-th>
             </template>
 
