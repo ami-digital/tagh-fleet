@@ -66,7 +66,25 @@ const miniState = ref(true)
 
 
             <q-list class="mt-2">
-
+                <div class="side-links">
+                    <q-item
+                        :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
+                        clickable
+                        tag="div"
+                        @click="simpleSideLinkClick('plans.index')"
+                    >
+                        <div class="  flex items-center">
+                            <q-icon
+                                :name="url === '/dashboard/index' ? `img:${DashboardBlue}` : `img:${Dashboard}`"
+                                class="p-0 text-grey"
+                                size="18px"
+                            />
+                        </div>
+                        <q-item-section class="ml-2">
+                            <q-item-label class="text-[#000] text-sm">Plans</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </div>
                 <div class="side-links">
                     <q-item
                         :class="url === '/dashboard/index' ? 'bg-[#66C4B9] active-side-link' : ''"
