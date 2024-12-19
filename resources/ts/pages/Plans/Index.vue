@@ -5,6 +5,10 @@ import { Dark } from "quasar";
 import TeamsTable from "../../components/team-members/TeamsTable.vue";
 import CalendarComponent from "../../components/plans/CalendarComponent.vue";
 import PlanDetailsComponent from "../../components/plans/PlanDetailsComponent.vue";
+import CreatePlan from "../../components/plans/CreatePlan.vue";
+import RoutsSentToDriversTable from "../../components/plans/RoutsSentToDriversTable.vue";
+import OrderViewDrawer from "../../components/orders/OrderViewDrawer.vue";
+import CreatPlanDrawer from "../../components/plans/CreatPlanDrawer.vue";
 
 const darkMode = ref(Dark.isActive);
 watch(darkMode, (value) => {
@@ -12,6 +16,9 @@ watch(darkMode, (value) => {
 });
 
 const search = ref('')
+
+const showModal = ref(false)
+
 </script>
 
 <template>
@@ -20,12 +27,12 @@ const search = ref('')
     </Head>
     <q-page class="px-6  bg-[#F5F5F5]" id="teams-page">
 
-        <section class="grid grid-cols-2 gap-x-4  ">
+        <section class="grid grid-cols-3 gap-x-4">
 
             <div>
                 <CalendarComponent />
             </div>
-            <div class="h-[50vh] py-4">
+            <div class="h-[40vh] py-4 col-span-2">
                 <div class="flex items-center">
                     <q-separator  class=" flex-1" />
                     <div class="h-10 ml-4 w-10 bg-white rounded-md flex text-center    justify-center items-center">
@@ -35,21 +42,33 @@ const search = ref('')
                     <q-separator  class="flex-1" />
                 </div>
 
-                <section class="h-[42vh] overflow-y-scroll" >
-                    <PlanDetailsComponent v-for="i in 5" :key="i" />
+                <section class="h-[40vh] w-[640px] overflow-y-auto justify-self-center" >
+                    <CreatePlan  @onCreat="showModal = true" />
+<!--                    <PlanDetailsComponent  />-->
                 </section>
 
             </div>
 
-            <section>
+            <section class="col-span-full">
+                <div class="flex items-center mb-5">
+                    <q-separator  class=" flex-1" />
+                    <div class="h-10 ml-4 w-10 bg-white rounded-md flex text-center    justify-center items-center">
+                        <span class="text-[13px] font-semibold">17 DEC</span>
+                    </div>
+                    <p class="mb-1 q-px-md text-xl font-normal">
+                        Routes sent to drivers
+<!--                        <q-badge color="red" text-color="black"  label="2" floating >4</q-badge>-->
+                    </p>
+                    <q-separator  class="flex-1" />
+                </div>
+                <RoutsSentToDriversTable  />
             </section>
 
         </section>
 
-
-
-
+        <CreatPlanDrawer @close="showModal = false" v-model="showModal" />
     </q-page>
+
 
 </template>
 

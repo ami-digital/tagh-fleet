@@ -9,11 +9,11 @@
             <!-- Plan Title -->
             <div class="flex items-center gap-2">
                 <!-- QIcon for Document -->
-                <q-icon name="mdi-file-outline" color="teal" size="xs" />
+                <q-icon name="mdi-file-outline" color="primary" size="xs" />
                 <!-- Plan Name -->
                 <h2 class="text-sm font-semibold text-gray-700">Plan 4</h2>
                 <!-- Edit QIcon -->
-                <button class="text-teal-500 hover:text-teal-700">
+                <button class="text-primary hover:text-primary">
                     <q-icon name="mdi-pencil-outline" size="xs" />
                 </button>
             </div>
@@ -34,7 +34,7 @@
                     style=" font-weight: normal; border-radius: 6px;  "
                     unelevated
                     label="Open Plan"
-                    color="teal"
+                    color="primary"
                     class="px-3 py-1"
                     no-caps
                 />
