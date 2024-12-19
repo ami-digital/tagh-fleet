@@ -5,12 +5,14 @@ import moment from "moment";
 export default defineComponent({
     name: "CalendarComponent",
     setup() {
-        const currentDate = ref(moment());
+        const currentDate = ref(moment()); // Start with the current date.
 
-
-        const nextMonth = () => currentDate.value.add(1, "month");
-        const prevMonth = () => currentDate.value.subtract(1, "month");
-
+        const nextMonth = () => {
+            currentDate.value = currentDate.value.clone().add(1, "month");
+        };
+        const prevMonth = () => {
+            currentDate.value = currentDate.value.clone().subtract(1, "month");
+        };
 
         const daysInMonth = computed(() => {
             const startOfMonth = currentDate.value.clone().startOf("month");
@@ -26,7 +28,6 @@ export default defineComponent({
             return days;
         });
 
-
         const events = [
             { date: "2024-12-17", type: "draft", count: 4 },
             { date: "2024-12-17", type: "routes", count: 2 },
@@ -35,6 +36,10 @@ export default defineComponent({
 
         const getEventsForDay = (day: moment.Moment) => {
             return events.filter((e) => e.date === day.format("YYYY-MM-DD"));
+        };
+
+        const handleDayClick = (day: moment.Moment) => {
+            alert(day.format("YYYY-MM-DD"));
         };
 
         return () =>
@@ -65,9 +70,11 @@ export default defineComponent({
                 // Calendar grid
                 h(
                     "div",
-                    { class: "grid grid-cols-7 gap-2 text-center text-gray-700 bg-white p-3 rounded shadow" },
+                    {
+                        class: "grid grid-cols-7 gap-2 text-center text-gray-700 bg-white p-3 rounded shadow",
+                    },
                     [
-
+                        // Day headers
                         ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) =>
                             h("div", { class: "font-semibold" }, day)
                         ),
@@ -80,31 +87,40 @@ export default defineComponent({
                                 {
                                     class: `h-16 border rounded flex flex-col justify-center items-center hover:bg-gray-200 cursor-pointer ${
                                         day.isSame(moment(), "day")
-                                            ? "bg-gray-100"
+                                            ? "bg-blue-100"
                                             : day.month() !== currentDate.value.month()
                                                 ? "text-gray-400"
                                                 : ""
                                     }`,
+                                    onClick: () => handleDayClick(day),
                                 },
                                 [
+                                    // Day number
                                     h(
                                         "span",
                                         { class: "text-sm font-medium" },
                                         day.date().toString()
                                     ),
 
-
-                                    ...eventsForDay.map((event) =>
-                                        h(
-                                            "div",
-                                            {
-                                                class: `mt-1 w-6 h-6 flex items-center justify-center rounded-full text-xs text-white ${
-                                                    event.type === "draft"
-                                                        ? "bg-yellow-500"
-                                                        : "bg-teal-500"
-                                                }`,
-                                            },
-                                            event.count.toString()
+                                    // Events container
+                                    eventsForDay.length > 0 &&
+                                    h(
+                                        "div",
+                                        {
+                                            class: "flex gap-2 mt-2 justify-center items-center",
+                                        },
+                                        eventsForDay.map((event) =>
+                                            h(
+                                                "div",
+                                                {
+                                                    class: `w-6 h-6 flex items-center justify-center rounded-full text-xs text-white ${
+                                                        event.type === "draft"
+                                                            ? "bg-yellow-500"
+                                                            : "bg-teal-500"
+                                                    }`,
+                                                },
+                                                event.count.toString()
+                                            )
                                         )
                                     ),
                                 ]
@@ -113,7 +129,7 @@ export default defineComponent({
                     ]
                 ),
 
-
+                // Legend
                 h("div", { class: "flex gap-4 mt-4 text-sm items-center" }, [
                     h("div", { class: "flex items-center gap-1" }, [
                         h("div", {
