@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import {type Ref, ref, watch} from "vue";
 import { Head } from "@inertiajs/vue3";
 import { Dark } from "quasar";
 import TeamsTable from "../../components/team-members/TeamsTable.vue";
+import AddTeamMemberDrawer from "../../components/team-members/AddTeamMemberDrawer.vue";
 
 const darkMode = ref(Dark.isActive);
 watch(darkMode, (value) => {
@@ -10,13 +11,14 @@ watch(darkMode, (value) => {
 });
 
 const search = ref('')
+const isCreateDrawerOpen :Ref<boolean> = ref(false)
 </script>
 
 <template>
     <Head>
         <title>Index</title>
     </Head>
-    <q-page class="px-6 py-4 bg-[#F5F5F5]" id="teams-page">
+    <q-page class=" py-4 bg-[#F5F5F5]" id="teams-page">
 
         <section class="flex items-center">
             <q-separator  class=" w-[10%] max-w-[100px] " />
@@ -25,7 +27,7 @@ const search = ref('')
 
         </section>
 
-        <section class="flex my-3 q-gutter-x-md">
+        <section class="flex my-3 px-6  q-gutter-x-md">
             <div>
                 <div class="flex search-input">
                     <q-input v-model="search"
@@ -42,6 +44,7 @@ const search = ref('')
 
             <div>
                 <q-btn
+                    @click="isCreateDrawerOpen = true"
                     label="Add New Team Member"
                     unelevated
                     dense
@@ -55,10 +58,11 @@ const search = ref('')
             </div>
         </section>
 
-        <section class="my-3">
+        <section class="my-3 px-6">
             <TeamsTable />
         </section>
 
+        <AddTeamMemberDrawer v-model="isCreateDrawerOpen" @close="isCreateDrawerOpen = false" />
     </q-page>
 
 </template>
