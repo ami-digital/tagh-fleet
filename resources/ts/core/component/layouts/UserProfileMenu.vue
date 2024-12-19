@@ -53,19 +53,19 @@ defineOptions({ name: 'UserProfileMenu' });
 
           <q-separator class="mx-4" />
 
-          <q-item clickable v-close-popup @click="router.post(route('logout'))" class="px-4">
-              <q-item-section  >
+<!--          <q-item clickable v-close-popup   class="px-4">-->
+<!--              <q-item-section  >-->
 
-                  <div class="flex items-center">
-                      <q-icon  name="add" size='xs' color="grey"  />
-                      <span class="text-[#898989] pl-2">Upload Logo</span>
-                  </div>
+<!--                  <div class="flex items-center">-->
+<!--                      <q-icon  name="add" size='xs' color="grey"  />-->
+<!--                      <span class="text-[#898989] pl-2">Upload Logo</span>-->
+<!--                  </div>-->
 
-              </q-item-section>
+<!--              </q-item-section>-->
 
-          </q-item>
+<!--          </q-item>-->
 
-          <q-item clickable v-close-popup @click="router.post(route('logout'))" class="px-4">
+          <q-item clickable v-close-popup  class="px-4">
               <q-item-section  >
 
                   <div class="flex items-center">
@@ -79,7 +79,7 @@ defineOptions({ name: 'UserProfileMenu' });
 
           <q-separator class="mx-4" />
 
-          <q-item clickable v-close-popup @click="router.post(route('logout'))" class="px-4">
+          <q-item clickable v-close-popup  class="px-4">
               <q-item-section  >
 
                   <div class="flex items-center">

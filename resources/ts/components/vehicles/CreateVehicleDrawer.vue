@@ -144,30 +144,31 @@ const closeDialog = () => {
                                 </div>
                             </div>
 
-                            <span class="text-center py-3 flex-1">
+                            <span class="text-center font-semibold py-3 flex-1">
                                 Create Vehicle
                             </span>
 
-                            <q-btn
-                                unelevated
-                                dense
-                                :icon="`img:${book}`"
-                                text-color="primary"
-                                size="md"
-                                padding="4px 14px"
-                                class="px-2 bg-white mr-3 mb-2 rounded-md border-primary"
-                                style=" font-weight: normal; border-radius: 20px; border:1px solid;"
-                            />
+<!--                            <q-btn-->
+<!--                                unelevated-->
+<!--                                dense-->
+<!--                                :icon="`img:${book}`"-->
+<!--                                text-color="primary"-->
+<!--                                size="md"-->
+<!--                                padding="4px 14px"-->
+<!--                                class="px-2 bg-white mr-3 mb-2 rounded-md border-primary"-->
+<!--                                style=" font-weight: normal; border-radius: 20px; border:1px solid;"-->
+<!--                            />-->
                         </div>
                     </q-card-section>
 
                     <q-card-section>
                         <div class="grid grid-cols-1 gap-4">
                             <div class="flex gap-x-2">
-                                <q-icon :name=" `img:${vehicle}`" color="primary" size="xs"/>
+
                                 <div class="flex-1">
-                                    <div class="mb-1 text-accent">
-                                        <label>Name</label>
+                                    <div class="mb-1 flex gap-2 text-accent">
+                                        <q-icon :name=" `img:${person}`" color="primary" size="xs"/>
+                                        <span>Name</span>
                                     </div>
 
                                     <div>
@@ -181,10 +182,12 @@ const closeDialog = () => {
                             </div>
 
                             <div class="flex gap-x-2">
-                                <q-icon :name=" `img:${person}`" color="primary" size="xs"/>
+
                                 <div class="flex-1">
-                                    <div class="mb-1 text-accent">
-                                        <label>Driver</label>
+
+                                    <div class="mb-1 flex gap-2 text-accent">
+                                        <q-icon :name=" `img:${vehicle}`" color="primary" size="xs"/>
+                                        <span>Driver</span>
                                     </div>
 
                                     <div>

@@ -39,31 +39,31 @@ const search = ref('')
                 </div>
             </div>
 
-            <div class="flex">
-                <q-btn
-                    label="Create Order"
-                    unelevated
-                    dense
-                    icon="add"
-                    text-color="accent"
-                    size="md"
-                    padding="4px 14px"
-                    class="px-2 bg-white px-2 mr-3 rounded-md;"
-                    style=" font-weight: normal; border-radius: 6px; border:1px solid #d9d9d9;"
-                />
-                <q-btn
-                    label="Upload"
-                    unelevated
-                    dense
-                    filled
-                    text-color="white"
-                    icon="upload"
-                    size="md"
-                    padding="4px 14px"
-                    class="px-2 bg-primary "
-                    style="font-weight: normal; border-radius: 6px;"
-                />
-            </div>
+<!--            <div class="flex">-->
+<!--                <q-btn-->
+<!--                    label="Create Order"-->
+<!--                    unelevated-->
+<!--                    dense-->
+<!--                    icon="add"-->
+<!--                    text-color="accent"-->
+<!--                    size="md"-->
+<!--                    padding="4px 14px"-->
+<!--                    class="px-2 bg-white px-2 mr-3 rounded-md;"-->
+<!--                    style=" font-weight: normal; border-radius: 6px; border:1px solid #d9d9d9;"-->
+<!--                />-->
+<!--                <q-btn-->
+<!--                    label="Upload"-->
+<!--                    unelevated-->
+<!--                    dense-->
+<!--                    filled-->
+<!--                    text-color="white"-->
+<!--                    icon="upload"-->
+<!--                    size="md"-->
+<!--                    padding="4px 14px"-->
+<!--                    class="px-2 bg-primary "-->
+<!--                    style="font-weight: normal; border-radius: 6px;"-->
+<!--                />-->
+<!--            </div>-->
         </section>
 
         <section class="my-3">

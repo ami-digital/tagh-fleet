@@ -3,7 +3,7 @@
 import {computed, ref} from "vue";
 
 import {leftDrawerOpen} from "../../utils";
-import {  usePage} from "@inertiajs/vue3";
+import {router, usePage} from "@inertiajs/vue3";
 import PresenceAvatar from "./PresenceAvatar.vue";
 import UserProfileMenu from "./UserProfileMenu.vue";
 
@@ -36,7 +36,7 @@ const appLogo = computed(() => $page?.props?.settings?.app_logo)
 
           <div class="mx-4">
               <q-btn
-
+                  @click="router.visit(route('settings.index'))"
                   text-color=""
                   style="border-radius: 100px; width: 35px; height: 35px;"
                   unelevated
