@@ -25,17 +25,17 @@ const showModal = ref(false)
                 <section class="flex items-center justify-between">
                     <h3 class="mb-1 mt-0  text-2xl font-medium">Vehicles Setup</h3>
 
-                    <q-btn
-                        label="View Guide"
-                        unelevated
-                        dense
-                        icon="menu_book"
-                        text-color="primary"
-                        size="md"
-                        padding="4px 14px"
-                        class="px-2 bg-white mr-3 rounded-lg border-primary"
-                        style=" font-weight: normal; border-radius: 18px; border:2px solid ;"
-                    />
+<!--                    <q-btn-->
+<!--                        label="View Guide"-->
+<!--                        unelevated-->
+<!--                        dense-->
+<!--                        icon="menu_book"-->
+<!--                        text-color="primary"-->
+<!--                        size="md"-->
+<!--                        padding="4px 14px"-->
+<!--                        class="px-2 bg-white mr-3 rounded-lg border-primary"-->
+<!--                        style=" font-weight: normal; border-radius: 18px; border:2px solid ;"-->
+<!--                    />-->
 
                 </section>
                 <section class="flex my-3 q-gutter-x-md">

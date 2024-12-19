@@ -161,7 +161,7 @@ const closeDialog = () => {
                         </div>
                     </q-card-section>
 
-                    <q-card-section>
+                    <q-card-section class="bg-[#e8f4fd] mx-3 mb-3" style="border-radius: 6px">
                         <div class="grid grid-cols-1 gap-4">
                             <div class="flex gap-x-2">
 

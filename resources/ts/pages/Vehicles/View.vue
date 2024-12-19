@@ -22,18 +22,18 @@ import MainLayout from "../../layouts/MainLayout.vue";
                 <div class="mb-6">
                     <div class="flex items-center justify-between mb-4">
                         <p class="text-[21px] mb-0 text-black ">Vehicle Capacities</p>
-                        <q-btn
-                            rounded
-                            outline
+<!--                        <q-btn-->
+<!--                            rounded-->
+<!--                            outline-->
 
-                                color="secondary"
-                            icon="menu_book"
-                            >
-                            <span class="text-[12px] ml-2">
-                                View Guide
-                            </span>
+<!--                                color="secondary"-->
+<!--                            icon="menu_book"-->
+<!--                            >-->
+<!--                            <span class="text-[12px] ml-2">-->
+<!--                                View Guide-->
+<!--                            </span>-->
 
-                        </q-btn>
+<!--                        </q-btn>-->
                     </div>
 
                     <div class="bg-blue-100 shadow  text-[#00a3ff] p-4 rounded-md grid grid-cols-[auto_minmax(0,_1fr)] bg-[#eff9f8] p-4 gap-4 items-center  ">
