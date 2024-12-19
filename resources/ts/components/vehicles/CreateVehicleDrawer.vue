@@ -28,9 +28,7 @@ const emits = defineEmits<{
   (e : 'onSubmit'): void;
 }>();
 
-const showDetails = ref(false);
 const name = ref('')
-const driver = ref('')
 const skills = ref('')
 const maxNumberOfStop = ref('')
 const capacity = ref('')
@@ -44,6 +42,25 @@ const breakStart = ref('')
 const breakEnd = ref('')
 const breakLength = ref('')
 const IncludeBreak = ref(false)
+
+const driverName = ref('')
+const driverEmail = ref('')
+const driverPassword = ref('')
+const driverPhone = ref('')
+const driverRoles = ref([{label:'', value: ''}])
+const driverNav = ref({label:'Google Maps', value: 'googleMaps'})
+
+const driverRolesOptions = ref([
+    {label:'Test', value: 'test'},
+    {label:'Test2', value: 'test2'},
+    {label:'Test3', value: 'test3'},
+])
+
+const driverNavOptions = ref([
+    {label:'Google Maps', value: 'googleMaps'},
+    {label:'Waze', value: 'Waze'},
+    {label:'Apple Maps', value: 'appleMap'},
+])
 
 
 
@@ -66,6 +83,43 @@ const endLocationBtnGroup = ref([
     {label: 'Other', value: 'other'},
     {label: 'Last Stop', value: 'lastStop'}
 ])
+const skillsList = ref([
+    {label: 'No Skills Found', value: 'empty',},
+])
+
+const driver = ref({label:'(No Driver)', value: 'noDriver'},)
+
+const driverList = ref([
+    {label:'(Add New Driver)', value: 'newDriver'},
+    {label:'(No Driver)', value: 'noDriver'},
+    {label:'Haseeb', value: 'haseeb'},
+])
+
+watch(driver, (newValue) => {
+    if (newValue.value === 'newDriver') {
+        addDriverDialog.value = true;
+    }
+});
+
+const addDriverDialog = ref(false)
+
+const addNewDriver = () => {
+    if (driverName.value) {
+        const newDriver = { label: driverName.value, value: driverName.value.toLowerCase() };
+        driverList.value.push(newDriver);
+        driver.value = newDriver;
+        driverName.value = '';
+        addDriverDialog.value = false;
+    }
+};
+const closeDialog = () => {
+    if (!name.value) {
+        driver.value = { label: '(No Driver)', value: 'noDriver' };
+    }
+    addDriverDialog.value = false;
+};
+
+
 </script>
 
 <template>
@@ -134,10 +188,12 @@ const endLocationBtnGroup = ref([
                                     </div>
 
                                     <div>
-                                        <q-input
-                                            v-model="driver"
-                                            dense
+                                        <q-select
                                             outlined
+                                            dense
+                                            v-model="driver"
+                                            :options="driverList"
+                                            options-selected-class="bg-[#E8F4FD] text-primary font-bold option-selected"
                                         />
                                     </div>
                                 </div>
@@ -385,10 +441,13 @@ const endLocationBtnGroup = ref([
                                     </div>
 
                                     <div>
-                                        <q-input
-                                            v-model="skills"
-                                            dense
+                                        <q-select
                                             outlined
+                                            dense
+                                            v-model="skills"
+                                            :options="skillsList"
+                                            options-selected-class="bg-[#E8F4FD] text-primary font-bold option-selected"
+
                                         />
                                     </div>
                                 </div>
@@ -527,13 +586,158 @@ const endLocationBtnGroup = ref([
                 </q-card>
             </section>
         </div>
-
     </section>
-
   </transition>
+
+    <q-dialog persistent v-model="addDriverDialog" v-if="driver.value === 'newDriver'">
+        <q-card class="sm:min-w-[800px] max-w-[70vh] q-px-md q-py-md rounded-md" >
+
+            <q-card-section class="flex justify-between items-center no-wrap q-py-none">
+                <div class="text-lg font-semibold">Add New Driver</div>
+                <q-btn
+                    flat
+                    round
+                    icon="close"
+                    class=" hover:text-red-700"
+                    @click="closeDialog"
+                    unelevated
+                >
+                </q-btn>
+            </q-card-section>
+
+            <q-card-section>
+                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
+                    <div class="col-span-2 text-right">
+                        <span class="text-negative">*</span>
+                        <label>Name :</label>
+                    </div>
+                    <div class="col-span-10">
+                        <q-input
+                            v-model="driverName"
+                            dense
+                            outlined
+                            placeholder="Driver Name"
+                        />
+                    </div>
+                </div>
+
+                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
+                    <div class="col-span-2 text-right">
+                        <span class="text-negative">*</span>
+                        <label>Email :</label>
+                    </div>
+                    <div class="col-span-10">
+                        <q-input
+                            v-model="driverEmail"
+                            dense
+                            outlined
+                            placeholder="Enter Email"
+                        />
+                    </div>
+                </div>
+
+                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
+                    <div class="col-span-2 text-right">
+                        <span class="text-negative">*</span>
+                        <label>Password :</label>
+                    </div>
+                    <div class="col-span-10">
+                        <q-input
+                            v-model="driverPassword"
+                            dense
+                            outlined
+                            placeholder="Password"
+                        />
+                    </div>
+                </div>
+
+                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
+                    <div class="col-span-2 text-right">
+                        <span class="text-negative">*</span>
+                        <label>Phone :</label>
+                    </div>
+                    <div class="col-span-10">
+                        <q-input
+                            v-model="driverPhone"
+                            dense
+                            outlined
+                            placeholder="Add Phone Number"
+                        />
+                    </div>
+                </div>
+
+
+                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
+                    <div class="col-span-2 text-right">
+                        <span class="text-negative">*</span>
+                        <label>Roles :</label>
+                    </div>
+                    <div class="col-span-10">
+                        <q-select
+                            v-model="driverRoles.value"
+                            dense
+                            outlined
+                            placeholder="Select Team Member's Roles"
+                            :options="driverRolesOptions"
+                            multiple
+                            use-chips
+                            options-selected-class="bg-[#E8F4FD] text-primary font-bold option-selected"
+                        />
+                    </div>
+                </div>
+
+                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
+                    <div class="col-span-2 text-right">
+                        <span class="text-negative">*</span>
+                        <label>Sat Nav :</label>
+                    </div>
+                    <div class="col-span-10">
+                        <q-select
+                            v-model="driverNav"
+                            dense
+                            outlined
+                            :options="driverNavOptions"
+                            options-selected-class="bg-[#E8F4FD] text-primary font-bold option-selected"
+                        />
+                    </div>
+                </div>
+            </q-card-section>
+
+            <q-card-actions align="right">
+                <q-btn
+                    outline
+                    size="md"
+                    padding="4px 14px"
+                    color="negative"
+                    label="Cancel"
+                    @click="closeDialog"
+                    style="font-weight: normal; border-radius: 6px; margin-right: 8px"
+                />
+                <q-btn
+                    label="Save"
+                    unelevated
+                    dense
+                    filled
+                    text-color="white"
+                    size="md"
+                    padding="4px 14px"
+                    class="  bg-primary "
+                    style="font-weight: normal; border-radius: 6px;"
+                    @click="addNewDriver"
+                />
+            </q-card-actions>
+        </q-card>
+    </q-dialog>
 </template>
 
 <style scoped>
+
+.input-group {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.88);
+}
+
 .side-drawer {
   box-shadow: rgba(17, 17, 26, 0.1) 0 4px 16px, rgba(17, 17, 26, 0.1) 0 8px 24px, rgba(17, 17, 26, 0.1) 0 16px 56px;
 }
