@@ -6,9 +6,9 @@ defineOptions({
     name: 'RoutesGoogleMap',
 });
 
-const googleMapsApiKey = ref('AIzaSyCeofdTxksEZQGG5Q7-UeAv0rogv2lkA4E');
+// const googleMapsApiKey = ref('AIzaSyCeofdTxksEZQGG5Q7-UeAv0rogv2lkA4E');
 
-// const googleMapsApiKey = ref('AIzaSyCykavRgmm93R8m-H61UZINCe8FW2yEjJc');
+const googleMapsApiKey = ref('AIzaSyCykavRgmm93R8m-H61UZINCe8FW2yEjJc');
 const mapRef = ref<HTMLElement | null>(null);
 
 
@@ -350,7 +350,7 @@ function plotRoute() {
         const returnUrl = `https://www.google.com/maps/dir/?api=1&origin=${new google.maps.LatLng(lastVisit.lat, lastVisit.lng).toUrlValue()}&destination=${endLatLng.toUrlValue()}&travelmode=driving`;
 
         // Provide both outbound and return URLs to the driver
-        alert(`Outbound route: ${googleMapsUrl}\nReturn route: ${returnUrl}`);
+        // alert(`Outbound route: ${googleMapsUrl}\nReturn route: ${returnUrl}`);
     });
 }
 

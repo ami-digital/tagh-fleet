@@ -42,9 +42,10 @@ const showModal = ref(false)
                     <q-separator  class="flex-1" />
                 </div>
 
-                <section class="h-[40vh] w-[640px] overflow-y-auto justify-self-center" >
+                <section class="h-[40vh]   " >
+
                     <CreatePlan  @onCreat="showModal = true" />
-<!--                    <PlanDetailsComponent  />-->
+                    <PlanDetailsComponent  />
                 </section>
 
             </div>
