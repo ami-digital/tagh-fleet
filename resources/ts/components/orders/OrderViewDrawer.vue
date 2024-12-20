@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import DashboardRoutesTable from "../routes/DashboardRoutesTable.vue";
+import DashboardRoutesTable from "../dashboard/DashboardRoutesTable.vue";
 
 const model = defineModel({required : true, default: false});
 
@@ -53,7 +53,7 @@ const toggleDetails = () => {
 
             <!-- Location -->
             <div class="text-[12px] font-medium text-gray-400 flex items-center">
-              <q-icon size="1.2rem" color="blue" class="mr-1" name="public" />
+              <q-icon size="1.2rem" color="blue" class="mr-1" name="route" />
               <span class="line-clamp-1 w-full md:w-9/12">south london/south coast</span>
             </div>
 
@@ -77,16 +77,19 @@ const toggleDetails = () => {
 
             <!-- Buttons -->
             <div class="col-span-1 md:col-span-2 flex flex-wrap justify-end gap-2">
-              <q-btn
-                  label="Edit Route"
-                  unelevated
-                  dense
-                  icon="edit"
-                  color="blue"
-                  size="md"
-                  padding="4px 14px"
-                  class="rounded-md"
-              />
+
+                <q-btn
+                    dense
+                    unelevated
+                    color="secondary"
+                >
+                    <div  class="px-2">
+                        <q-icon size="1rem" name="edit" />
+                        <span class="text-[12px] ml-1">
+                              Edit Route
+                           </span>
+                    </div>
+                </q-btn>
 
               <q-btn
                   outline
@@ -94,7 +97,7 @@ const toggleDetails = () => {
                   color="blue"
                   icon="print"
                   class="rounded-md"
-              />
+              ></q-btn>
 
               <q-btn
                   outline
@@ -108,38 +111,39 @@ const toggleDetails = () => {
 
 
           <section class="mt-3">
-            <div class="p-4 border border-gray-200 rounded-md shadow-md">
+            <div class="p-4 border flex flex-col  justify-center w-full border-gray-200 rounded-md shadow-md">
               <!-- Summary Information -->
               <div class=" grid grid-cols-2 text-sm text-gray-500   ">
 
-                <div class="flex ">
-                  <p>Completed: <span class="font-medium">0/11</span></p>
-                  <p>Failed: <span class="font-medium">0/11</span></p>
-                  <p>Outstanding: <span class="font-medium">0/11</span></p>
+                <div class="flex justify-between">
+                  <p>Completed: <span class="font-medium text-black">0/11</span></p>
+                  <p>Failed: <span class="font-medium text-black">0/11</span></p>
+                  <p>Outstanding: <span class="font-medium text-black">0/11</span></p>
                 </div>
 
 
 
                 <!-- Action Buttons -->
                 <div class="flex justify-end space-x-2">
-                  <q-icon name="edit" class="text-blue-500 cursor-pointer" size="1.2rem" />
-                  <q-icon name="delete" class="text-red-500 cursor-pointer" size="1.2rem" />
-                  <q-icon name="check" class="text-green-500 cursor-pointer" size="1.2rem" />
-                  <div>
+                  <q-icon name="delete" class="text-blue-500 cursor-pointer" size="1.2rem" />
+                </div>
+
+              </div>
+                <div class=" w-full flex justify-center">
                     <q-btn
                         unelevated
                         dense
-                        icon="keyboard_arrow_down"
                         color="blue"
                         size="sm"
                         class="rounded-md"
                         @click="toggleDetails"
-                    />
-                  </div>
-
+                     >
+                        <div class="px-2">
+                            <q-icon name="keyboard_arrow_down" />
+                            <span>More</span>
+                        </div>
+                    </q-btn>
                 </div>
-              </div>
-
 
               <div v-if="showDetails" class="mt-4 bg-blue-50 p-3 rounded-md">
                 <div class="grid grid-cols-2 gap-4 text-gray-600 text-sm">

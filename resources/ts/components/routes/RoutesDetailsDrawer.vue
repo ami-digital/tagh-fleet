@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import DashboardRoutesTable from "../routes/DashboardRoutesTable.vue";
+import DashboardRoutesTable from "../dashboard/DashboardRoutesTable.vue";
 import RoutsOrderItemsTable from "./RoutsOrderItemsTable.vue";
 import RoutesDetailsOrderInfoSection from "./RoutesDetailsOrderInfoSection.vue";
 import RoutesDetailsOrderDeliverySection from "./RoutesDetailsOrderDeliverySection.vue";
