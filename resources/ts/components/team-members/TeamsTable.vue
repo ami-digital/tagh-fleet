@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import {router} from "@inertiajs/vue3";
+import {route} from "ziggy-js";
 
 
+interface Props {
+    items : any[]
+}
 
+withDefaults(defineProps<Props>() , {items : () => []})
 
 const columns = ref([
     { name: "name", label: "Name", field: "name",  align: 'left', sortable: true },
@@ -15,19 +21,6 @@ const columns = ref([
 
 ]);
 
-const rows = ref([
-    {
-        id: 1,
-        name: "Chantelle Henshall",
-        email: "coboh24908@pokeline.com",
-        phone: "+44 786 645 4587",
-        roles: "Admin, Driver",
-        lastLogin: "1:14 PM, Dec 16, 2024",
-        appVersion: "Dec 1, 2024",
-        actions: "",
-
-    },
-])
 
 
 
@@ -39,7 +32,7 @@ const rows = ref([
 
     <section id="order-table">
         <q-table
-            :rows="rows"
+            :rows="items"
             :columns="columns"
             row-key="id"
             flat
@@ -59,19 +52,20 @@ const rows = ref([
                 </q-th>
             </template>
 
-            <template v-slot:body-cell-actions="">
+            <template v-slot:body-cell-actions="props">
                 <td style="text-align: right">
+<!--                    <q-btn-->
+<!--                        flat-->
+<!--                        round-->
+<!--                        icon="border_color"-->
+<!--                        size="sm"-->
+<!--                        class=" hover:text-blue-700 mx-2"-->
+<!--                        v-close-popup-->
+<!--                        unelevated-->
+<!--                    >-->
+<!--                    </q-btn>-->
                     <q-btn
-                        flat
-                        round
-                        icon="border_color"
-                        size="sm"
-                        class=" hover:text-blue-700 mx-2"
-                        v-close-popup
-                        unelevated
-                    >
-                    </q-btn>
-                    <q-btn
+                        @click="router.delete(route('team.members.destroy', { member: props.row.id }))"
                         flat
                         round
                         icon="delete_outline"

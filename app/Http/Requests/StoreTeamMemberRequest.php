@@ -25,8 +25,9 @@ class StoreTeamMemberRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'phone' => ['nullable', 'string', 'regex:/^\+\d{1,14}$/'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:team_members,email'],
+//            'phone' => ['nullable', 'string', 'regex:/^\+\d{1,14}$/'],
+            'phone' => ['nullable', 'string'],
             'roles' => ['required', 'array'],
             'roles.*' => ['exists:roles,id'],
             'sat_nav' => ['required' , Rule::in(SatNavEnums::values())],

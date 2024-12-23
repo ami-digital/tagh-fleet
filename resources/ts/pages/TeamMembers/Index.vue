@@ -1,17 +1,35 @@
 <script setup lang="ts">
-import {type Ref, ref, watch} from "vue";
-import { Head } from "@inertiajs/vue3";
-import { Dark } from "quasar";
+import {computed, ref} from "vue";
+import {Head, usePage} from "@inertiajs/vue3";
+
 import TeamsTable from "../../components/team-members/TeamsTable.vue";
 import AddTeamMemberDrawer from "../../components/team-members/AddTeamMemberDrawer.vue";
 
-const darkMode = ref(Dark.isActive);
-watch(darkMode, (value) => {
-    Dark.set(value);
-});
+import {useTeamMembers} from "../../core/composable/useTeamMembers";
+
+const props = defineProps({
+    members: Array
+})
+
+
 
 const search = ref('')
-const isCreateDrawerOpen :Ref<boolean> = ref(false)
+const {openAddTeamMemberDrawer , isCreateDrawerOpen } = useTeamMembers()
+
+const filteredTeams = computed(() => {
+
+    if(!search.value) {
+        return props.members
+    }
+    const searchTerm = search.value.toLowerCase();
+    return props.members.filter(member =>
+        member?.name.toLowerCase().indexOf(searchTerm) > -1 ||
+        member?.email.toLowerCase().indexOf(searchTerm) > -1 ||
+        member?.phone.toLowerCase().indexOf(searchTerm) > -1
+
+    );
+})
+
 </script>
 
 <template>
@@ -47,7 +65,7 @@ const isCreateDrawerOpen :Ref<boolean> = ref(false)
             <!-- Add Button -->
             <div class="w-full sm:w-auto">
                 <q-btn
-                    @click="isCreateDrawerOpen = true"
+                    @click="() => openAddTeamMemberDrawer()"
                     label="Add New Team Member"
                     unelevated
                     dense
@@ -61,10 +79,10 @@ const isCreateDrawerOpen :Ref<boolean> = ref(false)
         </section>
 
         <section class="my-3 px-6">
-            <TeamsTable />
+            <TeamsTable :items="filteredTeams" />
         </section>
 
-        <AddTeamMemberDrawer v-model="isCreateDrawerOpen" @close="isCreateDrawerOpen = false" />
+        <AddTeamMemberDrawer   v-model="isCreateDrawerOpen" @close="isCreateDrawerOpen = false" />
     </q-page>
 
 </template>

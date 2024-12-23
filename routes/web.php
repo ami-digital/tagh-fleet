@@ -21,7 +21,11 @@ Route::get('/orders/view', function () {
 
 
 
-Route::resource('team-members', TeamMemberController::class);
+Route::prefix('team')
+    ->name('team.') ->group(function () {
+
+        Route::resource('members', TeamMemberController::class);
+    });
 
 
 Route::get('/vehicles', function () {

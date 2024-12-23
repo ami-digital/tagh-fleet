@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { Head } from "@inertiajs/vue3";
+import {Head, usePage} from "@inertiajs/vue3";
 import { Dark } from "quasar";
 
 import OrdersTable from "../../components/orders/OrdersTable.vue";
@@ -12,6 +12,7 @@ watch(darkMode, (value) => {
 });
 
 const search = ref('');
+
 const OrderView = ref(false);
 </script>
 
@@ -19,6 +20,7 @@ const OrderView = ref(false);
     <Head>
         <title>Index</title>
     </Head>
+
     <q-page class="px-4 sm:px-6 py-4 bg-[#F5F5F5]" id="order-page">
 
         <!-- Header Section -->
