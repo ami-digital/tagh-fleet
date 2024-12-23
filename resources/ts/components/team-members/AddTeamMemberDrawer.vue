@@ -1,17 +1,53 @@
 <script setup lang="ts">
-const model = defineModel({ required: true, default: false });
-
-interface Props {
-    isLoaderActive?: boolean;
-    isCreateLoaderActive?: boolean;
-}
-
-withDefaults(defineProps<Props>(), { isLoaderActive: true, isCreateLoaderActive: false });
+import { TeamMemberForm, useTeamMembers} from "../../core/composable/useTeamMembers";
+import {useTemplateRef} from 'vue'
+import {router, useForm, usePage} from "@inertiajs/vue3";
+import {route} from "ziggy-js";
+import {emailValidator, requiredValidator} from "../../core/utils/validators";
 
 const emits = defineEmits<{
     (e: 'close'): void;
     (e: 'onSubmit'): void;
 }>();
+interface Props {
+    isLoaderActive?: boolean;
+
+    isCreateLoaderActive?: boolean;
+}
+
+const $page = usePage()
+withDefaults(defineProps<Props>(), { isLoaderActive: true, isCreateLoaderActive: false  , satNavOptions : () => [] ,rolesOptions : () => []});
+const model = defineModel({ required: true, default: false });
+
+const {rolesOptions , satNavOptions,isCreateDrawerOpen ,isCreateLoaderActive , DEFAULT_TEAM_MEMBER_FORM } = useTeamMembers()
+
+
+const form = useForm<TeamMemberForm>({...DEFAULT_TEAM_MEMBER_FORM})
+
+const fromRef = useTemplateRef<HTMLElement | null>('add-members-form');
+const submit = async () => {
+
+        if (fromRef.value) {
+            const isValid = await fromRef.value.validate();
+            if (!isValid) return
+        }
+
+
+    isCreateLoaderActive.value = true
+
+    form.post(route('team.members.store'), {
+        preserveState: true,
+        onSuccess: () => {
+            isCreateDrawerOpen.value = false
+            router.visit(route('team.members.index'))
+        },
+
+        onFinish : () => {
+            isCreateLoaderActive.value = false
+        }
+    })
+}
+
 </script>
 
 <template>
@@ -26,15 +62,17 @@ const emits = defineEmits<{
                         <q-icon size="md" class="text-gray-500 cursor-pointer hover:text-red-500" name="close" @click="() => emits('close')" />
                     </div>
                 </div>
+
+
                 <q-separator />
                 <div class="rounded mt-4 p-5 bg-white shadow shadow-xl">
-                    <q-form  >
+                    <q-form ref="add-members-form">
                         <!-- Name -->
                         <div class="grid grid-cols-12 space-x-3 items-center mb-4">
                             <label class="flex items-center sm:justify-end max-sm:mx-2  max-sm:justify-start  max-sm:mb-2 text-sm font-semibold   text-black col-span-2">
                                 <span class="text-red-300 mr-1">*</span> Name:
                             </label>
-                            <q-input outlined dense placeholder="Ahmed M" class="col-span-10 w-full" />
+                            <q-input v-model="form.name" :error="!!form.errors.name"  :error-message="form.errors.name" :rules="[requiredValidator]" outlined dense placeholder="Ahmed M" class="col-span-10 w-full" />
                         </div>
 
                         <!-- Email -->
@@ -42,23 +80,23 @@ const emits = defineEmits<{
                             <label class="flex items-center sm:justify-end max-sm:mx-2   max-sm:justify-start  max-sm:mb-2 text-sm font-semibold   text-black col-span-2">
                                 <span class="text-red-300 mr-1">*</span> Email:
                             </label>
-                            <q-input outlined dense type="email" placeholder="ahmed@tagfleet.com" class="col-span-10 w-full" />
+                            <q-input  v-model="form.email" :error="!!form.errors.email"  :error-message="form.errors.email" :rules="[requiredValidator , emailValidator]" outlined dense type="email" placeholder="ahmed@tagfleet.com" class="col-span-10 w-full" />
                         </div>
 
-                        <!-- Password -->
-                        <div class="grid grid-cols-12 space-x-3 items-center mb-4">
-                            <label class="flex items-center sm:justify-end  max-sm:mx-2  max-sm:justify-start  max-sm:mb-2 text-sm font-semibold   text-black col-span-2">
-                                <span class="text-red-300 mr-1">*</span> Password:
-                            </label>
-                            <q-input outlined dense type="password" placeholder="********" class="col-span-10 w-full" />
-                        </div>
+<!--                        &lt;!&ndash; Password &ndash;&gt;-->
+<!--                        <div class="grid grid-cols-12 space-x-3 items-center mb-4">-->
+<!--                            <label class="flex items-center sm:justify-end  max-sm:mx-2  max-sm:justify-start  max-sm:mb-2 text-sm font-semibold   text-black col-span-2">-->
+<!--                                <span class="text-red-300 mr-1">*</span> Password:-->
+<!--                            </label>-->
+<!--                            <q-input v-model="form.email"  outlined dense type="password" placeholder="********" class="col-span-10 w-full" />-->
+<!--                        </div>-->
 
                         <!-- Phone -->
                         <div class="grid grid-cols-12 space-x-3 items-center mb-4">
                             <label class="flex items-center sm:justify-end max-sm:mx-2   max-sm:justify-start  max-sm:mb-2 text-sm font-semibold   text-black col-span-2">
                                 Phone:
                             </label>
-                            <q-input outlined dense placeholder="+44" class="col-span-10 w-full" />
+                            <q-input v-model="form.phone" :error="!!form.errors.phone"  :error-message="form.errors.phone"  :rules="[requiredValidator]" outlined dense placeholder="+44" class="col-span-10 w-full" />
                         </div>
 
                         <!-- Roles -->
@@ -66,7 +104,8 @@ const emits = defineEmits<{
                             <label class="flex items-center sm:justify-end max-sm:mx-2   max-sm:justify-start  max-sm:mb-2 text-sm font-semibold   text-black col-span-2">
                                 <span class="text-red-300 mr-1">*</span> Roles:
                             </label>
-                            <q-select outlined dense multiple :options="[]" placeholder="Select Team Member's Role(s)" class="col-span-10 w-full" />
+                            <q-select v-model="form.roles" :rules="[requiredValidator]"  :error="!!form.errors.roles"  :error-message="form.errors.roles" map-options emit-value   option-label="name"
+                                      option-value="id" outlined dense multiple :options="rolesOptions" placeholder="Select Team Member's Role(s)" class="col-span-10 w-full" />
                         </div>
 
                         <!-- Sat Nav -->
@@ -74,13 +113,13 @@ const emits = defineEmits<{
                             <label class="flex items-center sm:justify-end max-sm:mx-2   max-sm:justify-start  max-sm:mb-2 text-sm font-semibold   text-black col-span-2">
                                 Sat Nav:
                             </label>
-                            <q-select outlined dense multiple :options="[]" placeholder="Default (Waze)" class="col-span-10 w-full" />
+                            <q-select v-model="form.sat_nav" :rules="[requiredValidator]" :error="!!form.errors.sat_nav"  :error-message="form.errors.sat_nav" outlined dense  map-options emit-value   :options="satNavOptions" placeholder="Default (Waze)" class="col-span-10 w-full" />
                         </div>
 
                         <!-- Action Buttons -->
                         <div class="flex justify-end gap-4 mt-4">
-                            <q-btn style="font-weight: normal; border-radius: 6px" color="red" outline label="Cancel" />
-                            <q-btn style="font-weight: normal; border-radius: 6px" label="Save" color="blue" unelevated type="submit" />
+                            <q-btn style="font-weight: normal; border-radius: 6px" color="red" outline @click="() => emits('close')" label="Cancel" />
+                            <q-btn style="font-weight: normal; border-radius: 6px" :loading="isCreateLoaderActive" :disabled="isCreateLoaderActive" @click="submit" label="Save" color="blue" unelevated type="submit" />
                         </div>
                     </q-form>
                 </div>
