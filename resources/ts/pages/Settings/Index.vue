@@ -1,5 +1,13 @@
 <script setup lang="ts">
 
+import TollSVG from '@images/svg/settings/toll.svg';
+import TrafficSVG from '@images/svg/settings/traffic.svg';
+import BoxSVG from '@images/svg/settings/box.svg';
+import ClockSVG from '@images/svg/settings/clock.svg';
+import BalanceSVG from '@images/svg/settings/balance.svg';
+import SequenceSVG from '@images/svg/settings/sequence.svg';
+import MergeSVG from '@images/svg/settings/merge.svg';
+
 const greenModel = ref(0)
 const arrayMarkerLabel = ref([
     { value: 0, label: 'Standard Traffic' },
@@ -103,8 +111,13 @@ const arrayMarkerLabel = ref([
 
                     <div class=" flex items-center ">
                         <div class="block text-[12px] font-medium text-gray-400 ">
-                            <q-icon size="1.2rem" color="blue" class="mr-1" name="public"/>
-                            Avoid Tolls
+                            <q-icon
+                                :name="`img:${TollSVG}`"
+                                class="p-0 text-grey"
+                                size="18px"
+                            />
+                            <span class="ml-1"> Avoid Tolls</span>
+
                         </div>
                     </div>
                     <div>
@@ -120,7 +133,12 @@ const arrayMarkerLabel = ref([
 
                     <div  >
                         <div class="block text-[12px] font-medium text-gray-400 ">
-                            <q-icon size="1.2rem" color="blue" class="mr-1" name="public"/>
+                            <q-icon
+                                :name="`img:${TrafficSVG}`"
+                                class="p-0 ml-1 text-grey"
+                                size="18px"
+                            />
+
                             Traffic Settings
                         </div>
                         <div class="px-3  text-center  w-auto mt-4">
@@ -148,8 +166,13 @@ const arrayMarkerLabel = ref([
 
                     <div class=" flex items-center ">
                         <div class="block text-[12px] font-medium text-gray-400 ">
-                            <q-icon size="1.2rem" color="blue" class="mr-1" name="public"/>
-                            Default Stop Type
+                            <q-icon
+                                :name="`img:${BoxSVG}`"
+                                class="p-0 text-grey"
+                                size="18px"
+                            />
+                            <span class="ml-1"> Default Stop Type</span>
+
 
                         </div>
                     </div>
@@ -166,8 +189,14 @@ const arrayMarkerLabel = ref([
 
                     <div class=" flex items-center ">
                         <div class="block text-[12px] font-medium text-gray-400 ">
-                            <q-icon size="1.2rem" color="blue" class="mr-1" name="public"/>
-                            Default Stop Type
+                            <q-icon
+                                :name="`img:${ClockSVG}`"
+                                class="p-0 text-grey"
+                                size="18px"
+                            />
+                            <span class="ml-1"> Max Allowed Route Duration</span>
+
+
 
                         </div>
                     </div>
@@ -181,49 +210,19 @@ const arrayMarkerLabel = ref([
                     </div>
                 </div>
 
-                <div class="grid grid-cols-3  ">
 
-                    <div class=" flex items-center ">
-                        <div class="block text-[12px] font-medium text-gray-400 ">
-                            <q-icon size="1.2rem" color="blue" class="mr-1" name="public"/>
-                            Max Allowed Route Duration
-                        </div>
-                    </div>
-                    <div>
-                        <q-toggle
-
-                            checked-icon="check"
-                            color="red"
-                            unchecked-icon="clear"
-                        />
-                    </div>
-                </div>
 
                 <div class="grid grid-cols-3  ">
 
                     <div class=" flex items-center ">
                         <div class="block text-[12px] font-medium text-gray-400 ">
-                            <q-icon size="1.2rem" color="blue" class="mr-1" name="public"/>
-                            Load Balancing
+                            <q-icon
+                                :name="`img:${BalanceSVG}`"
+                                class="p-0 text-grey"
+                                size="18px"
+                            />
+                            <span class="ml-1"> Load Balancing</span>
 
-                        </div>
-                    </div>
-                    <div>
-                        <q-toggle
-
-                            checked-icon="check"
-                            color="red"
-                            unchecked-icon="clear"
-                        />
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-3  ">
-
-                    <div class=" flex items-center ">
-                        <div class="block text-[12px] font-medium text-gray-400 ">
-                            <q-icon size="1.2rem" color="blue" class="mr-1" name="public"/>
-                            Maintain Upload Sequence
 
 
                         </div>
@@ -242,8 +241,39 @@ const arrayMarkerLabel = ref([
 
                     <div class=" flex items-center ">
                         <div class="block text-[12px] font-medium text-gray-400 ">
-                            <q-icon size="1.2rem" color="blue" class="mr-1" name="public"/>
-                            Merge Orders into Single Stop
+                            <q-icon
+                                :name="`img:${SequenceSVG}`"
+                                class="p-0 text-grey"
+                                size="18px"
+                            />
+                            <span class="ml-1"> Maintain Upload Sequence</span>
+
+
+
+
+                        </div>
+                    </div>
+                    <div>
+                        <q-toggle
+
+                            checked-icon="check"
+                            color="red"
+                            unchecked-icon="clear"
+                        />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3  ">
+
+                    <div class=" flex items-center ">
+                        <div class="block text-[12px] font-medium text-gray-400 ">
+                            <q-icon
+                                :name="`img:${MergeSVG}`"
+                                class="p-0 text-grey"
+                                size="18px"
+                            />
+                            <span class="ml-1"> Merge Orders into Single Stop</span>
+
 
 
 
