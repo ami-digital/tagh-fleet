@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TeamMemberController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,9 +18,10 @@ Route::get('/orders', function () {
 Route::get('/orders/view', function () {
     return Inertia\Inertia::render('Orders/View');
 });
-Route::get('/team-members', function () {
-    return Inertia\Inertia::render('TeamMembers/Index');
-})->name('team.index');
+
+
+
+Route::resource('team-members', TeamMemberController::class);
 
 
 Route::get('/vehicles', function () {
