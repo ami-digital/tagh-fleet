@@ -19,18 +19,18 @@ const Tags = ref('')
         <q-card >
             <q-card-section>
                 <div class="flex justify-between">
-                    <h5>2</h5>
-                    <q-btn
-                        label="Creat Order From Customer"
-                        unelevated
-                        dense
-                        icon="add_circle_outline"
-                        text-color="primary"
-                        size="md"
-                        padding="4px 14px"
-                        class="px-2 bg-white mr-3 mb-2 rounded-md border-primary"
-                        style=" font-weight: normal; border-radius: 6px; border:1px solid;"
-                    />
+
+<!--                    <q-btn-->
+<!--                        label="Creat Order From Customer"-->
+<!--                        unelevated-->
+<!--                        dense-->
+<!--                        icon="add_circle_outline"-->
+<!--                        text-color="primary"-->
+<!--                        size="md"-->
+<!--                        padding="4px 14px"-->
+<!--                        class="px-2 bg-white mr-3 mb-2 rounded-md border-primary"-->
+<!--                        style=" font-weight: normal; border-radius: 6px; border:1px solid;"-->
+<!--                    />-->
                 </div>
                 <span>
                     BODYLINE FITNESS AND GYM, LEKKI, LAGOS, Adenike Wole Ajibode Street, Lekki, Nigeria
@@ -262,7 +262,7 @@ const Tags = ref('')
         </q-card>
         <q-card class="col-span-2">
             <q-card-section>
-                <div class="h-[calc(100vh-180px)] w-full">
+                <div class="h-[calc(100vh-180px)]  ">
                     <iframe
                         width="100%"
                         height="100%"
@@ -272,9 +272,7 @@ const Tags = ref('')
                 </div>
             </q-card-section>
 
-            <q-card-section>
 
-            </q-card-section>
 
         </q-card>
     </section>

@@ -4,6 +4,7 @@ import { Head } from "@inertiajs/vue3";
 import { Dark } from "quasar";
 import MainLayout from "../../layouts/MainLayout.vue";
 import OrdersTable from "../../components/orders/OrdersTable.vue";
+import OrderEditViewDrawer from "../../components/orders/OrderEditViewDrawer.vue";
 
 
 const darkMode = ref(Dark.isActive);
@@ -12,6 +13,7 @@ watch(darkMode, (value) => {
 });
 
 const search = ref('')
+const OrderView  = ref(false)
 </script>
 
 <template>
@@ -67,9 +69,9 @@ const search = ref('')
         </section>
 
         <section class="my-3">
-            <OrdersTable />
+            <OrdersTable @view="OrderView = true" />
         </section>
-
+        <OrderEditViewDrawer @close="OrderView = false" v-model="OrderView" />
     </q-page>
 
 

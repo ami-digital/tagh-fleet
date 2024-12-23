@@ -16,6 +16,7 @@ withDefaults(defineProps<Props>() , {isLoaderActive : true ,isCreateLoaderActive
 const emits = defineEmits<{
   (e : 'close'): void;
   (e : 'onSubmit'): void;
+  (e : 'view'): void;
 
 
 }>();
@@ -178,7 +179,7 @@ const toggleDetails = () => {
           </section>
 
           <section class="mt-2">
-            <DashboardRoutesTable />
+            <DashboardRoutesTable @view="() => emits('view')" />
           </section>
         </div>
 

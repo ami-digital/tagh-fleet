@@ -4,6 +4,8 @@ import { Head } from "@inertiajs/vue3";
 import { Dark } from "quasar";
 import TeamsTable from "../../components/team-members/TeamsTable.vue";
 import DashboardRoutesTable from "../../components/dashboard/DashboardRoutesTable.vue";
+import OrderViewDrawer from "../../components/orders/OrderViewDrawer.vue";
+import RoutesDetailsDrawer from "../../components/routes/RoutesDetailsDrawer.vue";
 
 const darkMode = ref(Dark.isActive);
 watch(darkMode, (value) => {
@@ -11,6 +13,8 @@ watch(darkMode, (value) => {
 });
 
 const search = ref('')
+const showModal = ref(false)
+const routeStatus = ref(false)
 </script>
 
 <template>
@@ -43,7 +47,7 @@ const search = ref('')
                     </section>
 
                     <section class="mt-2">
-                        <DashboardRoutesTable />
+                        <DashboardRoutesTable @view="showModal = true" />
                     </section>
                 </div>
 
@@ -61,7 +65,8 @@ const search = ref('')
 
         </section>
 
-
+        <OrderViewDrawer @close="showModal = false" @view="() => routeStatus = true" v-model="showModal" />
+        <RoutesDetailsDrawer @close="routeStatus = false" v-model="routeStatus" />
     </q-page>
 
 </template>

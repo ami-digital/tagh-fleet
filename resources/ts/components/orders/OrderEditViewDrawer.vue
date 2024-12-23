@@ -5,7 +5,7 @@ import CustomerInfo from "./CustomerInfo.vue";
 import OrderHistory from "./OrderHistory.vue";
 
 const model = defineModel({required : true, default: false});
-const tab = ref('edit');
+const tab = ref('info');
 const splitterModel = ref(20);
 
 interface Props {

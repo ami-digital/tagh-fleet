@@ -5,6 +5,11 @@ import prevent = event.prevent;
 import OrdersTopNavActions from "./OrdersTopNavActions.vue";
 import OrderTableHeaderAction from "./OrderTableHeaderAction.vue";
 
+
+
+
+const emits = defineEmits(['view'])
+
 const orderSelected = ref([]);
 const search = ref('')
 const statusSelectList = ref('')
@@ -175,6 +180,7 @@ const resetFilters = () => {
             flat
             selection="multiple"
             color="primary"
+            @row-click="() => emits('view')"
             hide-pagination
             v-model:selected="orderSelected"
             class="rounded-lg shadow-sm bg-white text-[#61646A]"

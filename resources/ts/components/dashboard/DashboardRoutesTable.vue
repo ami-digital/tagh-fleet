@@ -2,10 +2,11 @@
 import { ref } from "vue";
 import {event} from "quasar";
 import prevent = event.prevent;
+import RoutesDetailsDrawer from "../routes/RoutesDetailsDrawer.vue";
 
 const orderSelected = ref([]);
 const search = ref('')
-
+const emits = defineEmits(['view'])
 
 
 const columns = ref([
@@ -58,7 +59,7 @@ const filters = ref<{ [key: string]: string }>({});
 
 <template>
 
-
+    <section>
     <section id="order-table">
         <q-table
             :rows="rows.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)"
@@ -68,7 +69,8 @@ const filters = ref<{ [key: string]: string }>({});
             color="primary"
             hide-pagination
             v-model:selected="orderSelected"
-            class="rounded-lg shadow-sm bg-white text-[#61646A]"
+            class="rounded-lg shadow-sm bg-white text-[#61646A] hover:cursor-pointer"
+            @row-click="() => emits('view')"
             table-header-class="bg-[#e8f4fd] font-semibold text-left"
         >
             <template v-slot:header-cell="props">
@@ -148,6 +150,7 @@ const filters = ref<{ [key: string]: string }>({});
     </section>
 
 
+</section>
 </template>
 
 <style lang="scss">
