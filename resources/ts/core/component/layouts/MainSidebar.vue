@@ -144,9 +144,9 @@ onUnmounted(() => {
                 </div>
                 <div class="side-links">
                     <q-item
-                        :class="currentUrl === '/team-members' ? 'bg-blue-100 active-side-link' : ''"
+                        :class="currentUrl === '/team/members' ? 'bg-blue-100 active-side-link' : ''"
                         clickable
-                        @click="simpleSideLinkClick('team.index')"
+                        @click="simpleSideLinkClick('team.members.index')"
                         tag="div"
 
                     >
