@@ -270,6 +270,7 @@ const resetFilters = () => {
 </template>
 
 <style lang="scss">
+
 #order-table {
     .q-table--col-auto-width:has(.q-checkbox) {
         text-align: left;
