@@ -1,13 +1,12 @@
 <script setup>
-
 </script>
 
 <template>
-    <div class="  mt-5 bg-white rounded-lg shadow-md flex flex-col gap-2 w-full   border">
+    <div class="mt-5 bg-white rounded-lg shadow-md flex flex-col gap-2 w-full border">
         <!-- Header Section -->
-        <div class="flex justify-between items-center p-2">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4">
             <!-- Plan Title -->
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 mb-2 sm:mb-0">
                 <!-- QIcon for Document -->
                 <q-icon name="mdi-file-outline" color="primary" size="xs" />
                 <!-- Plan Name -->
@@ -17,32 +16,33 @@
                     <q-icon name="mdi-pencil-outline" size="xs" />
                 </button>
             </div>
+
             <!-- Action Buttons -->
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap sm:flex-nowrap items-center gap-2">
                 <!-- Delete Button -->
                 <q-btn
-                    style=" font-weight: normal; border-radius: 6px; "
+                    style="font-weight: normal; border-radius: 6px;"
                     unelevated
-                    label="Delete Plan"
+                    label="Delete"
                     color="red"
                     outline
-                    class="px-3 py-1"
+                    class="px-2 py-1 text-xs sm:text-sm"
                     no-caps
                 />
                 <!-- Open Plan Button -->
                 <q-btn
-                    style=" font-weight: normal; border-radius: 6px;  "
+                    style="font-weight: normal; border-radius: 6px;"
                     unelevated
-                    label="Open Plan"
+                    label="Open"
                     color="primary"
-                    class="px-3 py-1"
+                    class="px-2 py-1 text-xs sm:text-sm"
                     no-caps
                 />
             </div>
         </div>
 
         <!-- Footer Details Section -->
-        <div class="flex items-center gap-4 text-gray-500 text-sm mt-2 border-t p-2 bg-blue-100">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 text-gray-500 text-sm mt-2 border-t p-4 bg-blue-100">
             <!-- Stops Icon -->
             <div class="flex items-center gap-1">
                 <q-icon name="mdi-map-marker-outline" size="sm" />
@@ -63,5 +63,4 @@
 </template>
 
 <style scoped lang="scss">
-
 </style>

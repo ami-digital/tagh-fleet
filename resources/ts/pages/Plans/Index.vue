@@ -15,62 +15,53 @@ watch(darkMode, (value) => {
     Dark.set(value);
 });
 
-const search = ref('')
-
-const showModal = ref(false)
-
+const search = ref('');
+const showModal = ref(false);
 </script>
 
 <template>
     <Head>
         <title>Index</title>
     </Head>
-    <q-page class="px-6  bg-[#F5F5F5]" id="teams-page">
-
-        <section class="grid grid-cols-3 gap-x-4">
-
+    <q-page class="px-4 md:px-6 bg-[#F5F5F5]" id="teams-page">
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
                 <CalendarComponent />
             </div>
-            <div class="h-[40vh] py-4 col-span-2">
-                <div class="flex items-center">
-                    <q-separator  class=" flex-1" />
-                    <div class="h-10 ml-4 w-10 bg-white rounded-md flex text-center    justify-center items-center">
-                        <span class="text-[13px] font-semibold">17 DEC</span>
+            <div class="md:h-[40vh] py-4 md:col-span-2">
+                <div class="flex flex-col md:flex-row items-center">
+                    <q-separator class="flex-1  " />
+                    <div class="h-10 w-10 bg-white rounded-md flex justify-center items-center mb-2 md:mb-0 mr-4  ">
+                        <span class="text-[13px] font-semibold text-center">17 DEC</span>
                     </div>
-                    <p class="mb-1 q-px-md text-xl font-normal">Continue with a draft plan</p>
-                    <q-separator  class="flex-1" />
+                    <p class="text-center text-[12px] md:text-left mb-1 md:text-xl font-normal">
+                        Continue with a draft plan
+                    </p>
+                    <q-separator class="flex-1  " />
                 </div>
-
-                <section class="h-[40vh]   " >
-
-                    <CreatePlan  @onCreat="showModal = true" />
-                    <PlanDetailsComponent  />
+                <section class="md:h-[40vh]">
+                    <CreatePlan @onCreat="showModal = true" />
+                    <PlanDetailsComponent />
                 </section>
-
             </div>
 
             <section class="col-span-full">
-                <div class="flex items-center mb-5">
-                    <q-separator  class=" flex-1" />
-                    <div class="h-10 ml-4 w-10 bg-white rounded-md flex text-center    justify-center items-center">
-                        <span class="text-[13px] font-semibold">17 DEC</span>
+                <div class="flex flex-col md:flex-row items-center mb-5">
+                    <q-separator class="flex-1 " />
+                    <div class="h-10 w-10 bg-white rounded-md flex justify-center items-center mb-2 md:mb-0 mr-4">
+                        <span class="text-[13px] text-center font-semibold">17 DEC</span>
                     </div>
-                    <p class="mb-1 q-px-md text-xl font-normal">
+                    <p class="text-center text-[12px] md:text-left mb-1 md:text-xl font-normal">
                         Routes sent to drivers
-<!--                        <q-badge color="red" text-color="black"  label="2" floating >4</q-badge>-->
                     </p>
-                    <q-separator  class="flex-1" />
+                    <q-separator class="flex-1 " />
                 </div>
-                <RoutsSentToDriversTable  />
+                <RoutsSentToDriversTable />
             </section>
-
         </section>
 
         <CreatPlanDrawer @close="showModal = false" v-model="showModal" />
     </q-page>
-
-
 </template>
 
 <style lang="scss">
