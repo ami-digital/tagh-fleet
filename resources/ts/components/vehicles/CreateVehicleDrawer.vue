@@ -11,7 +11,7 @@ import flag from '@images/svg/flag.svg';
 import location from '@images/svg/location.svg';
 import grid from '@images/svg/grid_box.svg';
 import key from '@images/svg/key.svg';
-import {router, useForm, usePage} from "@inertiajs/vue3";
+import {router, useForm} from "@inertiajs/vue3";
 
 import {useVehicles, VehicleForm} from "../../core/composable/useVehicles";
 
@@ -24,21 +24,42 @@ const emits = defineEmits<{
 
 const model = defineModel({required : true, default: false});
 
-const {skillsOptions , driversOptions,isCreateDrawerOpen ,isCreateLoaderActive , DEFAULT_VEHICLE_FORM ,availabilityBtnGroup ,startLocationBtnGroup ,endLocationBtnGroup} = useVehicles()
+const {skillsOptions , driversOptions,isCreateDrawerOpen ,isCreateLoaderActive  ,availabilityBtnGroup ,startLocationBtnGroup ,endLocationBtnGroup , defaultVehicleForm ,isOperationCreateMode} = useVehicles()
 
 
-const form = useForm<VehicleForm>({...DEFAULT_VEHICLE_FORM})
+const form = useForm<VehicleForm>({...defaultVehicleForm.value})
 
 
 
 
+watchEffect(() => {
+    const values = JSON.parse(JSON.stringify({...defaultVehicleForm.value}))
+    Object.assign(form , values)
+})
 
-const $page = usePage()
+
+
 const submit = async () => {
 
 
     isCreateLoaderActive.value = true
+    if(form?.id && !isOperationCreateMode.value) {
+        form.put(route('vehicles.update', { vehicle: form?.id}) , {
+            preserveState: true,
+            onSuccess :() =>{
+                isCreateDrawerOpen.value = false
 
+                router.visit(route('vehicles.index'))
+            },
+
+            onFinish : () => {
+                isCreateLoaderActive.value = false
+            }
+        })
+
+
+        return
+    }
     form.post(route('vehicles.store'), {
         preserveState: true,
         onSuccess: () => {
@@ -76,11 +97,11 @@ const submit = async () => {
                             </div>
 
                             <span class="text-center font-semibold py-3 flex-1">
-                                Create Vehicle
+                                {{isOperationCreateMode ? 'Create' : 'Update'}} Vehicle
                             </span>
 
                             <q-btn
-                                label="Save"
+                                :label="isOperationCreateMode ? 'Save' : 'Update'"
                                 @click.prevent="submit"
                                 :loading="isCreateLoaderActive"
                                 :disabled="isCreateLoaderActive"
