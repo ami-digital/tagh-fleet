@@ -87,7 +87,7 @@ const submit = async () => {
         <div class="px-6 py-4">
 
             <section class="grid grid-cols-3 gap-x-4">
-                <q-card class="px-6 py-4">
+                <q-card class="col-span-1  max-sm:col-span-3 px-6 py-4">
                     <q-card-section>
                         <div class="flex justify-between items-center">
                             <div>
@@ -547,7 +547,7 @@ const submit = async () => {
                     </q-card-section>
 
                 </q-card>
-                <q-card class="col-span-2">
+                <q-card class="col-span-2 max-sm:col-span-3 ">
                     <q-card-section style="padding: 0;">
                         <div class=" h-[calc(100vh-100px)] w-full">
                             <iframe
