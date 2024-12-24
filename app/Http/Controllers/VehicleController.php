@@ -43,16 +43,28 @@ class VehicleController extends Controller
         return to_route('vehicles.index');
     }
 
-    public function show(Vehicle $vehicle)
+    public function show(Vehicle $vehicle): JsonResponse
     {
         $vehicle->load('driver');
-        return new VehicleResource($vehicle);
+        $skills = [
+            ['label' => 'Ways' , 'value' => 'WAYS'],
+            ['label' => 'Google Map' , 'value' => 'GOOGLE'],
+            ['label' => 'Apple' , 'value' => 'APPLE'],
+        ];
+
+        $drivers = TeamMember::query()->get();
+
+        return new JsonResponse([
+            'status' => 'success',
+            'options' => ['skills' => $skills , 'drivers' => $drivers , 'vehicle' => $vehicle]
+        ], 200);
+
     }
 
     public function update(StoreVehicleRequest $request, Vehicle $vehicle)
     {
         $vehicle->update($request->validated());
-        return new VehicleResource($vehicle);
+        return to_route('vehicles.index');
     }
 
     public function destroy(Vehicle $vehicle): \Illuminate\Http\RedirectResponse

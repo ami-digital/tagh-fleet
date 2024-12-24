@@ -4,11 +4,12 @@ import { ref } from "vue";
 import {router} from "@inertiajs/vue3";
 import {route} from "ziggy-js";
 import {formatToTitleCase} from "../../core/utils";
+import {useVehicles} from "../../core/composable/useVehicles";
 
 interface Props {
     items : any[]
 }
-
+const {openEditVehicleDrawer} = useVehicles()
 withDefaults(defineProps<Props>() , {items : () => []})
 
 const columns = ref([
@@ -74,7 +75,17 @@ const columns = ref([
 
             <template v-slot:body-cell-actions="props">
                 <td style="text-align: right">
-
+                                        <q-btn
+                                            @click.prevent="openEditVehicleDrawer(props.row.id )"
+                                            flat
+                                            round
+                                            icon="border_color"
+                                            size="sm"
+                                            class=" hover:text-blue-700 mx-2"
+                                            v-close-popup
+                                            unelevated
+                                        >
+                                        </q-btn>
                     <q-btn
                         @click="router.delete(route('vehicles.destroy', { vehicle: props.row.id }))"
                         flat
