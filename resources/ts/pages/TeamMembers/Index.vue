@@ -14,7 +14,7 @@ const props = defineProps({
 
 
 const search = ref('')
-const {openAddTeamMemberDrawer , isCreateDrawerOpen } = useTeamMembers()
+const {openAddTeamMemberDrawer , isCreateDrawerOpen , reset } = useTeamMembers()
 
 const filteredTeams = computed(() => {
 
@@ -29,7 +29,7 @@ const filteredTeams = computed(() => {
 
     );
 })
-
+onUnmounted(reset)
 </script>
 
 <template>

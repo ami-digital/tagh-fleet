@@ -25,7 +25,7 @@ class UpdateTeamMemberRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255',Rule::unique('team_members', 'email')->ignore($this?->team_member),],
+            'email' => ['required', 'string', 'email', 'max:255',Rule::unique('team_members', 'email')->ignore($this?->member),],
 //            'phone' => ['nullable', 'string', 'regex:/^\+\d{1,14}$/'],
             'phone' => ['nullable', 'string'],
             'roles' => ['required', 'array'],

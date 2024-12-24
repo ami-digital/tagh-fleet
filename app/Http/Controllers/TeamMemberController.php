@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateTeamMemberRequest;
 use App\Models\TeamMember;
 
 
+use App\Models\Vehicle;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
@@ -54,7 +55,25 @@ class TeamMemberController extends Controller
 //        return redirect()->route('team.members.index')->with('success', 'Team Member added successfully.');
         return to_route('team.members.index');
     }
+    public function show(TeamMember $member): JsonResponse
+    {
 
+        $navs = [
+            ['label' => 'Ways' , 'value' => 'WAYS'],
+            ['label' => 'Google Map' , 'value' => 'GOOGLE'],
+            ['label' => 'Apple' , 'value' => 'APPLE'],
+        ] ;
+        Role::query()->firstOrCreate(['name' => 'administrator']);
+        $roles = Role::query()->get();
+
+        return new JsonResponse([
+            'status' => 'success',
+            'options' => ['navs' => $navs , 'roles' => $roles , 'member' =>$member]
+        ], 200);
+
+
+
+    }
     public function update(UpdateTeamMemberRequest $request, TeamMember $member):  RedirectResponse
     {
         $data = $request->validated();
@@ -62,6 +81,7 @@ class TeamMemberController extends Controller
 //        return redirect()->route('team.members.index')->with('success', 'Team Member updated successfully.');
         return to_route('team.members.index');
     }
+
 
 
     public function destroy(TeamMember $member): RedirectResponse
