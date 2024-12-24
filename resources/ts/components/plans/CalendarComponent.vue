@@ -45,7 +45,7 @@ export default defineComponent({
         return () =>
             h("div", { class: "p-4 w-full" }, [
                 // Month navigation and title
-                h("div", { class: "flex justify-between items-center mb-2" }, [
+                h("div", { class: "flex flex-col sm:flex-row justify-between items-center mb-2 gap-2" }, [
                     h(
                         "button",
                         {
@@ -71,12 +71,12 @@ export default defineComponent({
                 h(
                     "div",
                     {
-                        class: "grid grid-cols-7 gap-2 text-center text-gray-700 bg-white p-3 rounded shadow",
+                        class: "grid grid-cols-7 sm:grid-cols-7 gap-2 text-center text-gray-700 bg-white p-3 rounded shadow",
                     },
                     [
                         // Day headers
                         ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) =>
-                            h("div", { class: "font-semibold" }, day)
+                            h("div", { class: "font-semibold text-xs sm:text-sm" }, day)
                         ),
 
                         // Calendar days
@@ -85,7 +85,7 @@ export default defineComponent({
                             return h(
                                 "div",
                                 {
-                                    class: `h-16 border rounded flex flex-col justify-center items-center hover:bg-gray-200 cursor-pointer ${
+                                    class: `h-12 sm:h-16 border rounded flex flex-col justify-center items-center hover:bg-gray-200 cursor-pointer ${
                                         day.isSame(moment(), "day")
                                             ? "bg-blue-100"
                                             : day.month() !== currentDate.value.month()
@@ -98,7 +98,7 @@ export default defineComponent({
                                     // Day number
                                     h(
                                         "span",
-                                        { class: "text-sm font-medium" },
+                                        { class: "text-xs sm:text-sm font-medium" },
                                         day.date().toString()
                                     ),
 
@@ -107,17 +107,21 @@ export default defineComponent({
                                     h(
                                         "div",
                                         {
-                                            class: "flex gap-2 mt-2 justify-center items-center",
+                                            class: "flex flex-wrap gap-1 sm:gap-2 mt-1 sm:mt-2 justify-center items-center",
                                         },
                                         eventsForDay.map((event) =>
                                             h(
                                                 "div",
                                                 {
-                                                    class: `w-6 h-6 flex items-center justify-center rounded-full text-xs text-white ${
+                                                    class: `w-4 h-4 sm:w-3 sm:h-3 lg:w-6 lg:h-6 flex items-center justify-center rounded-full text-[10px] sm:text-xs lg:text-sm text-white ${
                                                         event.type === "draft"
                                                             ? "bg-yellow-500"
                                                             : "bg-teal-500"
                                                     }`,
+                                                    style: {
+                                                        minWidth: "1rem", // Ensures a consistent circular size
+                                                        minHeight: "1rem",
+                                                    },
                                                 },
                                                 event.count.toString()
                                             )
@@ -125,12 +129,13 @@ export default defineComponent({
                                     ),
                                 ]
                             );
-                        }),
-                    ]
+                        })
+
+    ]
                 ),
 
                 // Legend
-                h("div", { class: "flex gap-4 mt-4 text-sm items-center" }, [
+                h("div", { class: "flex flex-col sm:flex-row gap-2 sm:gap-4 mt-4 text-xs sm:text-sm items-center" }, [
                     h("div", { class: "flex items-center gap-1" }, [
                         h("div", {
                             class: "w-4 h-4 rounded-full bg-yellow-500 inline-block",
