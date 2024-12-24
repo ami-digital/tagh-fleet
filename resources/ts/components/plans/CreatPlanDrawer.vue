@@ -1,16 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
-import vehicle from '@images/svg/vehicle.svg';
-import person from '@images/svg/person.svg';
-import timer from '@images/svg/timer.svg';
-import home from '@images/svg/home-icon.svg';
-import coffee from '@images/svg/coffee_cup.svg';
-import book from '@images/svg/book.svg';
-import flag from '@images/svg/flag.svg';
-import location from '@images/svg/location.svg';
-import grid from '@images/svg/grid_box.svg';
-import key from '@images/svg/key.svg';
 
 const model = defineModel({required : true, default: false});
 
@@ -28,97 +18,14 @@ const emits = defineEmits<{
   (e : 'onSubmit'): void;
 }>();
 
-const name = ref('')
-const skills = ref('')
-const maxNumberOfStop = ref('')
-const capacity = ref('')
-const startTime = ref('')
-const endTime = ref('')
-const startAddress = ref('')
-const endAddress = ref('')
-const defalult = ref('')
+const planName = ref('Plan 1');
+const routeDate = ref('24/12/2024');
 
-const breakStart = ref('')
-const breakEnd = ref('')
-const breakLength = ref('')
-const IncludeBreak = ref(false)
+const menageStops = ref(false);
 
-const driverName = ref('')
-const driverEmail = ref('')
-const driverPassword = ref('')
-const driverPhone = ref('')
-const driverRoles = ref([{label:'', value: ''}])
-const driverNav = ref({label:'Google Maps', value: 'googleMaps'})
-
-const driverRolesOptions = ref([
-    {label:'Test', value: 'test'},
-    {label:'Test2', value: 'test2'},
-    {label:'Test3', value: 'test3'},
-])
-
-const driverNavOptions = ref([
-    {label:'Google Maps', value: 'googleMaps'},
-    {label:'Waze', value: 'Waze'},
-    {label:'Apple Maps', value: 'appleMap'},
-])
-
-
-
-const availability = ref('fullDay')
-const startLocation = ref('depot')
-const endLocation = ref('depot')
-
-const availabilityBtnGroup = ref([
-    {label: 'Full Day', value: 'fullDay'},
-    {label: 'Specific Times', value: 'specificTimes'},
-    {label: 'Start Now', value: 'startNow'}
-])
-const startLocationBtnGroup = ref([
-    {label: 'Depot', value: 'depot'},
-    {label: 'Other', value: 'other'},
-    {label: 'App Location', value: 'appLocation', disabled:true}
-])
-const endLocationBtnGroup = ref([
-    {label: 'Depot', value: 'depot'},
-    {label: 'Other', value: 'other'},
-    {label: 'Last Stop', value: 'lastStop'}
-])
-const skillsList = ref([
-    {label: 'No Skills Found', value: 'empty',},
-])
-
-const driver = ref({label:'(No Driver)', value: 'noDriver'},)
-
-const driverList = ref([
-    {label:'(Add New Driver)', value: 'newDriver'},
-    {label:'(No Driver)', value: 'noDriver'},
-    {label:'Haseeb', value: 'haseeb'},
-])
-
-watch(driver, (newValue) => {
-    if (newValue.value === 'newDriver') {
-        addDriverDialog.value = true;
-    }
-});
-
-const addDriverDialog = ref(false)
-
-const addNewDriver = () => {
-    if (driverName.value) {
-        const newDriver = { label: driverName.value, value: driverName.value.toLowerCase() };
-        driverList.value.push(newDriver);
-        driver.value = newDriver;
-        driverName.value = '';
-        addDriverDialog.value = false;
-    }
-};
-const closeDialog = () => {
-    if (!name.value) {
-        driver.value = { label: '(No Driver)', value: 'noDriver' };
-    }
-    addDriverDialog.value = false;
-};
-
+const  addStopManually = () => {
+    menageStops.value = true;
+}
 
 </script>
 
@@ -137,17 +44,112 @@ const closeDialog = () => {
             <section class="grid grid-cols-4 gap-x-4">
                 <q-card class="p-2">
 
+                    <section>
+                        <q-card-section class="q-pb-none">
+                            <div class="grid grid-cols-2 gap-x-2" >
+                                <div>
+                                    <div class="">
+                                        <div class="mb-4 flex gap-2 text-accent">
+                                            <span>Plan Name:</span>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                {{planName}}
+                                                 <q-btn
+                                                     unelevated
+                                                     padding="4px"
+                                                     size="xs"
+                                                     text-color="primary"
+                                                     @click.stop=""
+                                                     icon="border_color"
+                                                 >
+
+                                                <q-menu anchor="bottom right" self="top right">
+                                                    <q-item>
+                                                        <div class="flex no-wrap search-input">
+                                                            <div>
+                                                                <q-input
+                                                                     v-model="planName"
+                                                                     outlined
+                                                                     dense
+                                                                     class="text-gray-app min-w-[200px] bg-white"
+                                                                     placeholder="Type Plan Name"
+                                                                >
+                                                                </q-input>
+                                                            </div>
+
+                                                            <q-btn
+                                                                label="Save"
+                                                                dense
+                                                                color="primary"
+                                                                unelevated
+                                                                size=""
+                                                                padding="8px 14px"
+                                                                class="mx-2"
+                                                                v-close-popup
+                                                            />
+                                                        </div>
+                                                    </q-item>
+                                                </q-menu>
+                                            </q-btn>
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="">
+                                        <div class="mb-1 flex gap-2 text-accent">
+                                            <span>Route Date:</span>
+                                        </div>
+                                        <div>
+                                            <q-input dense v-model="routeDate" mask="date" :rules="['date']">
+                                                <template v-slot:append>
+                                                    <q-icon name="event" class="cursor-pointer">
+                                                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                                                            <q-date v-model="routeDate">
+                                                                <div class="row items-center justify-end">
+                                                                    <q-btn v-close-popup label="Close" color="primary" flat />
+                                                                </div>
+                                                            </q-date>
+                                                        </q-popup-proxy>
+                                                    </q-icon>
+                                                </template>
+                                            </q-input>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </q-card-section>
+                        <q-separator />
+                    </section>
+
                     <section class="h-[42vh] overflow-y-auto border-b">
                         <q-card-section>
-                            <div class="">
+                            <div class="flex justify-between">
                                 <div class="font-semibold text-[16px]">
-                                    Stops
+                                    {{menageStops ? 'Manage Stops' : 'Stops'}}
                                     <span class="bg-primary text-white text-center rounded-full px-1.5 py-0.5 w-7 inline-block font-normal">0</span>
+                                </div>
+                                <div v-if="menageStops">
+                                    <q-btn
+                                        label="Done"
+                                        color="primary"
+                                        unelevated
+                                        dense
+                                        icon="check"
+                                        padding="4px 6px"
+                                        size="sm"
+                                        @click="menageStops = false"
+                                    />
                                 </div>
                             </div>
                         </q-card-section>
 
-                        <q-card-section style="padding-top: 0">
+                        <q-card-section v-if="!menageStops" style="padding-top: 0">
                             <div class="text-accent">
                                 Add stops to your plan to get started
                             </div>
@@ -158,7 +160,7 @@ const closeDialog = () => {
                                     padding="14px 24px"
                                     v-ripple
                                     class="w-full bg-primary cursor-pointer  text-white px-6 py-3 my-4"
-                                    @click="console.log('')"
+                                    @click="addStopManually"
                                 >
                                     <q-card-section class="flex items-center q-pa-none">
                                         <q-icon
@@ -243,145 +245,6 @@ const closeDialog = () => {
     </section>
   </transition>
 
-    <q-dialog persistent v-model="addDriverDialog" v-if="driver.value === 'newDriver'">
-        <q-card class="sm:min-w-[800px] max-w-[70vh] q-px-md q-py-md rounded-md" >
-
-            <q-card-section class="flex justify-between items-center no-wrap q-py-none">
-                <div class="text-lg font-semibold">Add New Driver</div>
-                <q-btn
-                    flat
-                    round
-                    icon="close"
-                    class=" hover:text-red-700"
-                    @click="closeDialog"
-                    unelevated
-                >
-                </q-btn>
-            </q-card-section>
-
-            <q-card-section>
-                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
-                    <div class="col-span-2 text-right">
-                        <span class="text-negative">*</span>
-                        <label>Name :</label>
-                    </div>
-                    <div class="col-span-10">
-                        <q-input
-                            v-model="driverName"
-                            dense
-                            outlined
-                            placeholder="Driver Name"
-                        />
-                    </div>
-                </div>
-
-                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
-                    <div class="col-span-2 text-right">
-                        <span class="text-negative">*</span>
-                        <label>Email :</label>
-                    </div>
-                    <div class="col-span-10">
-                        <q-input
-                            v-model="driverEmail"
-                            dense
-                            outlined
-                            placeholder="Enter Email"
-                        />
-                    </div>
-                </div>
-
-                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
-                    <div class="col-span-2 text-right">
-                        <span class="text-negative">*</span>
-                        <label>Password :</label>
-                    </div>
-                    <div class="col-span-10">
-                        <q-input
-                            v-model="driverPassword"
-                            dense
-                            outlined
-                            placeholder="Password"
-                        />
-                    </div>
-                </div>
-
-                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
-                    <div class="col-span-2 text-right">
-                        <span class="text-negative">*</span>
-                        <label>Phone :</label>
-                    </div>
-                    <div class="col-span-10">
-                        <q-input
-                            v-model="driverPhone"
-                            dense
-                            outlined
-                            placeholder="Add Phone Number"
-                        />
-                    </div>
-                </div>
-
-
-                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
-                    <div class="col-span-2 text-right">
-                        <span class="text-negative">*</span>
-                        <label>Roles :</label>
-                    </div>
-                    <div class="col-span-10">
-                        <q-select
-                            v-model="driverRoles.value"
-                            dense
-                            outlined
-                            placeholder="Select Team Member's Roles"
-                            :options="driverRolesOptions"
-                            multiple
-                            use-chips
-                            options-selected-class="bg-[#E8F4FD] text-primary font-bold option-selected"
-                        />
-                    </div>
-                </div>
-
-                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
-                    <div class="col-span-2 text-right">
-                        <span class="text-negative">*</span>
-                        <label>Sat Nav :</label>
-                    </div>
-                    <div class="col-span-10">
-                        <q-select
-                            v-model="driverNav"
-                            dense
-                            outlined
-                            :options="driverNavOptions"
-                            options-selected-class="bg-[#E8F4FD] text-primary font-bold option-selected"
-                        />
-                    </div>
-                </div>
-            </q-card-section>
-
-            <q-card-actions align="right">
-                <q-btn
-                    outline
-                    size="md"
-                    padding="4px 14px"
-                    color="negative"
-                    label="Cancel"
-                    @click="closeDialog"
-                    style="font-weight: normal; border-radius: 6px; margin-right: 8px"
-                />
-                <q-btn
-                    label="Save"
-                    unelevated
-                    dense
-                    filled
-                    text-color="white"
-                    size="md"
-                    padding="4px 14px"
-                    class="  bg-primary "
-                    style="font-weight: normal; border-radius: 6px;"
-                    @click="addNewDriver"
-                />
-            </q-card-actions>
-        </q-card>
-    </q-dialog>
 </template>
 
 <style scoped>
