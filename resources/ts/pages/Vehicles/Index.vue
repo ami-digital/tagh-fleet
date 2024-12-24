@@ -12,7 +12,7 @@ const props = defineProps({
 })
 
 
-const {openAddVehicleDrawer , isCreateDrawerOpen } = useVehicles()
+const {openAddVehicleDrawer , isCreateDrawerOpen , reset } = useVehicles()
 const search = ref('');
 
 
@@ -30,6 +30,8 @@ const filteredVehicle = computed(() => {
 })
 
 
+
+onUnmounted(reset)
 
 </script>
 

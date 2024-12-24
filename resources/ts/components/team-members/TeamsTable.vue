@@ -3,12 +3,15 @@ import { ref } from "vue";
 import {router} from "@inertiajs/vue3";
 import {route} from "ziggy-js";
 
+import {useTeamMembers} from "../../core/composable/useTeamMembers";
+
 
 interface Props {
     items : any[]
 }
 
 withDefaults(defineProps<Props>() , {items : () => []})
+const {openEditTeamMemberDrawer} = useTeamMembers()
 
 const columns = ref([
     { name: "name", label: "Name", field: "name",  align: 'left', sortable: true },
@@ -54,16 +57,17 @@ const columns = ref([
 
             <template v-slot:body-cell-actions="props">
                 <td style="text-align: right">
-<!--                    <q-btn-->
-<!--                        flat-->
-<!--                        round-->
-<!--                        icon="border_color"-->
-<!--                        size="sm"-->
-<!--                        class=" hover:text-blue-700 mx-2"-->
-<!--                        v-close-popup-->
-<!--                        unelevated-->
-<!--                    >-->
-<!--                    </q-btn>-->
+                    <q-btn
+                        @click.prevent="openEditTeamMemberDrawer(props.row.id )"
+                        flat
+                        round
+                        icon="border_color"
+                        size="sm"
+                        class=" hover:text-blue-700 mx-2"
+                        v-close-popup
+                        unelevated
+                    >
+                    </q-btn>
                     <q-btn
                         @click="router.delete(route('team.members.destroy', { member: props.row.id }))"
                         flat

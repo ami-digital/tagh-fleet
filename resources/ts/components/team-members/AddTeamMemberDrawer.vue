@@ -11,11 +11,11 @@ const emits = defineEmits<{
 }>();
 
 
-const $page = usePage()
+
 
 const model = defineModel({ required: true, default: false });
 
-const {rolesOptions , satNavOptions,isCreateDrawerOpen ,isCreateLoaderActive , DEFAULT_TEAM_MEMBER_FORM } = useTeamMembers()
+const {rolesOptions , satNavOptions,isCreateDrawerOpen ,isCreateLoaderActive , DEFAULT_TEAM_MEMBER_FORM ,isOperationCreateMode, defaultTeamMemberForm } = useTeamMembers()
 
 
 const form = useForm<TeamMemberForm>({...DEFAULT_TEAM_MEMBER_FORM})
@@ -30,7 +30,23 @@ const submit = async () => {
 
 
     isCreateLoaderActive.value = true
+    if(form?.id && !isOperationCreateMode.value) {
+        form.put(route('team.members.update', { member: form?.id}) , {
+            preserveState: true,
+            onSuccess :() =>{
+                isCreateDrawerOpen.value = false
 
+                router.visit(route('team.members.index'))
+            },
+
+            onFinish : () => {
+                isCreateLoaderActive.value = false
+            }
+        })
+
+
+        return
+    }
     form.post(route('team.members.store'), {
         preserveState: true,
         onSuccess: () => {
@@ -43,6 +59,11 @@ const submit = async () => {
         }
     })
 }
+
+watchEffect(() => {
+    const values = JSON.parse(JSON.stringify({...defaultTeamMemberForm.value}))
+    Object.assign(form , values)
+})
 
 </script>
 
