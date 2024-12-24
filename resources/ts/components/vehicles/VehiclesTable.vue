@@ -3,6 +3,7 @@ import { ref } from "vue";
 
 import {router} from "@inertiajs/vue3";
 import {route} from "ziggy-js";
+import {formatToTitleCase} from "../../core/utils";
 
 interface Props {
     items : any[]
@@ -53,6 +54,21 @@ const columns = ref([
             <template v-slot:body-cell-driver="props">
                 <td style="text-align: left">
                     {{props.row?.driver?.name}}
+                </td>
+            </template>
+            <template v-slot:body-cell-start_location="props">
+                <td style="text-align: left">
+                    {{formatToTitleCase(props.row?.start_location)}}
+                </td>
+            </template>
+            <template v-slot:body-cell-end_location="props">
+                <td style="text-align: left">
+                    {{formatToTitleCase(props.row?.end_location)}}
+                </td>
+            </template>
+            <template v-slot:body-cell-availability="props">
+                <td style="text-align: left">
+                    {{formatToTitleCase(props.row?.availability)}}
                 </td>
             </template>
 

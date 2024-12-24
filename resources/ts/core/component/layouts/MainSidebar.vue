@@ -164,7 +164,7 @@ onUnmounted(() => {
                 </div>
                 <div class="side-links">
                     <q-item
-                        :class="currentUrl === '/vehicles' ? 'bg-blue-100 active-side-link' : ''"
+                        :class="currentUrl === '/vehicles/vehicles' ? 'bg-blue-100 active-side-link' : ''"
                         clickable
                         @click="simpleSideLinkClick('vehicles.index')"
                         tag="div"
@@ -172,7 +172,7 @@ onUnmounted(() => {
                     >
                         <div class="  flex items-center">
                             <q-icon
-                                :name="currentUrl === '/vehicles' ? `img:${vehicleActiveSvg}` : `img:${vehicleSvg}`"
+                                :name="currentUrl === '/vehicles/vehicles' ? `img:${vehicleActiveSvg}` : `img:${vehicleSvg}`"
                                 class="p-0 text-grey"
                                 size="24px"
                             />

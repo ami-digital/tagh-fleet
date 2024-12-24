@@ -16,7 +16,13 @@ export const isEmptyArray = (arr: unknown): boolean => {
     return Array.isArray(arr) && arr.length === 0;
 };
 
-
+export function formatToTitleCase(value) {
+    return value
+        .toLowerCase()
+        .split('_')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}
 export const isNullOrUndefined = (
     value: unknown
 ): value is undefined | null => {
