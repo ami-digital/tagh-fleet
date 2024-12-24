@@ -15,8 +15,8 @@ const columns = ref([
     { name: "email", label: "Email", field: "email",  align: 'left', sortable: true },
     { name: "phone", label: "Phone", field: "phone", align: 'left',  sortable: true,},
     { name: "roles", label: "Roles", field: "roles",  align: 'left', sortable: true },
-    { name: "lastLogin", label: "Last Login", field: "lastLogin",  align: 'left', sortable: true },
-    { name: "appVersion", label: "App Version", field: "appVersion",  align: 'left', sortable: true },
+    { name: "sat_nav", label: "Sat nav", field: "sat_nav",  align: 'left', sortable: true },
+
     { name: "actions", label: "", field: "actions",  align: 'right', },
 
 ]);

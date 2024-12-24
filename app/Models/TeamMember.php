@@ -9,4 +9,5 @@ class TeamMember extends Model
 {
     use  HasRoles ;
     protected $guarded =['roles'];
+    protected $hidden =['password'];
 }

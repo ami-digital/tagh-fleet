@@ -4,7 +4,6 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    '// Read more': https://github.com/vuejs/vue-next/pull/3399
     MainLayout: typeof import('./resources/ts/layouts/MainLayout.vue')['default']
   }
 }

@@ -43,6 +43,8 @@ const filteredTeams = computed(() => {
             <q-separator class="flex-1" />
         </section>
 
+
+
         <!-- Responsive Section -->
         <section class="flex flex-col sm:flex-row sm:items-center sm:justify-between my-3 px-6 q-gutter-x-md gap-3">
             <!-- Search Input -->

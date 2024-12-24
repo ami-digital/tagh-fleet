@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TeamMemberController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,7 +47,15 @@ Route::get('/plans', function () {
     return Inertia\Inertia::render('Plans/Index');
 })->name('plans.index');
 
-Route::get('/settings', function () {
-    return Inertia\Inertia::render('Settings/Index');
-})->name('settings.index');
+
+
+Route::prefix('settings')
+    ->name('settings.') ->group(function () {
+
+        Route::get('/', [SettingsController::class, 'getSettings'])->name('index');
+        Route::post('/update', [SettingsController::class, 'updateSettings'])->name('update');
+    });
+
+
+
 
