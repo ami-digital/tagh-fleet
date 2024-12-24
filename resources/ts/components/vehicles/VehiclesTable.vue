@@ -1,56 +1,26 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import {event} from "quasar";
 
+import {router} from "@inertiajs/vue3";
+import {route} from "ziggy-js";
+import {formatToTitleCase} from "../../core/utils";
 
+interface Props {
+    items : any[]
+}
+
+withDefaults(defineProps<Props>() , {items : () => []})
 
 const columns = ref([
     { name: "name", label: "Name", field: "name",  align: 'left', sortable: true },
     { name: "driver", label: "Driver", field: "driver",  align: 'left', sortable: true },
-    { name: "startLocation", label: "Start Location", field: "startLocation", align: 'left',},
-    { name: "endLocation", label: "End Location", field: "endLocation",  align: 'left',  },
+    { name: "start_location", label: "Start Location", field: "start_location", align: 'left',},
+    { name: "end_location", label: "End Location", field: "end_location",  align: 'left',  },
     { name: "availability", label: "Availability", field: "availability",  align: 'left', },
-    { name: "driverBreak", label: "Driver Break", field: "driverBreak",  align: 'left', },
-    { name: "overnight", label: "Overnight", field: "Overnight",  align: 'left', },
-    { name: "qty", label: "QTY", field: "qty",  align: 'left', },
+    { name: "max_number_of_stops", label: "Number of stops", field: "max_number_of_stops",  align: 'left', },
+    { name: "actions", label: "", field: "actions",  align: 'left', },
 ]);
 
-const rows = ref([
-    {
-        id: 1,
-        driver: "Chantelle",
-        name: "LJ12 XJD",
-        startLocation: "Depot",
-        endLocation: "Depot",
-        availability: "After 1:14 PM",
-        Overnight: "0",
-        driverBreak: "-",
-        qty: "20",
-    },
-    {
-        id: 1,
-        driver: "Chantelle",
-        name: "LJ12 XJD",
-        startLocation: "Depot",
-        endLocation: "Depot",
-        availability: "After 1:14 PM",
-        Overnight: "0",
-        driverBreak: "-",
-        qty: "20",
-    },
-    {
-        id: 1,
-        driver: "Chantelle",
-        name: "LJ12 XJD",
-        startLocation: "Depot",
-        endLocation: "Depot",
-        availability: "After 1:14 PM",
-        Overnight: "0",
-        driverBreak: "-",
-        qty: "20",
-    },
-
-]);
 
 
 
@@ -62,7 +32,7 @@ const rows = ref([
 
     <section id="order-table">
         <q-table
-            :rows="rows"
+            :rows="items"
             :columns="columns"
             row-key="id"
             flat
@@ -81,20 +51,32 @@ const rows = ref([
                     {{ props.col.label }}
                 </q-th>
             </template>
+            <template v-slot:body-cell-driver="props">
+                <td style="text-align: left">
+                    {{props.row?.driver?.name}}
+                </td>
+            </template>
+            <template v-slot:body-cell-start_location="props">
+                <td style="text-align: left">
+                    {{formatToTitleCase(props.row?.start_location)}}
+                </td>
+            </template>
+            <template v-slot:body-cell-end_location="props">
+                <td style="text-align: left">
+                    {{formatToTitleCase(props.row?.end_location)}}
+                </td>
+            </template>
+            <template v-slot:body-cell-availability="props">
+                <td style="text-align: left">
+                    {{formatToTitleCase(props.row?.availability)}}
+                </td>
+            </template>
 
-            <template v-slot:body-cell-actions="">
+            <template v-slot:body-cell-actions="props">
                 <td style="text-align: right">
+
                     <q-btn
-                        flat
-                        round
-                        icon="border_color"
-                        size="sm"
-                        class=" hover:text-blue-700 mx-2"
-                        v-close-popup
-                        unelevated
-                    >
-                    </q-btn>
-                    <q-btn
+                        @click="router.delete(route('vehicles.destroy', { vehicle: props.row.id }))"
                         flat
                         round
                         icon="delete_outline"

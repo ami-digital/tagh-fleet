@@ -1,17 +1,35 @@
 <script setup lang="ts">
 
 import { Head } from "@inertiajs/vue3";
-import { ref } from "vue"
-import MainLayout from "../../layouts/MainLayout.vue";
+import {computed, ref} from "vue"
 import VehiclesTable from "../../components/vehicles/VehiclesTable.vue";
-import OrderViewDrawer from "../../components/orders/OrderViewDrawer.vue";
-import OrderViewDrawerCopy from "../../components/orders/OrderViewDrawerCopy.vue";
 import CreateVehicleDrawer from "../../components/vehicles/CreateVehicleDrawer.vue";
-import TeamsTable from "../../components/team-members/TeamsTable.vue";
-import AddTeamMemberDrawer from "../../components/team-members/AddTeamMemberDrawer.vue";
 
+import {useVehicles} from "../../core/composable/useVehicles";
+
+const props = defineProps({
+    vehicles: Array
+})
+
+
+const {openAddVehicleDrawer , isCreateDrawerOpen } = useVehicles()
 const search = ref('');
-const showModal = ref(false)
+
+
+const filteredVehicle = computed(() => {
+
+    if(!search.value) {
+        return props.vehicles
+    }
+    const searchTerm = search.value.toLowerCase();
+    return props.vehicles.filter(vehicle =>
+        vehicle?.name.toLowerCase().indexOf(searchTerm) > -1 ||
+        vehicle?.driver?.name.toLowerCase().indexOf(searchTerm) > -1
+
+    );
+})
+
+
 
 </script>
 
@@ -49,7 +67,7 @@ const showModal = ref(false)
             <!-- Add Button -->
             <div class="w-full sm:w-auto">
                 <q-btn
-                    @click="showModal = true"
+                    @click="() => openAddVehicleDrawer()"
                     label="Create Vehicle"
                     unelevated
                     dense
@@ -63,10 +81,10 @@ const showModal = ref(false)
         </section>
 
         <section class="my-3 px-6">
-            <VehiclesTable />
+            <VehiclesTable :items="filteredVehicle" />
         </section>
 
-        <CreateVehicleDrawer @close="showModal = false" v-model="showModal" />
+        <CreateVehicleDrawer @close="isCreateDrawerOpen = false" v-model="isCreateDrawerOpen" />
     </q-page>
 
 </template>

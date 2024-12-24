@@ -6,120 +6,51 @@ import person from '@images/svg/person.svg';
 import timer from '@images/svg/timer.svg';
 import home from '@images/svg/home-icon.svg';
 import coffee from '@images/svg/coffee_cup.svg';
-import book from '@images/svg/book.svg';
+
 import flag from '@images/svg/flag.svg';
 import location from '@images/svg/location.svg';
 import grid from '@images/svg/grid_box.svg';
 import key from '@images/svg/key.svg';
+import {router, useForm, usePage} from "@inertiajs/vue3";
+
+import {useVehicles, VehicleForm} from "../../core/composable/useVehicles";
+
+import {route} from "ziggy-js";
+const emits = defineEmits<{
+    (e : 'close'): void;
+    (e : 'onSubmit'): void;
+}>();
+
 
 const model = defineModel({required : true, default: false});
 
-interface Props {
-  isLoaderActive?: boolean;
-  isCreateLoaderActive?: boolean;
+const {skillsOptions , driversOptions,isCreateDrawerOpen ,isCreateLoaderActive , DEFAULT_VEHICLE_FORM ,availabilityBtnGroup ,startLocationBtnGroup ,endLocationBtnGroup} = useVehicles()
+
+
+const form = useForm<VehicleForm>({...DEFAULT_VEHICLE_FORM})
+
+
+
+
+
+const $page = usePage()
+const submit = async () => {
+
+
+    isCreateLoaderActive.value = true
+
+    form.post(route('vehicles.store'), {
+        preserveState: true,
+        onSuccess: () => {
+            isCreateDrawerOpen.value = false
+            router.visit(route('vehicles.index'))
+        },
+
+        onFinish : () => {
+            isCreateLoaderActive.value = false
+        }
+    })
 }
-
-
-
-withDefaults(defineProps<Props>() , {isLoaderActive : true ,isCreateLoaderActive : false });
-
-const emits = defineEmits<{
-  (e : 'close'): void;
-  (e : 'onSubmit'): void;
-}>();
-
-const name = ref('')
-const skills = ref('')
-const maxNumberOfStop = ref('')
-const capacity = ref('')
-const startTime = ref('')
-const endTime = ref('')
-const startAddress = ref('')
-const endAddress = ref('')
-const defalult = ref('')
-
-const breakStart = ref('')
-const breakEnd = ref('')
-const breakLength = ref('')
-const IncludeBreak = ref(false)
-
-const driverName = ref('')
-const driverEmail = ref('')
-const driverPassword = ref('')
-const driverPhone = ref('')
-const driverRoles = ref([{label:'', value: ''}])
-const driverNav = ref({label:'Google Maps', value: 'googleMaps'})
-
-const driverRolesOptions = ref([
-    {label:'Test', value: 'test'},
-    {label:'Test2', value: 'test2'},
-    {label:'Test3', value: 'test3'},
-])
-
-const driverNavOptions = ref([
-    {label:'Google Maps', value: 'googleMaps'},
-    {label:'Waze', value: 'Waze'},
-    {label:'Apple Maps', value: 'appleMap'},
-])
-
-
-
-const availability = ref('fullDay')
-const startLocation = ref('depot')
-const endLocation = ref('depot')
-
-const availabilityBtnGroup = ref([
-    {label: 'Full Day', value: 'fullDay'},
-    {label: 'Specific Times', value: 'specificTimes'},
-    {label: 'Start Now', value: 'startNow'}
-])
-const startLocationBtnGroup = ref([
-    {label: 'Depot', value: 'depot'},
-    {label: 'Other', value: 'other'},
-    {label: 'App Location', value: 'appLocation', disabled:true}
-])
-const endLocationBtnGroup = ref([
-    {label: 'Depot', value: 'depot'},
-    {label: 'Other', value: 'other'},
-    {label: 'Last Stop', value: 'lastStop'}
-])
-const skillsList = ref([
-    {label: 'No Skills Found', value: 'empty',},
-])
-
-const driver = ref({label:'(No Driver)', value: 'noDriver'},)
-
-const driverList = ref([
-    {label:'(Add New Driver)', value: 'newDriver'},
-    {label:'(No Driver)', value: 'noDriver'},
-    {label:'Haseeb', value: 'haseeb'},
-])
-
-watch(driver, (newValue) => {
-    if (newValue.value === 'newDriver') {
-        addDriverDialog.value = true;
-    }
-});
-
-const addDriverDialog = ref(false)
-
-const addNewDriver = () => {
-    if (driverName.value) {
-        const newDriver = { label: driverName.value, value: driverName.value.toLowerCase() };
-        driverList.value.push(newDriver);
-        driver.value = newDriver;
-        driverName.value = '';
-        addDriverDialog.value = false;
-    }
-};
-const closeDialog = () => {
-    if (!name.value) {
-        driver.value = { label: '(No Driver)', value: 'noDriver' };
-    }
-    addDriverDialog.value = false;
-};
-
-
 </script>
 
 <template>
@@ -137,7 +68,7 @@ const closeDialog = () => {
             <section class="grid grid-cols-3 gap-x-4">
                 <q-card class="px-6 py-4">
                     <q-card-section>
-                        <div class="flex justify-between">
+                        <div class="flex justify-between items-center">
                             <div>
                                 <div class="">
                                     <q-btn round unelevated outline color="white" text-color="dark" size="sm" icon="keyboard_arrow_left" @click="() =>emits('close')" />
@@ -148,16 +79,16 @@ const closeDialog = () => {
                                 Create Vehicle
                             </span>
 
-<!--                            <q-btn-->
-<!--                                unelevated-->
-<!--                                dense-->
-<!--                                :icon="`img:${book}`"-->
-<!--                                text-color="primary"-->
-<!--                                size="md"-->
-<!--                                padding="4px 14px"-->
-<!--                                class="px-2 bg-white mr-3 mb-2 rounded-md border-primary"-->
-<!--                                style=" font-weight: normal; border-radius: 20px; border:1px solid;"-->
-<!--                            />-->
+                            <q-btn
+                                label="Save"
+                                @click.prevent="submit"
+                                :loading="isCreateLoaderActive"
+                                :disabled="isCreateLoaderActive"
+                                color="primary"
+                                unelevated
+
+                                class="mx-2"
+                            />
                         </div>
                     </q-card-section>
 
@@ -173,7 +104,8 @@ const closeDialog = () => {
 
                                     <div>
                                         <q-input
-                                            v-model="name"
+                                            v-model="form.name"
+                                            :error="!!form.errors.name"  :error-message="form.errors.name"
                                             dense
                                             outlined
                                         />
@@ -192,10 +124,14 @@ const closeDialog = () => {
 
                                     <div>
                                         <q-select
+
+                                            v-model="form.driver_id"
+                                            :options="driversOptions"
                                             outlined
                                             dense
-                                            v-model="driver"
-                                            :options="driverList"
+                                            map-options emit-value   option-label="name"
+                                            option-value="id"
+                                            :error="!!form.errors.driver_id"  :error-message="form.errors.driver_id"
                                             options-selected-class="bg-[#E8F4FD] text-primary font-bold option-selected"
                                         />
                                     </div>
@@ -219,7 +155,8 @@ const closeDialog = () => {
 
                                        <div>
                                            <q-btn-toggle
-                                               v-model="availability"
+                                               v-model="form.availability"
+                                               :error="!!form.errors.availability"  :error-message="form.errors.availability"
                                                toggle-color="primary"
                                                :options="availabilityBtnGroup"
                                                color="white"
@@ -227,8 +164,9 @@ const closeDialog = () => {
                                                unelevated
                                                class="border"
                                            />
+
                                            <div
-                                               v-if="availability === 'specificTimes'"
+                                               v-if="form.availability === 'SPECIFIC_TIMES'"
                                                class="grid grid-cols-2 gap-4 my-4"
                                            >
                                                <div>
@@ -238,7 +176,8 @@ const closeDialog = () => {
 
                                                    <div>
                                                        <q-input
-                                                           v-model="startTime"
+                                                           v-model="form.slot_start"
+                                                           :error="!!form.errors.slot_start"  :error-message="form.errors.slot_start"
                                                            dense
                                                            outlined
                                                            type="time"
@@ -253,7 +192,8 @@ const closeDialog = () => {
 
                                                    <div>
                                                        <q-input
-                                                           v-model="endTime"
+                                                           v-model="form.slot_end"
+                                                           :error="!!form.errors.slot_end"  :error-message="form.errors.slot_end"
                                                            dense
                                                            outlined
                                                            type="time"
@@ -271,7 +211,8 @@ const closeDialog = () => {
 
                                    <div class="flex-1">
                                        <q-toggle
-                                           v-model="IncludeBreak"
+                                           v-model="form.include_driver_break"
+                                           :error="!!form.errors.include_driver_break"  :error-message="form.errors.include_driver_break"
                                            color="primary"
                                            label="Include Driver Break"
                                            left-label
@@ -280,7 +221,7 @@ const closeDialog = () => {
                                        />
 
                                        <div
-                                           v-if="IncludeBreak"
+                                           v-if="form.include_driver_break"
                                            class="grid grid-cols-2 gap-4 my-4"
                                        >
                                            <div>
@@ -291,7 +232,8 @@ const closeDialog = () => {
 
                                                <div>
                                                    <q-input
-                                                       v-model="breakStart"
+                                                       v-model="form.break_start"
+                                                       :error="!!form.errors.break_start"  :error-message="form.errors.break_start"
                                                        dense
                                                        outlined
                                                        type="time"
@@ -307,7 +249,8 @@ const closeDialog = () => {
 
                                                <div>
                                                    <q-input
-                                                       v-model="breakEnd"
+                                                       v-model="form.break_end"
+                                                       :error="!!form.errors.break_end"  :error-message="form.errors.break_end"
                                                        dense
                                                        outlined
                                                        type="time"
@@ -326,7 +269,8 @@ const closeDialog = () => {
 
                                                <div>
                                                    <q-input
-                                                       v-model="breakLength"
+                                                       v-model="form.break_length"
+                                                       :error="!!form.errors.break_length"  :error-message="form.errors.break_length"
                                                        dense
                                                        outlined
                                                        type="number"
@@ -348,7 +292,7 @@ const closeDialog = () => {
 
                                 <div class="flex gap-x-2">
 
-                                    <q-icon :name="startLocation === 'other' ? `img:${location}` : `img:${home}`" color="primary" size="xs"/>
+                                    <q-icon :name="form.start_location === 'OTHER' ? `img:${location}` : `img:${home}`" color="primary" size="xs"/>
                                     <div class="flex-1">
                                         <div class="mb-1 text-accent">
                                             <label>Start Location</label>
@@ -356,7 +300,8 @@ const closeDialog = () => {
 
                                         <div>
                                             <q-btn-toggle
-                                                v-model="startLocation"
+                                                v-model="form.start_location"
+                                                :error="!!form.errors.start_location"  :error-message="form.errors.start_location"
                                                 toggle-color="primary"
                                                 :options="startLocationBtnGroup"
                                                 color="white"
@@ -365,7 +310,7 @@ const closeDialog = () => {
                                                 class="border"
                                             />
                                             <div
-                                                v-if="startLocation === 'other'"
+                                                v-if="form.start_location === 'OTHER'"
                                                 class="my-4"
                                             >
                                                 <div>
@@ -376,7 +321,8 @@ const closeDialog = () => {
 
                                                     <div>
                                                         <q-input
-                                                            v-model="startAddress"
+                                                            v-model="form.start_location_address"
+                                                            :error="!!form.errors.start_location_address"  :error-message="form.errors.start_location_address"
                                                             dense
                                                             outlined
                                                         />
@@ -388,7 +334,7 @@ const closeDialog = () => {
                                 </div>
 
                                 <div class="flex gap-x-2 mt-4">
-                                    <q-icon :name="endLocation === 'other' ? `img:${location}` : endLocation === 'lastStop' ? `img:${flag}` : `img:${home}`" color="primary" size="xs"/>
+                                    <q-icon :name="form.end_location === 'OTHER' ? `img:${location}` : form.end_location === 'OTHER' ? `img:${flag}` : `img:${home}`" color="primary" size="xs"/>
                                     <div class="flex-1">
                                         <div class="mb-1 text-accent">
                                             <label>End Location</label>
@@ -396,7 +342,7 @@ const closeDialog = () => {
 
                                         <div>
                                             <q-btn-toggle
-                                                v-model="endLocation"
+                                                v-model="form.end_location"
                                                 toggle-color="primary"
                                                 :options="endLocationBtnGroup"
                                                 color="white"
@@ -405,7 +351,7 @@ const closeDialog = () => {
                                                 class="border"
                                             />
                                             <div
-                                                v-if="endLocation === 'other'"
+                                                v-if="form.end_location === 'OTHER'"
                                                 class="my-4"
                                             >
                                                 <div>
@@ -416,7 +362,8 @@ const closeDialog = () => {
 
                                                     <div>
                                                         <q-input
-                                                            v-model="endAddress"
+                                                            v-model="form.end_location_address"
+                                                            :error="!!form.errors.end_location_address"  :error-message="form.errors.end_location_address"
                                                             dense
                                                             outlined
                                                         />
@@ -447,8 +394,9 @@ const closeDialog = () => {
                                         <q-select
                                             outlined
                                             dense
-                                            v-model="skills"
-                                            :options="skillsList"
+                                            v-model="form.skills"
+                                            :options="skillsOptions"
+                                            :error="!!form.errors.skills"  :error-message="form.errors.skills"
                                             options-selected-class="bg-[#E8F4FD] text-primary font-bold option-selected"
 
                                         />
@@ -465,7 +413,8 @@ const closeDialog = () => {
 
                                     <div>
                                         <q-input
-                                            v-model="maxNumberOfStop"
+                                            v-model="form.max_number_of_stops"
+                                            :error="!!form.errors.max_number_of_stops"  :error-message="form.errors.max_number_of_stops"
                                             dense
                                             outlined
                                             type="number"
@@ -486,7 +435,7 @@ const closeDialog = () => {
                                                         <q-item>
                                                             <div class="flex no-wrap search-input">
                                                                 <div>
-                                                                    <q-input v-model="defalult"
+                                                                    <q-input v-model="form.max_number_of_stops"
                                                                              outlined
                                                                              dense
                                                                              class="text-gray-app min-w-[200px] bg-white"
@@ -523,7 +472,8 @@ const closeDialog = () => {
 
                                     <div>
                                         <q-input
-                                            v-model="capacity"
+                                            v-model="form.capacity"
+                                            :error="!!form.errors.capacity"  :error-message="form.errors.capacity"
                                             dense
                                             outlined
                                             type="number"
@@ -544,7 +494,7 @@ const closeDialog = () => {
                                                             <q-item>
                                                                 <div class="flex no-wrap search-input">
                                                                    <div>
-                                                                       <q-input v-model="defalult"
+                                                                       <q-input v-model="form.capacity"
                                                                                 outlined
                                                                                 dense
                                                                                 class="text-gray-app min-w-[200px] bg-white"
@@ -592,145 +542,145 @@ const closeDialog = () => {
     </section>
   </transition>
 
-    <q-dialog persistent v-model="addDriverDialog" v-if="driver.value === 'newDriver'">
-        <q-card class="sm:min-w-[800px] max-w-[70vh] q-px-md q-py-md rounded-md" >
+<!--    <q-dialog persistent v-model="addDriverDialog" v-if="driver.value === 'newDriver'">-->
+<!--        <q-card class="sm:min-w-[800px] max-w-[70vh] q-px-md q-py-md rounded-md" >-->
 
-            <q-card-section class="flex justify-between items-center no-wrap q-py-none">
-                <div class="text-lg font-semibold">Add New Driver</div>
-                <q-btn
-                    flat
-                    round
-                    icon="close"
-                    class=" hover:text-red-700"
-                    @click="closeDialog"
-                    unelevated
-                >
-                </q-btn>
-            </q-card-section>
+<!--            <q-card-section class="flex justify-between items-center no-wrap q-py-none">-->
+<!--                <div class="text-lg font-semibold">Add New Driver</div>-->
+<!--                <q-btn-->
+<!--                    flat-->
+<!--                    round-->
+<!--                    icon="close"-->
+<!--                    class=" hover:text-red-700"-->
+<!--                    @click="closeDialog"-->
+<!--                    unelevated-->
+<!--                >-->
+<!--                </q-btn>-->
+<!--            </q-card-section>-->
 
-            <q-card-section>
-                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
-                    <div class="col-span-2 text-right">
-                        <span class="text-negative">*</span>
-                        <label>Name :</label>
-                    </div>
-                    <div class="col-span-10">
-                        <q-input
-                            v-model="driverName"
-                            dense
-                            outlined
-                            placeholder="Driver Name"
-                        />
-                    </div>
-                </div>
+<!--            <q-card-section>-->
+<!--                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">-->
+<!--                    <div class="col-span-2 text-right">-->
+<!--                        <span class="text-negative">*</span>-->
+<!--                        <label>Name :</label>-->
+<!--                    </div>-->
+<!--                    <div class="col-span-10">-->
+<!--                        <q-input-->
+<!--                            v-model="driverName"-->
+<!--                            dense-->
+<!--                            outlined-->
+<!--                            placeholder="Driver Name"-->
+<!--                        />-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
-                    <div class="col-span-2 text-right">
-                        <span class="text-negative">*</span>
-                        <label>Email :</label>
-                    </div>
-                    <div class="col-span-10">
-                        <q-input
-                            v-model="driverEmail"
-                            dense
-                            outlined
-                            placeholder="Enter Email"
-                        />
-                    </div>
-                </div>
+<!--                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">-->
+<!--                    <div class="col-span-2 text-right">-->
+<!--                        <span class="text-negative">*</span>-->
+<!--                        <label>Email :</label>-->
+<!--                    </div>-->
+<!--                    <div class="col-span-10">-->
+<!--                        <q-input-->
+<!--                            v-model="driverEmail"-->
+<!--                            dense-->
+<!--                            outlined-->
+<!--                            placeholder="Enter Email"-->
+<!--                        />-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
-                    <div class="col-span-2 text-right">
-                        <span class="text-negative">*</span>
-                        <label>Password :</label>
-                    </div>
-                    <div class="col-span-10">
-                        <q-input
-                            v-model="driverPassword"
-                            dense
-                            outlined
-                            placeholder="Password"
-                        />
-                    </div>
-                </div>
+<!--                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">-->
+<!--                    <div class="col-span-2 text-right">-->
+<!--                        <span class="text-negative">*</span>-->
+<!--                        <label>Password :</label>-->
+<!--                    </div>-->
+<!--                    <div class="col-span-10">-->
+<!--                        <q-input-->
+<!--                            v-model="driverPassword"-->
+<!--                            dense-->
+<!--                            outlined-->
+<!--                            placeholder="Password"-->
+<!--                        />-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
-                    <div class="col-span-2 text-right">
-                        <span class="text-negative">*</span>
-                        <label>Phone :</label>
-                    </div>
-                    <div class="col-span-10">
-                        <q-input
-                            v-model="driverPhone"
-                            dense
-                            outlined
-                            placeholder="Add Phone Number"
-                        />
-                    </div>
-                </div>
+<!--                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">-->
+<!--                    <div class="col-span-2 text-right">-->
+<!--                        <span class="text-negative">*</span>-->
+<!--                        <label>Phone :</label>-->
+<!--                    </div>-->
+<!--                    <div class="col-span-10">-->
+<!--                        <q-input-->
+<!--                            v-model="driverPhone"-->
+<!--                            dense-->
+<!--                            outlined-->
+<!--                            placeholder="Add Phone Number"-->
+<!--                        />-->
+<!--                    </div>-->
+<!--                </div>-->
 
 
-                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
-                    <div class="col-span-2 text-right">
-                        <span class="text-negative">*</span>
-                        <label>Roles :</label>
-                    </div>
-                    <div class="col-span-10">
-                        <q-select
-                            v-model="driverRoles.value"
-                            dense
-                            outlined
-                            placeholder="Select Team Member's Roles"
-                            :options="driverRolesOptions"
-                            multiple
-                            use-chips
-                            options-selected-class="bg-[#E8F4FD] text-primary font-bold option-selected"
-                        />
-                    </div>
-                </div>
+<!--                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">-->
+<!--                    <div class="col-span-2 text-right">-->
+<!--                        <span class="text-negative">*</span>-->
+<!--                        <label>Roles :</label>-->
+<!--                    </div>-->
+<!--                    <div class="col-span-10">-->
+<!--                        <q-select-->
+<!--                            v-model="driverRoles.value"-->
+<!--                            dense-->
+<!--                            outlined-->
+<!--                            placeholder="Select Team Member's Roles"-->
+<!--                            :options="driverRolesOptions"-->
+<!--                            multiple-->
+<!--                            use-chips-->
+<!--                            options-selected-class="bg-[#E8F4FD] text-primary font-bold option-selected"-->
+<!--                        />-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">
-                    <div class="col-span-2 text-right">
-                        <span class="text-negative">*</span>
-                        <label>Sat Nav :</label>
-                    </div>
-                    <div class="col-span-10">
-                        <q-select
-                            v-model="driverNav"
-                            dense
-                            outlined
-                            :options="driverNavOptions"
-                            options-selected-class="bg-[#E8F4FD] text-primary font-bold option-selected"
-                        />
-                    </div>
-                </div>
-            </q-card-section>
+<!--                <div class="input-group grid grid-cols-12 gap-2 mb-6 items-center">-->
+<!--                    <div class="col-span-2 text-right">-->
+<!--                        <span class="text-negative">*</span>-->
+<!--                        <label>Sat Nav :</label>-->
+<!--                    </div>-->
+<!--                    <div class="col-span-10">-->
+<!--                        <q-select-->
+<!--                            v-model="driverNav"-->
+<!--                            dense-->
+<!--                            outlined-->
+<!--                            :options="driverNavOptions"-->
+<!--                            options-selected-class="bg-[#E8F4FD] text-primary font-bold option-selected"-->
+<!--                        />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </q-card-section>-->
 
-            <q-card-actions align="right">
-                <q-btn
-                    outline
-                    size="md"
-                    padding="4px 14px"
-                    color="negative"
-                    label="Cancel"
-                    @click="closeDialog"
-                    style="font-weight: normal; border-radius: 6px; margin-right: 8px"
-                />
-                <q-btn
-                    label="Save"
-                    unelevated
-                    dense
-                    filled
-                    text-color="white"
-                    size="md"
-                    padding="4px 14px"
-                    class="  bg-primary "
-                    style="font-weight: normal; border-radius: 6px;"
-                    @click="addNewDriver"
-                />
-            </q-card-actions>
-        </q-card>
-    </q-dialog>
+<!--            <q-card-actions align="right">-->
+<!--                <q-btn-->
+<!--                    outline-->
+<!--                    size="md"-->
+<!--                    padding="4px 14px"-->
+<!--                    color="negative"-->
+<!--                    label="Cancel"-->
+<!--                    @click="closeDialog"-->
+<!--                    style="font-weight: normal; border-radius: 6px; margin-right: 8px"-->
+<!--                />-->
+<!--                <q-btn-->
+<!--                    label="Save"-->
+<!--                    unelevated-->
+<!--                    dense-->
+<!--                    filled-->
+<!--                    text-color="white"-->
+<!--                    size="md"-->
+<!--                    padding="4px 14px"-->
+<!--                    class="  bg-primary "-->
+<!--                    style="font-weight: normal; border-radius: 6px;"-->
+<!--                    @click="addNewDriver"-->
+<!--                />-->
+<!--            </q-card-actions>-->
+<!--        </q-card>-->
+<!--    </q-dialog>-->
 </template>
 
 <style scoped>
