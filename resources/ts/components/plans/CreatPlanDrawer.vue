@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
+import ManageVehicles from "../vehicles/ManageVehicles.vue";
 
 
 const model = defineModel({required : true, default: false});
@@ -22,10 +23,27 @@ const planName = ref('Plan 1');
 const routeDate = ref('24/12/2024');
 
 const menageStops = ref(false);
+const menageVehicles = ref(false);
+
+const  vehiclesDone = () => {
+    menageVehicles.value = false;
+    menageStops.value = false;
+}
+const  stopsDone = () => {
+    menageStops.value = false;
+    menageVehicles.value = false;
+}
 
 const  addStopManually = () => {
     menageStops.value = true;
+    menageVehicles.value = false;
 }
+
+const  menageVehiclesBtn = () => {
+    menageVehicles.value = true;
+    menageStops.value = false;
+}
+
 
 </script>
 
@@ -127,29 +145,47 @@ const  addStopManually = () => {
                         <q-separator />
                     </section>
 
-                    <section class="h-[42vh] overflow-y-auto border-b">
-                        <q-card-section>
+                    <section class="overflow-y-auto border-b" :class="menageStops ? 'h-[75vh]' : menageVehicles ? '' : 'h-[40vh]'">
+                        <q-card-section class="q-py-sm">
+
                             <div class="flex justify-between">
                                 <div class="font-semibold text-[16px]">
-                                    {{menageStops ? 'Manage Stops' : 'Stops'}}
+                                    {{menageStops || menageVehicles ? 'Manage Stops' : 'Stops'}}
                                     <span class="bg-primary text-white text-center rounded-full px-1.5 py-0.5 w-7 inline-block font-normal">0</span>
                                 </div>
-                                <div v-if="menageStops">
-                                    <q-btn
-                                        label="Done"
-                                        color="primary"
-                                        unelevated
-                                        dense
-                                        icon="check"
-                                        padding="4px 6px"
-                                        size="sm"
-                                        @click="menageStops = false"
-                                    />
+
+                                <div>
+                                    <div v-if="!menageStops && menageVehicles">
+                                        <q-btn
+                                            label="Manage Stops"
+                                            color="primary"
+                                            outline
+                                            unelevated
+                                            dense
+                                            icon="border_color"
+                                            padding="4px 6px"
+                                            size="sm"
+                                            @click="addStopManually"
+                                        />
+                                    </div>
+
+                                    <div v-if="menageStops">
+                                        <q-btn
+                                            label="Done"
+                                            color="primary"
+                                            unelevated
+                                            dense
+                                            icon="check"
+                                            padding="4px 6px"
+                                            size="sm"
+                                            @click="stopsDone"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </q-card-section>
 
-                        <q-card-section v-if="!menageStops" style="padding-top: 0">
+                        <q-card-section v-if="!menageStops && !menageVehicles" style="padding-top: 0">
                             <div class="text-accent">
                                 Add stops to your plan to get started
                             </div>
@@ -202,31 +238,90 @@ const  addStopManually = () => {
 <!--                                </q-card>-->
 <!--                            </div>-->
                         </q-card-section>
-                    </section>
 
-                    <section class="h-[42vh] overflow-y-auto ">
-                        <q-card-section>
-                            <div class="">
-                                <div class="font-semibold text-[16px]">
-                                    Vehicles
-                                    <span class="bg-primary text-white text-center rounded-full px-1.5 py-0.5 w-7 inline-block font-normal">1</span>
+                        <q-card-section v-if="menageStops">
+                            <div  >
+                                <div class="flex search-input mb-2">
+                                    <q-input
+                                        v-model="search"
+                                        outlined
+                                        dense
+                                        class="text-gray-app bg-white flex-1"
+                                        placeholder="Type Address to add or find a stop"
+                                    ></q-input>
+                                    <div class="h-8 w-12 bg-primary flex items-center justify-center cursor-pointer"
+                                         style="border-radius: 0 6px 6px 0">
+                                        <q-icon size="xs" class="text-gray-app inline-block" color="white" name="add" />
+                                    </div>
                                 </div>
                             </div>
                         </q-card-section>
 
-                        <q-card-section>
-                            <q-btn
-                                label="Manage Vehicles"
-                                unelevated
-                                outline
-                                color="primary"
-                                style="width: 100%"
-                                icon="directions_car"
-                                dense
-                            />
+
+                    </section>
+
+                    <section class="overflow-y-auto" :class="menageStops ? '': menageVehicles ? 'h-[75vh]' : 'h-[40vh]'">
+                        <q-card-section class="q-py-sm">
+                            <div :class="menageStops || menageVehicles ? 'flex justify-between' : ''">
+                                <div class="font-semibold text-[16px]" :class="menageStops || menageVehicles? 'mb-0' : 'mb-6'">
+                                    Vehicles
+                                    <span class="bg-primary text-white text-center rounded-full px-1.5 py-0.5 w-7 inline-block font-normal">1</span>
+                                </div>
+
+                                <div>
+                                    <div v-if="!menageVehicles">
+                                        <q-btn
+                                            label="Manage Vehicles"
+                                            color="primary"
+                                            outline
+                                            unelevated
+                                            dense
+                                            icon="directions_car"
+                                            size="md"
+                                            :style="menageVehicles ? '' : 'width:100%; padding:4px 6px;' "
+                                            @click="menageVehiclesBtn"
+                                        />
+                                    </div>
+
+                                    <div v-if="menageVehicles">
+                                        <q-btn
+                                            label="Done"
+                                            color="primary"
+                                            unelevated
+                                            dense
+                                            icon="check"
+                                            padding="4px 6px"
+                                            size="sm"
+                                            @click="vehiclesDone"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </q-card-section>
+                        <q-card-section v-if="menageVehicles" >
+                            <ManageVehicles />
                         </q-card-section>
                     </section>
 
+                    <section>
+                        <q-separator />
+                        <q-card-section class="q-pb-sm">
+                            <div align="right">
+                                <q-btn
+                                    label="Generate Routes"
+                                    unelevated
+                                    dense
+                                    filled
+                                    text-color="white"
+                                    size="md"
+                                    padding="4px 14px"
+                                    class="px-2 bg-primary "
+                                    style="font-weight: normal; border-radius: 6px;"
+                                    @click=""
+                                />
+                            </div>
+                        </q-card-section>
+                    </section>
 
                 </q-card>
                 <q-card class="col-span-3">
