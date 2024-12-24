@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TeamMemberController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -29,9 +30,12 @@ Route::prefix('team')
     });
 
 
-Route::get('/vehicles', function () {
-    return Inertia\Inertia::render('Vehicles/Index');
-})->name('vehicles.index');
+
+
+Route::prefix('vehicles')->group(function () {
+        Route::resource('vehicles', VehicleController::class);
+    });
+
 
 
 Route::get('/zones', function () {

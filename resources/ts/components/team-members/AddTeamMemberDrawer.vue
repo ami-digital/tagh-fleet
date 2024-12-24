@@ -9,14 +9,10 @@ const emits = defineEmits<{
     (e: 'close'): void;
     (e: 'onSubmit'): void;
 }>();
-interface Props {
-    isLoaderActive?: boolean;
 
-    isCreateLoaderActive?: boolean;
-}
 
 const $page = usePage()
-withDefaults(defineProps<Props>(), { isLoaderActive: true, isCreateLoaderActive: false  , satNavOptions : () => [] ,rolesOptions : () => []});
+
 const model = defineModel({ required: true, default: false });
 
 const {rolesOptions , satNavOptions,isCreateDrawerOpen ,isCreateLoaderActive , DEFAULT_TEAM_MEMBER_FORM } = useTeamMembers()
@@ -72,7 +68,7 @@ const submit = async () => {
                             <label class="flex items-center sm:justify-end max-sm:mx-2  max-sm:justify-start  max-sm:mb-2 text-sm font-semibold   text-black col-span-2">
                                 <span class="text-red-300 mr-1">*</span> Name:
                             </label>
-                            <q-input v-model="form.name" :error="!!form.errors.name"  :error-message="form.errors.name" :rules="[requiredValidator]" outlined dense placeholder="Ahmed M" class="col-span-10 w-full" />
+                            <q-input v-model="form.name" :error="!!form.errors.name"  :error-message="form.errors.name" :rules="[requiredValidator]" outlined dense placeholder="Your name" class="col-span-10 w-full" />
                         </div>
 
                         <!-- Email -->
@@ -80,7 +76,7 @@ const submit = async () => {
                             <label class="flex items-center sm:justify-end max-sm:mx-2   max-sm:justify-start  max-sm:mb-2 text-sm font-semibold   text-black col-span-2">
                                 <span class="text-red-300 mr-1">*</span> Email:
                             </label>
-                            <q-input  v-model="form.email" :error="!!form.errors.email"  :error-message="form.errors.email" :rules="[requiredValidator , emailValidator]" outlined dense type="email" placeholder="ahmed@tagfleet.com" class="col-span-10 w-full" />
+                            <q-input  v-model="form.email" :error="!!form.errors.email"  :error-message="form.errors.email" :rules="[requiredValidator , emailValidator]" outlined dense type="email" placeholder="example@tagfleet.com" class="col-span-10 w-full" />
                         </div>
 
 <!--                        &lt;!&ndash; Password &ndash;&gt;-->
